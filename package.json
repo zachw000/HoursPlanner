@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/zachw000/HoursPlanner/issues"
   },
-  "homepage": "https://github.com/zachw000/HoursPlanner#readme"
+  "homepage": "https://github.com/zachw000/HoursPlanner#readme",
+  "dependencies": {
+    "ejs": "^2.5.7"
+  }
 }
