@@ -1,0 +1,19 @@
+{
+  "name": "hoursplanner",
+  "version": "1.0.0",
+  "description": "Structural Weekly Planner Gannett-Fleming",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zachw000/HoursPlanner.git"
+  },
+  "author": "Zachary Waldron",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/zachw000/HoursPlanner/issues"
+  },
+  "homepage": "https://github.com/zachw000/HoursPlanner#readme"
+}
