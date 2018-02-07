@@ -18,6 +18,9 @@
   "homepage": "https://github.com/zachw000/HoursPlanner#readme",
   "dependencies": {
     "ejs": "^2.5.7",
-    "jquery": "^3.3.1"
+    "electron": "^1.8.2",
+    "jquery": "^3.3.1",
+    "path": "^0.12.7",
+    "url": "^0.11.0"
   }
 }
