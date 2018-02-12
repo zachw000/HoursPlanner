@@ -2,7 +2,8 @@
 const {app, BrowserWindow} = require('electron');
 const url = require('url');
 const path = require('path');
-
+const ejse = require('ejs-electron');
+/*
 let win;
 
 var createWindow = function() {
@@ -13,14 +14,16 @@ var createWindow = function() {
     slashes: true
   }));
 };
+*/
+let mainWindow;
 
-// Quit when all windows are closed.
-app.on('window-all-closed', function () {
-    // On OS X it is common for applications and their menu bar
-    // to stay active until the user quits explicitly with Cmd + Q
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
+ejse.data('username', 'Some Guy');
+
+app.on('ready', () => {
+    mainWindow = new BrowserWindow();
+    mainWindow.loadURL('file://' + __dirname + '/views/index.ejs');
 });
 
-app.on('ready', createWindow);
+//module.start = function() {
+//  createWindow();
+//};
