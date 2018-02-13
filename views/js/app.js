@@ -1,7 +1,5 @@
 /*jshint esversion: 6 */
 // Create Rotation upon document load
-let $ = require('jquery');
-let jQuery = require('jquery');
 // Converts the month number to a readable string
 var stringMonth = function(monthInteger) {
         switch (monthInteger) {

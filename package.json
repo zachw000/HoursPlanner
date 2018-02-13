@@ -19,6 +19,7 @@
   "dependencies": {
     "ejs": "^2.5.7",
     "ejs-electron": "^2.0.1",
+    "fullcalendar": "^3.8.2",
     "jquery": "^3.3.1",
     "path": "^0.12.7",
     "url": "^0.11.0"

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>let $ = require('jquery'); let jQuery = require('jquery');</script>
   <title>Hours Planner <%= (username === "" ? "" : ("- Welcome " + username)) %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="utf-8" />
@@ -13,9 +14,10 @@
     src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
     crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js" integrity="sha256-zBy1l2WBAh2vPF8rnjFMUXujsfkKjya0Jy5j6yKj0+Q=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/es-us.js" integrity="sha256-n+D1JQq42TKVNfd71q9OEFPV/z1DA/Wg3KBEjwfrXPE=" crossorigin="anonymous"></script>
+  <script src="scripts/moment.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+  <link rel="stylesheet" href="../node_modules/fullcalendar/dist/fullcalendar.css" />
+  <script src="../node_modules/fullcalendar/dist/fullcalendar.js"></script>
   <script src="js/app.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js" integrity="sha384-3ziFidFTgxJXHMDttyPJKDuTlmxJlwbSkojudK/CkRqKDOmeSbN6KLrGdrBQnT2n" crossorigin="anonymous"></script>
