@@ -20,7 +20,7 @@ let mainWindow;
 ejse.data('username', 'Some Guy');
 
 app.on('ready', () => {
-    mainWindow = new BrowserWindow();
+    mainWindow = new BrowserWindow({width: 800, height: 600});
     mainWindow.loadURL('file://' + __dirname + '/views/index.ejs');
 });
 
