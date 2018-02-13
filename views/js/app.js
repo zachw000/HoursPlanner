@@ -1,47 +1,36 @@
+/*jshint esversion: 6 */
 // Create Rotation upon document load
-
+let $ = require('jquery');
+let jQuery = require('jquery');
 // Converts the month number to a readable string
 var stringMonth = function(monthInteger) {
         switch (monthInteger) {
                 case 0:
                         return "January";
-                        break;
                 case 1:
                         return "February";
-                        break;
                 case 2:
                         return "March";
-                        break;
                 case 3:
                         return "April";
-                        break;
                 case 4:
                         return "May";
-                        break;
                 case 5:
                         return "June";
-                        break;
                 case 6:
                         return "July";
-                        break;
                 case 7:
                         return "August";
-                        break;
                 case 8:
                         return "September";
-                        break;
                 case 9:
                         return "October";
-                        break;
                 case 10:
                         return "November";
-                        break;
                 case 11:
                         return "December";
-                        break;
                 default:
                         return monthInteger;
-                        break;
         }
 };
 
@@ -132,4 +121,8 @@ $(document).ready(function () {
         if (ie <= 10 && ie != false) {
                 $("body").html("<h1 class='text-danger'>Sorry, this browser is not supported; please use a newer browser such as Chrome.</h1>");
         }
+
+        $('#calendar').fullCalendar({
+          // options and callbacks here
+        });
 });
