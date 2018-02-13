@@ -17,7 +17,7 @@ var createWindow = function() {
 */
 let mainWindow;
 
-ejse.data('username', 'Some Guy');
+ejse.data('username', 'Zachary Waldron');
 
 app.on('ready', () => {
     mainWindow = new BrowserWindow({width: 800, height: 600});

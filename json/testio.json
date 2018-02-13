@@ -1,0 +1,6 @@
+{
+  "testdata": [
+    {"name": "obj1", "prop": "true"},
+    {"name": "obj2", "prop": "property"}
+  ]
+}
