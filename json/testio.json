@@ -1,6 +1,1 @@
-{
-  "testdata": [
-    {"name": "obj1", "prop": "true"},
-    {"name": "obj2", "prop": "property"}
-  ]
-}
+{"testdata":[{"name":"obj1","prop":"true"},{"name":"obj2","prop":"property"},{"name":"obj3","prop":"really"}]}
