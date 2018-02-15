@@ -30,7 +30,7 @@ var printObject = function() {
   console.log(obj.testdata);
   appendData({
     name: 'obj3',
-    prop: 'really'
+    prop: 'testobj'
   });
 };
 
