@@ -146,13 +146,13 @@ $(document).ready(function () {
         }
 
         $('#calendar').fullCalendar({
-          // options and callbacks here
+          //weekends: false
         });
 
         if (currentPage() === "login.ejs") {
           readEmployees(function (err, ret) {
             if (err !== null) {
-              window.alert("An error has occurred while loading Employee list.");
+              window.alert("" + err);
             } else {
               // Debug only
               //window.alert("No error.");
