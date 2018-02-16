@@ -4,7 +4,7 @@
   <!-- Insert this line above script imports  -->
   <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <title>Hours Planner <%= (username === "" ? "" : ("- Welcome " + username)) %></title>
+  <title>Hours Planner</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="utf-8" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -32,7 +32,9 @@
   			</button>
   			<div class="collapse navbar-collapse justify-content-md-center navbar-toggleable-md" id="mainNavbarCollapse">
   				<ul class="nav pull-lg-right navbar-nav mr-auto">
-  			<li class='nav-item active dropdown'><a href='/' class='nav-link'>Overview</a></li><li class='nav-item dropdown'><a href='/' class='nav-link'>Login</a></li><li class='nav-item dropdown'><a class="nav-link nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  			<li class='nav-item active dropdown'><a href='./index.ejs' class='nav-link'>Overview</a></li>
+        <li class='nav-item dropdown'><a href='./login.ejs' class='nav-link'>Login</a></li>
+        <li class='nav-item dropdown'><a class="nav-link nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
   				Personnel <i class="fa fa-angle-down" aria-hidden="true"></i>
   </a>
   			<ul class="dropdown-menu bg-primary" aria-labelledby="navbarDropdown1">
@@ -73,7 +75,7 @@
   		</div>
   <div class="jumbotron jumbotron-fluid text-center">
 		<div class="layer">
-			<img class="img-responsive hidden-xs hidden-sm" src="http://www.gannettfleming.com/images/GFLogo400x400V2.png" alt="Gannett Fleming, Inc." />
+			<!--<img class="img-responsive hidden-xs hidden-sm" src="http://www.gannettfleming.com/images/GFLogo400x400V2.png" alt="Gannett Fleming, Inc." />-->
 			<p>
 				Weekly Hours Planner <em>*BETA 2*</em>
 			</p>
@@ -81,26 +83,15 @@
 	</div>
   <div class="container-fluid">
     <div class="row">
-      <div class="col">
-        <div id="calendar"></div>
+      <div class="container">
+        <h3>Overview</h3>
       </div>
-      <div class="col-8">
-        <h3>Weekly Planner</h3>
-        <div class="container">
-          <h2>Data</h2>
-          <div class="data-in row">
-          </div>
-        </div>
+    </div>
+    <div class="row">
+      <div class="container">
+        <div id="calendar"></div>
       </div>
     </div>
   </div>
-  <script type="text/javascript">
-    $(document).ready(function () {
-      readEmployees(function (err, ret) {
-        $(".data-in").text(JSON.stringify(ret));
-      });
-    });
-  </script>
 </body>
-<% ejse.stopListening() %>
 </html>

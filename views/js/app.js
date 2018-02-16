@@ -97,6 +97,10 @@ var dateObj = {
         "year": d.getFullYear()
 };
 
+var currentPage = function() {
+  return window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
+};
+
 jQuery.fn.rotate = function(degrees) {
     $(this).css({'-webkit-transform' : 'rotate('+ degrees +'deg)',
                  '-moz-transform' : 'rotate('+ degrees +'deg)',
@@ -123,4 +127,22 @@ $(document).ready(function () {
         $('#calendar').fullCalendar({
           // options and callbacks here
         });
+
+        if (currentPage() === "login.ejs") {
+          readEmployees(function (err, ret) {
+            if (err !== null) {
+              window.alert("An error has occurred while loading Employee list.");
+            } else {
+              // Debug only
+              //window.alert("No error.");
+              var data_out = "";
+
+              for (i = 0; i < ret.Employees.length; i++) {
+                data_out += "<option>" + ret.Employees[i].name + "</option>";
+              }
+
+              $("#nameList").html(data_out);
+            }
+          });
+        }
 });

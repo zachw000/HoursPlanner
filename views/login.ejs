@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Insert this line above script imports  -->
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <title>Hours Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Zachary Waldron" />
+  <link href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.2/lux/bootstrap.min.css" rel="stylesheet" integrity="sha384-CF64UnUzxV691sOmqagn+TQJmesKn1fgsYmlIPqYB5nm0m32jYo3LiX1BcrbuESZ" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="css/fixes.css" rel="stylesheet" />
+  <script src="scripts/moment.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+  <link rel="stylesheet" href="../node_modules/fullcalendar/dist/fullcalendar.css" />
+  <script src="js/app.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js" integrity="sha384-3ziFidFTgxJXHMDttyPJKDuTlmxJlwbSkojudK/CkRqKDOmeSbN6KLrGdrBQnT2n" crossorigin="anonymous"></script>
+  <script src="../node_modules/fullcalendar/dist/fullcalendar.js"></script>
+  <script src="scripts/jsonhandler.js"></script>
+  <!-- Insert this line after script imports -->
+  <script>if (window.module) module = window.module;</script>
+</head>
+<body>
+  <div class="sticky-top navigation navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-primary">
+  			<a class="navbar-brand" href="#">Gannett-Fleming</a>
+
+  			<button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#mainNavbarCollapse">
+  				&#9776;
+  			</button>
+  			<div class="collapse navbar-collapse justify-content-md-center navbar-toggleable-md" id="mainNavbarCollapse">
+  				<ul class="nav pull-lg-right navbar-nav mr-auto">
+  			<li class='nav-item dropdown'><a href='./index.ejs' class='nav-link'>Overview</a></li>
+        <li class='nav-item active dropdown'><a href='./login.ejs' class='nav-link'>Login</a></li>
+        <li class='nav-item dropdown'><a class="nav-link nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  				Personnel <i class="fa fa-angle-down" aria-hidden="true"></i>
+  </a>
+  			<ul class="dropdown-menu bg-primary" aria-labelledby="navbarDropdown1">
+  				<li class='nav-item dropdown-header'>Personnel</li>
+  				<li class='nav-item'>
+  					<a class='hover nav-link' href='#'>Employees</a>
+  				</li>
+  				<li class='nav-item'>
+  					<a class='hover nav-link' href='#'>Set PMs</a>
+  				</li>
+  				<li class='nav-item'>
+  					<a class='hover nav-link' href='#'>Set ENGs</a>
+  				</li>
+  				<li class='nav-item'>
+  					<a class='hover nav-link' href='#'>Set INSPTs</a>
+  				</li>
+  				<li class='nav-item'>
+  					<a class='hover nav-link' href='#'>Set ADMINs</a>
+  				</li>
+  				<li class='nav-item'>
+  					<a class='hover nav-link' href='#'>PTO</a>
+  				</li>
+  				<li class='nav-item'>
+  					<a class='hover nav-link' href='#'>OOO</a>
+  				</li>
+  			</ul></li><li class='nav-item dropdown'><a class='nav-link nav-rotate' id='navbarDropdown2' data-target='#' href='/' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Projects <i class="fa fa-angle-down" aria-hidden="true"></i>
+  </a>
+  			<ul class='dropdown-menu bg-primary' aria-labelledby='navbarDropdown2'>
+  				<li class='nav-item dropdown-header'>Projects</li>
+  				<li class='nav-item'>
+  					<a class='nav-link' href='#'>Enter New &#9;<i class='fa fa-cog' aria-hidden='true'></i></a>
+  				</li>
+  				<li class='nav-item'>
+  					<a class='nav-link' href='#'>Edit Existing &#9;<i class='fa fa-pencil' aria-hidden='true'></i></a>
+  				</li>
+  			</ul></li></ul>
+  			</div>
+  		</div>
+  <div class="jumbotron jumbotron-fluid text-center">
+		<div class="layer">
+			<!--<img class="img-responsive hidden-xs hidden-sm" src="http://www.gannettfleming.com/images/GFLogo400x400V2.png" alt="Gannett Fleming, Inc." />-->
+			<p>
+				Weekly Hours Planner <strong>*BETA 2*</strong>
+			</p>
+		</div>
+	</div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="container">
+          <h3>Please Select Your Name</h3>
+          <div class="form-group">
+            <label for="nameList">Name: (Select One)</label>
+            <select class="form-control" id="nameList">
+            </select>
+            <button class="button form-control">Log In</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
