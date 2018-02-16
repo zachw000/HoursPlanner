@@ -86,9 +86,21 @@
       </div>
       <div class="col-8">
         <h3>Weekly Planner</h3>
+        <div class="container">
+          <h2>Data</h2>
+          <div class="data-in row">
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      readEmployees(function (err, ret) {
+        $(".data-in").text(JSON.stringify(ret));
+      });
+    });
+  </script>
 </body>
 <% ejse.stopListening() %>
 </html>
