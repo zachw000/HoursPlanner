@@ -76,6 +76,7 @@ function detectIE() {
   // other browser
   return false;
 }
+
 function setScroll() {
         window.scrollBy({
                 top: 100, // could be negative value
@@ -93,6 +94,17 @@ function setScroll() {
 var setLoginCookie = function(cookie_inf, callback) {
   if (!(cookie_inf !== null && typeof cookie_inf === 'object'))
     return callback("Data is null or is not of type 'object'.");
+  var valid_cookie = true;
+  valid_cookie = cookie_inf.hasOwnProperty('url') ? valid_cookie:false;
+  valid_cookie = cookie_inf.hasOwnProperty('name') ? valid_cookie:false;
+  valid_cookie = cookie_inf.hasOwnProperty('value') ? valid_cookie:false;
+
+  if (!valid_cookie) return callback("Invalid cookie data.");
+
+  // Set the cookie, and display an error if an error occurrs.
+  session.defaultSession.cookies.set(cookie_inf, (error) => {
+    if (error) console.error(error);
+  });
 };
 
 
