@@ -104,6 +104,7 @@ var setLoginCookie = function(cookie_inf, callback) {
   // Set the cookie, and display an error if an error occurrs.
   session.defaultSession.cookies.set(cookie_inf, (error) => {
     if (error) console.error(error);
+    else return callback(null);
   });
 };
 
