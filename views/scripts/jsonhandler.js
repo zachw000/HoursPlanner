@@ -74,6 +74,34 @@ var readMilestones = function(callback) {
     });
 };
 
+// Get Not In Office information, such as PTO or OOO
+var readNIO = function(callback) {
+  jsonfile.readFile(prepend + filenames[2], function(err, ret) {
+    if (err !== null) {
+      console.log(err);
+      eventEmitter.emit('readError');
+    }
+
+    // Place all data into the records
+    record.NIO = ret;
+    return callback(err, ret);
+  });
+};
+
+// Read all project data
+var readProjects = function(callback) {
+  jsonfile.readFile(prepend + filenames[3], function(err, ret) {
+    if (err !== null) {
+      console.log(err);
+      eventEmitter.emit('readError');
+    }
+
+    // Place all data into the records
+    record.Projects = ret;
+    return callback(err, ret);
+  });
+};
+
 // return false if createObject fails
 var createEmployee = function(data, callback) {
   // Makes sure the item is an object, and isn't null
@@ -98,6 +126,50 @@ var createEmployee = function(data, callback) {
       // Go to callback and return control to previous function
       if (err !== null) return callback(err);
       else return callback(null);
+    });
+  });
+};
+
+/*
+TEMP Placeholders for future delete functions
+*/
+
+// Pass a valid employee object, which will then be matched by the JSON data
+var deleteEmployee = function(data, callback) {
+
+};
+
+var deleteMilestone = function(data, callback) {
+
+};
+
+var deleteNIO = function(data, callback) {
+
+};
+
+var deleteProject = function(data, callback) {
+
+};
+
+var createMilestone = function(data, callback) {
+  if (!(data !== null && typeof data === 'object'))
+    return callback("Input data is not of type 'object' or is null.");
+
+  if (!checkMilestoneData(data) || hasNull(data))
+    return callback("Input data is not a valid 'Milestone' object, or contains null properties.");
+
+  readMilestones(function (err, ret) {
+    if (err !== null) {
+      eventEmitter.emit('readError');
+      return callback(err);
+    }
+    // Add data to array
+    record.milestones.milestones.push(data);
+
+    // write data and update JSON file
+    jsonfile.writeFile(prepend + filename[1], record.milestones, function (err) {
+      if (err !== null) return callback(err);
+      else return callback(null); // Null is a good thing here
     });
   });
 };

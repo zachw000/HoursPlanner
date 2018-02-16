@@ -1,4 +1,5 @@
 /*jshint esversion: 6 */
+const {session} = require('electron');
 // Create Rotation upon document load
 // Converts the month number to a readable string
 var stringMonth = function(monthInteger) {
@@ -87,6 +88,13 @@ function setScroll() {
                 behavior: 'smooth'
         });
 }
+
+// This will store the login information for the current user (on the local machine)
+var setLoginCookie = function(cookie_inf, callback) {
+  if (!(cookie_inf !== null && typeof cookie_inf === 'object'))
+    return callback("Data is null or is not of type 'object'.");
+};
+
 
 var d = new Date();
 var degreesRotated = 0;
