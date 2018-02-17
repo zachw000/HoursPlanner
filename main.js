@@ -23,6 +23,9 @@ app.on('ready', () => {
     mainWindow.loadURL('file://' + __dirname + '/views/index.ejs');
 });
 
+app.on('window-all-closed', () => {
+  app.quit();
+});
 //module.start = function() {
 //  createWindow();
 //};
