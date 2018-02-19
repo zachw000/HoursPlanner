@@ -135,7 +135,13 @@ TEMP Placeholders for future delete functions
 */
 
 // Pass a valid employee object, which will then be matched by the JSON data
-var deleteEmployee = function(data, callback) {
+var deleteEmployeeByObject = function(data, callback) {
+
+};
+
+// Pass in a String and delete all employees with that name
+// Their hours would be auto removed thanks to being stored in the same object.
+var deleteEmployeeByName = function(data, callback) {
 
 };
 
@@ -143,13 +149,27 @@ var deleteMilestone = function(data, callback) {
 
 };
 
+// Pass in Object to match and delete PTO/OOO
 var deleteNIO = function(data, callback) {
 
 };
 
-var deleteProject = function(data, callback) {
+// Pass type, name, and date
+var deleteNIOByData = function(type, name, date, callback) {
 
 };
+
+// Pass object data into delete project.
+var deleteProjectByObject = function(data, callback) {
+
+};
+
+// Insert Project # to find and delete project.
+var deleteProejctByNum = function(projnum, callback) {
+
+};
+
+var deleteProjectByDescription = function(projdesc, callback) {};
 
 var createMilestone = function(data, callback) {
   if (!(data !== null && typeof data === 'object'))
