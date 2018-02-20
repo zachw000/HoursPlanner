@@ -9,12 +9,47 @@ var eventEmitter = new events.EventEmitter();
 var record = {
   "employees": Object,
   "milestones": Object,
-  "NIO": Object,
-  "Projects": Object
+  "nio": Object,
+  "projects": Object
+};
+
+// Define Object.equals in the Object prototype
+// This will make it possible to use Object.equals anywhere
+Object.prototype.equals = function(x)
+{
+  var p;
+  for(p in this) {
+      if(typeof(x[p])=='undefined') {return false;}
+  }
+
+  for(p in this) {
+      if (this[p]) {
+          switch(typeof(this[p])) {
+              case 'object':
+                  if (!this[p].equals(x[p])) { return false; } break;
+              case 'function':
+                  if (typeof(x[p])=='undefined' ||
+                      (p != 'equals' && this[p].toString() != x[p].toString()))
+                      return false;
+                  break;
+              default:
+                  if (this[p] != x[p]) { return false; }
+          }
+      } else {
+          if (x[p])
+              return false;
+      }
+  }
+
+  for(p in x) {
+      if(typeof(this[p])=='undefined') {return false;}
+  }
+
+  return true;
 };
 
 // Checks whether the employee data is valid, if the data is not valid, then return false
-function checkEmployeeObject(obj) {
+function checkEmployeeData(obj) {
   var ret = true;
   if (obj === null || typeof obj != 'object') ret = false;
 
@@ -37,6 +72,32 @@ function checkMilestoneData(obj) {
   ret = obj.hasOwnProperty('projnum') ? ret:false;
   ret = obj.hasOwnProperty('date') ? ret:false;
   ret = obj.hasOwnProperty('type') ? ret:false;
+
+  return ret;
+}
+
+function checkNIOData(obj) {
+  var ret = true;
+  if (obj === null || typeof obj != 'object') ret = false;
+
+  // Check object properties
+  ret = obj.hasOwnProperty('name') ? ret:false;
+  ret = obj.hasOwnProperty('date') ? ret:false;
+  ret = obj.hasOwnProperty('time') ? ret:false;
+  ret = obj.hasOwnProperty('type') ? ret:false;
+
+  return ret;
+}
+
+function checkProjectData(obj) {
+  var ret = true;
+  if (obj === null || typeof obj != 'object') ret = false;
+
+  // Check object properties
+  ret = obj.hasOwnProperty('name') ? ret:false;
+  ret = obj.hasOwnProperty('projnum') ? ret:false;
+  ret = obj.hasOwnProperty('projname') ? ret:false;
+  ret = obj.hasOwnProperty('active') ? ret:false;
 
   return ret;
 }
@@ -83,7 +144,7 @@ var readNIO = function(callback) {
     }
 
     // Place all data into the records
-    record.NIO = ret;
+    record.nio = ret;
     return callback(err, ret);
   });
 };
@@ -97,7 +158,7 @@ var readProjects = function(callback) {
     }
 
     // Place all data into the records
-    record.Projects = ret;
+    record.projects = ret;
     return callback(err, ret);
   });
 };
@@ -108,7 +169,7 @@ var createEmployee = function(data, callback) {
   if (!(data !== null && typeof data === 'object'))
     return callback("Input data is not of type 'object' or is null.");
   // Checks whether the object is a valid employee object, with no nulls
-  if (!checkEmployeeObject(data) || hasNull(data))
+  if (!checkEmployeeData(data) || hasNull(data))
     return callback("Input data is not a valid 'Employee' object, or contains null properties.");
 
   // Read Employee JSON file, and use the object to write to list
@@ -130,13 +191,122 @@ var createEmployee = function(data, callback) {
   });
 };
 
+var createMilestone = function(data, callback) {
+  if (!(data !== null && typeof data === 'object'))
+    return callback("Input data is not of type 'object' or is null.");
+
+  if (!checkMilestoneData(data) || hasNull(data))
+    return callback("Input data is not a valid 'Milestone' object, or contains null properties.");
+
+  readMilestones(function (err, ret) {
+    if (err !== null) {
+      eventEmitter.emit('readError');
+      return callback(err);
+    }
+    // Add data to array
+    record.milestones.milestones.push(data);
+
+    // write data and update JSON file
+    jsonfile.writeFile(prepend + filename[1], record.milestones, function (err) {
+      if (err !== null) return callback(err);
+      else return callback(null); // Null is a good thing here
+    });
+  });
+};
+
+var createNIO = function(data, callback) {
+  if (!(data !== null && typeof data === 'object'))
+    return callback("Input data is not of type 'object' or is null.");
+  if (!checkNIOData(data) || hasNull(data))
+    return callback("Input data is not a valid 'NIO' object, or contains null properties.");
+
+  readProjects(function (err, ret) {
+    if (err !== null) {
+      eventEmitter.emit('readError');
+      return callback(err);
+    }
+
+    // Add data to array
+    record.nio.notinoffice.push(data);
+
+    // Write data
+    jsonfile.writeFile(prepend + filename[2], record.nio, function (err) {
+      if (err !== null) return callback(err);
+      else return callback(null); // Successful write
+    });
+  });
+};
+
+var createProject = function(data, callback) {
+  if (!(data !== null && typeof data === 'object'))
+    return callback("Input data is not of type 'object' or is null.");
+  if (!checkProjectData(data) || hasNull(data))
+    return callback("Input data is not a valid 'Project' object, or contains null properties.");
+
+  readProjects(function (err, ret) {
+    if (err !== null) {
+      eventEmitter.emit('readError');
+      return callback(err);
+    }
+
+    // Add data to array
+    record.projects.projects.push(data);
+
+    // Write data
+    jsonfile.writeFile(prepend + filename[3], record.projects, function (err) {
+      if (err !== null) return callback(err);
+      else return callback(null); // Successful write
+    });
+  });
+};
+
+var clearRecordMemory = function() {
+  // Delete all record memory
+  delete record.employees;
+  delete record.milestones;
+  delete record.nio;
+  delete record.projects;
+
+  // Recreate empty variables
+  record.employees = Object;
+  record.milestones = Object;
+  record.nio = Object;
+  record.projects = Object;
+};
+
 /*
 TEMP Placeholders for future delete functions
 */
 
 // Pass a valid employee object, which will then be matched by the JSON data
 var deleteEmployeeByObject = function(data, callback) {
+  // Stores all matching data indexcies.
+  var match_indicies = [];
+  if (!(record.employees !== null && record.hasOwnProperty('Employees')))
+    return callback("Error: Please run 'readEmployees' first to set record variable.");
 
+  // If the record contains the required properties, check if it is valid.
+  if (!checkEmployeeData(data))
+    return callback("Error: Object is not a valid 'employee' object, or contains null values.");
+
+  // Will attempt to match the given data with the records
+  // When using by Object, it will delete ALL IDENTITICAL Objects to the one
+  // specified.
+  for (i = 0; i < record.employees.Employees.length; i++) {
+    // Readies data for array.slice(n)
+    if (data.equals(record.employees.Employees[i])) match_indicies.push(i + 1);
+  }
+
+  // Deletes all values matching, this traverses backwards to retain index
+  for (var j = match_indicies.length - 1; j >= 0; j--)
+    record.employees.Employees.slice(match_indicies[j]);
+
+  if (match_indicies.length > 0) {
+    jsonfile.writeFile(prepend + filename[0], record.employees, function (err) {
+      if (err !== null) return callback(err);
+      else return callback(null);
+    });
+  }
 };
 
 // Pass in a String and delete all employees with that name
@@ -169,27 +339,6 @@ var deleteProejctByNum = function(projnum, callback) {
 
 };
 
-var deleteProjectByDescription = function(projdesc, callback) {};
+var deleteProjectByDescription = function(projdesc, callback) {
 
-var createMilestone = function(data, callback) {
-  if (!(data !== null && typeof data === 'object'))
-    return callback("Input data is not of type 'object' or is null.");
-
-  if (!checkMilestoneData(data) || hasNull(data))
-    return callback("Input data is not a valid 'Milestone' object, or contains null properties.");
-
-  readMilestones(function (err, ret) {
-    if (err !== null) {
-      eventEmitter.emit('readError');
-      return callback(err);
-    }
-    // Add data to array
-    record.milestones.milestones.push(data);
-
-    // write data and update JSON file
-    jsonfile.writeFile(prepend + filename[1], record.milestones, function (err) {
-      if (err !== null) return callback(err);
-      else return callback(null); // Null is a good thing here
-    });
-  });
 };
