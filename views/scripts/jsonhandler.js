@@ -15,7 +15,7 @@ var record = {
 
 // Define Object.equals in the Object prototype
 // This will make it possible to use Object.equals anywhere
-Object.prototype.equals = function(x)
+/*Object.prototype.equals = function(x)
 {
   var p;
   for(p in this) {
@@ -46,7 +46,9 @@ Object.prototype.equals = function(x)
   }
 
   return true;
-};
+};*/
+
+var equalObj = function(obj1, obj2) {};
 
 // Checks whether the employee data is valid, if the data is not valid, then return false
 function checkEmployeeData(obj) {
@@ -294,7 +296,7 @@ var deleteEmployeeByObject = function(data, callback) {
   // specified.
   for (i = 0; i < record.employees.Employees.length; i++) {
     // Readies data for array.slice(n)
-    if (data.equals(record.employees.Employees[i])) match_indicies.push(i + 1);
+    if (equalObj(data, record.employees.Employees[i])) match_indicies.push(i + 1);
   }
 
   // Deletes all values matching, this traverses backwards to retain index
