@@ -282,6 +282,8 @@ TEMP Placeholders for future delete functions
 var deleteEmployeeByObject = function(data, callback) {
   // Stores all matching data indexcies.
   var match_indicies = [];
+
+  // Check to make sure records are set
   if (!(record.employees !== null && record.hasOwnProperty('Employees')))
     return callback("Error: Please run 'readEmployees' first to set record variable.");
 
@@ -312,10 +314,19 @@ var deleteEmployeeByObject = function(data, callback) {
 // Pass in a String and delete all employees with that name
 // Their hours would be auto removed thanks to being stored in the same object.
 var deleteEmployeeByName = function(data, callback) {
+  // Stores all matching data indexcies.
+  var match_indicies = [];
+
+  // Check to make sure records are set
+  if (!(record.employees !== null && record.hasOwnProperty('Employees')))
+    return callback("Error: Please run 'readEmployees' first to set record variable.");
+};
+
+var deleteMilestoneByObj = function(data, callback) {
 
 };
 
-var deleteMilestone = function(data, callback) {
+var deleteMilestoneByDate = function(data, callback) {
 
 };
 
