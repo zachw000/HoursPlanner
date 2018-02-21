@@ -6,3 +6,4 @@ npm install -g bower
 npm install -g @angular/cli
 npm install --save jquery
 bower install bootstrap
+bower install bootstrap-select

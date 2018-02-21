@@ -179,13 +179,13 @@ $(document).ready(function () {
           eventSources: [
             {
               events: calendar_events_pto,
-              color: 'red',
-              textColor: 'white'
+              color: 'rgba(238, 51, 78, 0.6)',
+              textColor: 'rgba(255, 255, 255, 255)'
             },
             {
               events: calendar_events_ooo,
-              color: 'blue',
-              textColor: 'white'
+              color: 'rgba(0, 0, 255, 0.6)',
+              textColor: 'rgba(255, 255, 255, 255)'
             }
           ]
         });
@@ -204,11 +204,19 @@ $(document).ready(function () {
         var data_out = "";
 
         for (i = 0; i < ret.Employees.length; i++) {
-          data_out += "<option>" + ret.Employees[i].name + "</option>";
+          data_out += "<option value=\"" + ret.Employees[i].name + "\">" + ret.Employees[i].name + "</option>";
         }
-
+        console.log(data_out);
         $("#nameList").html(data_out);
       }
     });
   }
+  // What happens when the login button is clicked
+  $("#login").on('click', function() {
+    // Make sure this is the correct page
+    if (currentPage() === "login.ejs") {
+      // Debug: Popup window with selected name
+      alert($("#nameList").val());
+    }
+  });
 });

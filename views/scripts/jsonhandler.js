@@ -165,6 +165,24 @@ var readProjects = function(callback) {
   });
 };
 
+// Uses the records already in memory rather than reading again, much faster
+// Than performing another read
+function getRecord(recName) {
+  switch (recName) {
+    case 'employees':
+      return record.employees;
+    case 'milestones':
+      return record.milestones;
+    case 'nio':
+      return record.nio;
+    case 'projects':
+      return record.projects;
+    default:
+      // Invalid recordset selected
+      return null;
+  }
+}
+
 // return false if createObject fails
 var createEmployee = function(data, callback) {
   // Makes sure the item is an object, and isn't null
