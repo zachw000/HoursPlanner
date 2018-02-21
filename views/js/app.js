@@ -131,63 +131,39 @@ jQuery.fn.rotate = function(degrees) {
 };
 
 $(document).ready(function () {
-  $('.nav-rotate').on('click', function() {
-          degreesRotated += 180;
-          degreesRotated %= 360;
-          $(this).find("i").rotate(degreesRotated);
-  });
+        $('.nav-rotate').on('click', function() {
+                degreesRotated += 180;
+                degreesRotated %= 360;
+                $(this).find("i").rotate(degreesRotated);
+        });
 
-  $('.date-anc').text(dateObj.month + " " + dateObj.day + ", " + dateObj.year);
+        $('.date-anc').text(dateObj.month + " " + dateObj.day + ", " + dateObj.year);
 
-  var ie = detectIE();
+        var ie = detectIE();
 
-  if (ie <= 10 && ie != false) {
-    $("body").html("<h1 class='text-danger'>Sorry, this browser is not supported; please use a newer browser such as Chrome.</h1>");
-  }
-
-  if (currentPage() === "index.ejs") {
-    // This code will only execute on index.ejs
-    readNIO(function(err, ret) {
-      if (err !== null) {
-        window.alert("" + err);
-      } else {
-        // If there was no read Error
-        var calendar_events = [];
-        for (var i = 0; i < ret.notinoffice.length; i++) {
-          if (ret.notinoffice[i].type == "pto") {
-            calendar_events.push({
-              title: ret.notinoffice[i].name,
-              start: ret.notinoffice[i].date.split("/")[2] + "-" +
-                (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1]) + "-" +
-                (ret.notinoffice[i].date.split("/")[0] < 10 ? "0" + ret.notinoffice[i].date.split("/")[0]:ret.notinoffice[i].date.split("/")[0]),
-              end: ret.notinoffice[i].date.split("/")[2] + "-" +
-                (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1]) + "-" +
-                (ret.notinoffice[i].date.split("/")[0] < 10 ? "0" + ret.notinoffice[i].date.split("/")[0]:ret.notinoffice[i].date.split("/")[0])
-            });
-          }
-        }
-        // Debug
-        // console.log(JSON.stringify(calendar_events));
-      }
-    });
-  }
-
-  // If current page is the login page
-  if (currentPage() === "login.ejs") {
-    readEmployees(function (err, ret) {
-      if (err !== null) {
-        window.alert("" + err);
-      } else {
-        // Debug only
-        //window.alert("No error.");
-        var data_out = "";
-
-        for (i = 0; i < ret.Employees.length; i++) {
-          data_out += "<option>" + ret.Employees[i].name + "</option>";
+        if (ie <= 10 && ie != false) {
+                $("body").html("<h1 class='text-danger'>Sorry, this browser is not supported; please use a newer browser such as Chrome.</h1>");
         }
 
-        $("#nameList").html(data_out);
-      }
-    });
-  }
+        $('#calendar').fullCalendar({
+          //weekends: false
+        });
+
+        if (currentPage() === "login.ejs") {
+          readEmployees(function (err, ret) {
+            if (err !== null) {
+              window.alert("" + err);
+            } else {
+              // Debug only
+              //window.alert("No error.");
+              var data_out = "";
+
+              for (i = 0; i < ret.Employees.length; i++) {
+                data_out += "<option>" + ret.Employees[i].name + "</option>";
+              }
+
+              $("#nameList").html(data_out);
+            }
+          });
+        }
 });

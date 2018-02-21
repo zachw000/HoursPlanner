@@ -18,6 +18,7 @@ var createWindow = function() {
 let mainWindow;
 
 app.on('ready', () => {
+    ejse.data('username', 'Zachary Waldron');
     mainWindow = new BrowserWindow({width: 800, height: 600});
     mainWindow.loadURL('file://' + __dirname + '/views/index.ejs');
 });
