@@ -152,22 +152,46 @@ $(document).ready(function () {
         window.alert("" + err);
       } else {
         // If there was no read Error
-        var calendar_events = [];
+        var calendar_events_pto = [];
+        var calendar_events_ooo = [];
         for (var i = 0; i < ret.notinoffice.length; i++) {
+          // Stored as MMDDYYYY, Need YYYYMMDD
           if (ret.notinoffice[i].type == "pto") {
-            calendar_events.push({
+            calendar_events_pto.push({
               title: ret.notinoffice[i].name,
               start: ret.notinoffice[i].date.split("/")[2] + "-" +
-                (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1]) + "-" +
-                (ret.notinoffice[i].date.split("/")[0] < 10 ? "0" + ret.notinoffice[i].date.split("/")[0]:ret.notinoffice[i].date.split("/")[0]),
-              end: ret.notinoffice[i].date.split("/")[2] + "-" +
-                (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1]) + "-" +
-                (ret.notinoffice[i].date.split("/")[0] < 10 ? "0" + ret.notinoffice[i].date.split("/")[0]:ret.notinoffice[i].date.split("/")[0])
+                (ret.notinoffice[i].date.split("/")[0] < 10 ? "0" + ret.notinoffice[i].date.split("/")[0]:ret.notinoffice[i].date.split("/")[0]) + "-" +
+                (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1])
             });
+
+            //console.log(calendar_events_pto[calendar_events_pto.length - 1]);
+          } else if (ret.notinoffice[i].type == "ooo") {
+            calendar_events_ooo.push({
+              title: ret.notinoffice[i].name,
+              start: ret.notinoffice[i].date.split("/")[2] + "-" +
+                (ret.notinoffice[i].date.split("/")[0] < 10 ? "0" + ret.notinoffice[i].date.split("/")[0]:ret.notinoffice[i].date.split("/")[0]) + "-" +
+                (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1])
+            });
+
+            //console.log(calendar_events_ooo[calendar_events_ooo.length - 1]);
           }
         }
         // Debug
-        // console.log(JSON.stringify(calendar_events));
+        //console.log(JSON.stringify(calendar_events));
+        $('#calendar').fullCalendar({
+          eventSources: [
+            {
+              events: calendar_events_pto,
+              color: 'red',
+              textColor: 'white'
+            },
+            {
+              events: calendar_events_ooo,
+              color: 'blue',
+              textColor: 'white'
+            }
+          ]
+        });
       }
     });
   }
