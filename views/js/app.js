@@ -156,6 +156,7 @@ $(document).ready(function () {
         var calendar_events_ooo = [];
         for (var i = 0; i < ret.notinoffice.length; i++) {
           // Stored as MMDDYYYY, Need YYYYMMDD
+          // Re-arrange dates to ISO 8601 format
           if (ret.notinoffice[i].type == "pto") {
             calendar_events_pto.push({
               title: ret.notinoffice[i].name,
@@ -163,7 +164,6 @@ $(document).ready(function () {
                 (ret.notinoffice[i].date.split("/")[0] < 10 ? "0" + ret.notinoffice[i].date.split("/")[0]:ret.notinoffice[i].date.split("/")[0]) + "-" +
                 (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1])
             });
-
             //console.log(calendar_events_pto[calendar_events_pto.length - 1]);
           } else if (ret.notinoffice[i].type == "ooo") {
             calendar_events_ooo.push({
@@ -172,12 +172,9 @@ $(document).ready(function () {
                 (ret.notinoffice[i].date.split("/")[0] < 10 ? "0" + ret.notinoffice[i].date.split("/")[0]:ret.notinoffice[i].date.split("/")[0]) + "-" +
                 (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1])
             });
-
             //console.log(calendar_events_ooo[calendar_events_ooo.length - 1]);
           }
         }
-        // Debug
-        //console.log(JSON.stringify(calendar_events));
         $('#calendar').fullCalendar({
           eventSources: [
             {
