@@ -48,7 +48,28 @@ var record = {
   return true;
 };*/
 
-var equalObj = function(obj1, obj2) {};
+// Checks if two objects are equal, only true iff IDENTITICAL
+var equalObj = (obj1, obj2) => {
+  // Check if both inputs are objects
+  if (obj1 === null || typeof obj1 !== 'object') return false;
+  if (obj2 === null || typeof obj2 !== 'object') return false;
+
+  // Assign object key values to both objects
+  var keys1 = Object.keys(obj1);
+  var keys2 = Object.keys(obj2);
+
+  // Check key lengths
+  if (keys1.length !== keys2.length) return false;
+
+  for (var key in keys1) {
+    // Checks if both have the property, and then checks if data
+    // inside is identitical.
+    if (!obj2.hasOwnProperty(keys1[key])) return false;
+    if (obj1[keys1[key]] !== obj2[keys1[key]]) return false;
+  }
+
+  return true;
+};
 
 // Checks whether the employee data is valid, if the data is not valid, then return false
 function checkEmployeeData(obj) {
