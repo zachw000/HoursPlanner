@@ -168,7 +168,7 @@ $(document).ready(function () {
         for (var i = 0; i < ret.notinoffice.length; i++) {
           // Stored as MM/DD/YYYY, Need YYYY-MM-DD
           // Re-arrange dates to ISO 8601 format
-          if (ret.notinoffice[i].type == "pto") {
+          if (ret.notinoffice[i].type == "pto" && !ret.notinoffice[i].hasOwnProperty("dateend")) {
             calendar_events_pto.push({
               title: ret.notinoffice[i].name,
               start: ret.notinoffice[i].date.split("/")[2] + "-" +
@@ -176,7 +176,17 @@ $(document).ready(function () {
                 (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1])
             });
             //console.log(calendar_events_pto[calendar_events_pto.length - 1]);
-          } else if (ret.notinoffice[i].type == "ooo") {
+          } else if (ret.notinoffice[i].type == "pto" && ret.notinoffice[i].hasOwnProperty("dateend")) {
+            calendar_events_pto.push({
+              title: ret.notinoffice[i].name,
+              start: ret.notinoffice[i].date.split("/")[2] + "-" +
+                (ret.notinoffice[i].date.split("/")[0] < 10 ? "0" + ret.notinoffice[i].date.split("/")[0]:ret.notinoffice[i].date.split("/")[0]) + "-" +
+                (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1]),
+              end: ret.notinoffice[i].dateend.split("/")[2] + "-" +
+                (ret.notinoffice[i].dateend.split("/")[0] < 10 ? "0" + ret.notinoffice[i].dateend.split("/")[0]:ret.notinoffice[i].dateend.split("/")[0]) + "-" +
+                (ret.notinoffice[i].dateend.split("/")[1] < 10 ? "0" + ret.notinoffice[i].dateend.split("/")[1]:ret.notinoffice[i].dateend.split("/")[1])
+            });
+          } else if (ret.notinoffice[i].type == "ooo" && !ret.notinoffice[i].hasOwnProperty("dateend")) {
             calendar_events_ooo.push({
               title: ret.notinoffice[i].name,
               start: ret.notinoffice[i].date.split("/")[2] + "-" +
@@ -184,6 +194,16 @@ $(document).ready(function () {
                 (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1])
             });
             //console.log(calendar_events_ooo[calendar_events_ooo.length - 1]);
+          } else if (ret.notinoffice[i].type == "ooo" && ret.notinoffice[i].hasOwnProperty("dateend")) {
+            calendar_events_ooo.push({
+              title: ret.notinoffice[i].name,
+              start: ret.notinoffice[i].date.split("/")[2] + "-" +
+                (ret.notinoffice[i].date.split("/")[0] < 10 ? "0" + ret.notinoffice[i].date.split("/")[0]:ret.notinoffice[i].date.split("/")[0]) + "-" +
+                (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1]),
+              end: ret.notinoffice[i].dateend.split("/")[2] + "-" +
+                (ret.notinoffice[i].dateend.split("/")[0] < 10 ? "0" + ret.notinoffice[i].dateend.split("/")[0]:ret.notinoffice[i].dateend.split("/")[0]) + "-" +
+                (ret.notinoffice[i].dateend.split("/")[1] < 10 ? "0" + ret.notinoffice[i].dateend.split("/")[1]:ret.notinoffice[i].dateend.split("/")[1])
+            });
           }
         }
         $('#calendar').fullCalendar({
