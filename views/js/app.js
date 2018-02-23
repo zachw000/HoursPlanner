@@ -1,5 +1,6 @@
 /*jshint esversion: 6 */
-const {session} = require('electron');
+const session = require('electron').remote.session;
+var ses = session.fromPartition('persist:name');
 // Create Rotation upon document load
 // Converts the month number to a readable string
 var stringMonth = function(monthInteger) {
@@ -77,6 +78,13 @@ function detectIE() {
   return false;
 }
 
+var getCookie = (cname, callback) => {
+  var value = {name: cname};
+  ses.cookies.get(value, (error, cookies) => {
+    return callback(error, cookies);
+  });
+};
+
 function setScroll() {
         window.scrollBy({
                 top: 100, // could be negative value
@@ -90,8 +98,8 @@ function setScroll() {
         });
 }
 
-// This will store the login information for the current user (on the local machine)
-var setLoginCookie = function(cookie_inf, callback) {
+// Store the login information for the current user (on the local machine)
+var setLoginCookie = (cookie_inf, callback) => {
   if (!(cookie_inf !== null && typeof cookie_inf === 'object'))
     return callback("Data is null or is not of type 'object'.");
   var valid_cookie = true;
@@ -102,9 +110,8 @@ var setLoginCookie = function(cookie_inf, callback) {
   if (!valid_cookie) return callback("Invalid cookie data.");
 
   // Set the cookie, and display an error if an error occurrs.
-  session.defaultSession.cookies.set(cookie_inf, (error) => {
-    if (error) console.error(error);
-    else return callback(null);
+  ses.cookies.set(cookie_inf, (error) => {
+    console.log(error);
   });
 };
 
@@ -130,6 +137,10 @@ jQuery.fn.rotate = function(degrees) {
     return $(this);
 };
 
+getCookie("name", (error, cookies) => {
+  alert(cookies[0].value);
+});
+
 $(document).ready(function () {
   $('.nav-rotate').on('click', function() {
           degreesRotated += 180;
@@ -140,7 +151,7 @@ $(document).ready(function () {
   $('.date-anc').text(dateObj.month + " " + dateObj.day + ", " + dateObj.year);
 
   var ie = detectIE();
-
+  /*ONLY USED IN WEBSITE MODE, WITHOUT NODE INTEGRATIONS*/
   if (ie <= 10 && ie != false) {
     $("body").html("<h1 class='text-danger'>Sorry, this browser is not supported; please use a newer browser such as Chrome.</h1>");
   }
@@ -155,7 +166,7 @@ $(document).ready(function () {
         var calendar_events_pto = [];
         var calendar_events_ooo = [];
         for (var i = 0; i < ret.notinoffice.length; i++) {
-          // Stored as MMDDYYYY, Need YYYYMMDD
+          // Stored as MM/DD/YYYY, Need YYYY-MM-DD
           // Re-arrange dates to ISO 8601 format
           if (ret.notinoffice[i].type == "pto") {
             calendar_events_pto.push({
@@ -180,12 +191,12 @@ $(document).ready(function () {
             {
               events: calendar_events_pto,
               color: 'rgba(238, 51, 78, 0.6)',
-              textColor: 'rgba(255, 255, 255, 255)'
+              textColor: 'rgba(255, 255, 255, 1)'
             },
             {
               events: calendar_events_ooo,
               color: 'rgba(0, 0, 255, 0.6)',
-              textColor: 'rgba(255, 255, 255, 255)'
+              textColor: 'rgba(255, 255, 255, 1)'
             }
           ]
         });
@@ -206,7 +217,6 @@ $(document).ready(function () {
         for (i = 0; i < ret.Employees.length; i++) {
           data_out += "<option value=\"" + ret.Employees[i].name + "\">" + ret.Employees[i].name + "</option>";
         }
-        console.log(data_out);
         $("#nameList").html(data_out);
       }
     });
@@ -217,6 +227,16 @@ $(document).ready(function () {
     if (currentPage() === "login.ejs") {
       // Debug: Popup window with selected name
       alert($("#nameList").val());
+      var name = "name";
+      var value = $("#nameList").val();
+
+      setLoginCookie({
+        url: "http://127.0.0.1",
+        name: name,
+        value: value
+      }, function (err) {
+        if (err !== null) alert("An error has occurred.\n" + err);
+      });
     }
   });
 });

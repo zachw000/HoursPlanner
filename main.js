@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-const {app, BrowserWindow} = require('electron');
+const {session, app, BrowserWindow} = require('electron');
 const url = require('url');
 const path = require('path');
 const ejse = require('ejs-electron');
@@ -20,6 +20,7 @@ let mainWindow;
 app.on('ready', () => {
     mainWindow = new BrowserWindow({width: 800, height: 600});
     mainWindow.loadURL('file://' + __dirname + '/views/index.ejs');
+    global.ses = mainWindow.webContents.session;
 });
 
 app.on('window-all-closed', () => {
