@@ -111,7 +111,7 @@ var setLoginCookie = (cookie_inf, callback) => {
 
   // Set the cookie, and display an error if an error occurrs.
   ses.cookies.set(cookie_inf, (error) => {
-    console.log(error);
+    console.eror(error);
   });
 };
 
@@ -167,7 +167,7 @@ $(document).ready(function () {
   if (currentPage() === "index.ejs") {
     // This code will only execute on index.ejs
     readMilestones((err, ret) => {
-      
+
     });
     readNIO(function(err, ret) {
       if (err !== null) {

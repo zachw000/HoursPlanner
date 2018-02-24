@@ -13,41 +13,6 @@ var record = {
   "projects": Object
 };
 
-// Define Object.equals in the Object prototype
-// This will make it possible to use Object.equals anywhere
-/*Object.prototype.equals = function(x)
-{
-  var p;
-  for(p in this) {
-      if(typeof(x[p])=='undefined') {return false;}
-  }
-
-  for(p in this) {
-      if (this[p]) {
-          switch(typeof(this[p])) {
-              case 'object':
-                  if (!this[p].equals(x[p])) { return false; } break;
-              case 'function':
-                  if (typeof(x[p])=='undefined' ||
-                      (p != 'equals' && this[p].toString() != x[p].toString()))
-                      return false;
-                  break;
-              default:
-                  if (this[p] != x[p]) { return false; }
-          }
-      } else {
-          if (x[p])
-              return false;
-      }
-  }
-
-  for(p in x) {
-      if(typeof(this[p])=='undefined') {return false;}
-  }
-
-  return true;
-};*/
-
 // Checks if two objects are equal, only true iff IDENTITICAL
 var equalObj = (obj1, obj2) => {
   // Check if both inputs are objects
