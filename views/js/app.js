@@ -115,6 +115,14 @@ var setLoginCookie = (cookie_inf, callback) => {
   });
 };
 
+var loggedIn = (callback) => {
+  getCookie("name", (error, cookies) => {
+    if (error || cookies[0] === undefined)
+      return callback("Not logged in", false);
+
+  });
+};
+
 
 var d = new Date();
 var degreesRotated = 0;
@@ -158,6 +166,9 @@ $(document).ready(function () {
 
   if (currentPage() === "index.ejs") {
     // This code will only execute on index.ejs
+    readMilestones((err, ret) => {
+      
+    });
     readNIO(function(err, ret) {
       if (err !== null) {
         window.alert("" + err);
@@ -210,12 +221,12 @@ $(document).ready(function () {
           eventSources: [
             {
               events: calendar_events_pto,
-              color: 'rgba(238, 51, 78, 0.6)',
+              color: 'rgba(238, 51, 78, 0.4)',
               textColor: 'rgba(255, 255, 255, 1)'
             },
             {
               events: calendar_events_ooo,
-              color: 'rgba(0, 0, 255, 0.6)',
+              color: 'rgba(0, 0, 255, 0.4)',
               textColor: 'rgba(255, 255, 255, 1)'
             }
           ]
