@@ -87,7 +87,12 @@ var loggedIn = (callback) => {
   });
 };
 
-var AnsiDate = (mmddyyy) => {};
+var ISO86Date = (mmddyyy) => {
+  // Stored as MM/DD/YYYY, Need YYYY-MM-DD
+  var parts = mmddyyy.split('/');
+  return parts[2] + "-" + (parts[0] < 10 ? "0" + parts[0]:parts[0]) +
+    "-" + (parts[1] < 10 ? "0" + parts[1]:parts[1]);
+};
 
 
 var d = new Date();
@@ -103,14 +108,6 @@ var currentPage = function() {
   return window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
 };
 
-jQuery.fn.rotate = function(degrees) {
-    $(this).css({'-webkit-transform' : 'rotate('+ degrees +'deg)',
-                 '-moz-transform' : 'rotate('+ degrees +'deg)',
-                 '-ms-transform' : 'rotate('+ degrees +'deg)',
-                 'transform' : 'rotate('+ degrees +'deg)'});
-    return $(this);
-};
-
 $(document).ready(function () {
   loggedIn((err, li, name) => {
     if (err !== null) {
@@ -120,82 +117,86 @@ $(document).ready(function () {
     }
   });
 
-  $('.nav-rotate').on('click', function() {
-          degreesRotated += 180;
-          degreesRotated %= 360;
-          $(this).find("i").rotate(degreesRotated);
-  });
-
   $('.date-anc').text(dateObj.month + " " + dateObj.day + ", " + dateObj.year);
 
   if (currentPage() === "index.ejs") {
     // This code will only execute on index.ejs
-    readMilestones((err, ret) => {
-
-    });
-    readNIO(function(err, ret) {
+    readNIO((err, ret) => {
       if (err !== null) {
-        window.alert("" + err);
-      } else {
-        // If there was no read Error
-        var calendar_events_pto = [];
-        var calendar_events_ooo = [];
-        for (var i = 0; i < ret.notinoffice.length; i++) {
-          // Stored as MM/DD/YYYY, Need YYYY-MM-DD
-          // Re-arrange dates to ISO 8601 format
-          if (ret.notinoffice[i].type == "pto" && !ret.notinoffice[i].hasOwnProperty("dateend")) {
-            calendar_events_pto.push({
-              title: ret.notinoffice[i].name,
-              start: ret.notinoffice[i].date.split("/")[2] + "-" +
-                (ret.notinoffice[i].date.split("/")[0] < 10 ? "0" + ret.notinoffice[i].date.split("/")[0]:ret.notinoffice[i].date.split("/")[0]) + "-" +
-                (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1])
-            });
-            //console.log(calendar_events_pto[calendar_events_pto.length - 1]);
-          } else if (ret.notinoffice[i].type == "pto" && ret.notinoffice[i].hasOwnProperty("dateend")) {
-            calendar_events_pto.push({
-              title: ret.notinoffice[i].name,
-              start: ret.notinoffice[i].date.split("/")[2] + "-" +
-                (ret.notinoffice[i].date.split("/")[0] < 10 ? "0" + ret.notinoffice[i].date.split("/")[0]:ret.notinoffice[i].date.split("/")[0]) + "-" +
-                (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1]),
-              end: ret.notinoffice[i].dateend.split("/")[2] + "-" +
-                (ret.notinoffice[i].dateend.split("/")[0] < 10 ? "0" + ret.notinoffice[i].dateend.split("/")[0]:ret.notinoffice[i].dateend.split("/")[0]) + "-" +
-                (ret.notinoffice[i].dateend.split("/")[1] < 10 ? "0" + ret.notinoffice[i].dateend.split("/")[1]:ret.notinoffice[i].dateend.split("/")[1])
-            });
-          } else if (ret.notinoffice[i].type == "ooo" && !ret.notinoffice[i].hasOwnProperty("dateend")) {
-            calendar_events_ooo.push({
-              title: ret.notinoffice[i].name,
-              start: ret.notinoffice[i].date.split("/")[2] + "-" +
-                (ret.notinoffice[i].date.split("/")[0] < 10 ? "0" + ret.notinoffice[i].date.split("/")[0]:ret.notinoffice[i].date.split("/")[0]) + "-" +
-                (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1])
-            });
-            //console.log(calendar_events_ooo[calendar_events_ooo.length - 1]);
-          } else if (ret.notinoffice[i].type == "ooo" && ret.notinoffice[i].hasOwnProperty("dateend")) {
-            calendar_events_ooo.push({
-              title: ret.notinoffice[i].name,
-              start: ret.notinoffice[i].date.split("/")[2] + "-" +
-                (ret.notinoffice[i].date.split("/")[0] < 10 ? "0" + ret.notinoffice[i].date.split("/")[0]:ret.notinoffice[i].date.split("/")[0]) + "-" +
-                (ret.notinoffice[i].date.split("/")[1] < 10 ? "0" + ret.notinoffice[i].date.split("/")[1]:ret.notinoffice[i].date.split("/")[1]),
-              end: ret.notinoffice[i].dateend.split("/")[2] + "-" +
-                (ret.notinoffice[i].dateend.split("/")[0] < 10 ? "0" + ret.notinoffice[i].dateend.split("/")[0]:ret.notinoffice[i].dateend.split("/")[0]) + "-" +
-                (ret.notinoffice[i].dateend.split("/")[1] < 10 ? "0" + ret.notinoffice[i].dateend.split("/")[1]:ret.notinoffice[i].dateend.split("/")[1])
-            });
-          }
-        }
-        $('#calendar').fullCalendar({
-          eventSources: [
-            {
-              events: calendar_events_pto,
-              color: 'rgba(238, 51, 78, 0.4)',
-              textColor: 'rgba(255, 255, 255, 1)'
-            },
-            {
-              events: calendar_events_ooo,
-              color: 'rgba(0, 0, 255, 0.4)',
-              textColor: 'rgba(255, 255, 255, 1)'
-            }
-          ]
-        });
+        console.error(err);
+        return;
       }
+      var calendar_events_pto = [];
+      var calendar_events_ooo = [];
+
+      for (var i = 0; i < ret.notinoffice.length; i++) {
+        if (ret.notinoffice[i].type == "pto" && !ret.notinoffice[i].hasOwnProperty("dateend")) {
+          calendar_events_pto.push({
+            title: ret.notinoffice[i].name,
+            start: ISO86Date(ret.notinoffice[i].date)
+          });
+        } else if (ret.notinoffice[i].type == "pto" && ret.notinoffice[i].hasOwnProperty("dateend")) {
+          calendar_events_pto.push({
+            title: ret.notinoffice[i].name,
+            start: ISO86Date(ret.notinoffice[i].date),
+            end: ISO86Date(ret.notinoffice[i].dateend)
+          });
+        } else if (ret.notinoffice[i].type == "ooo" && !ret.notinoffice[i].hasOwnProperty("dateend")) {
+          calendar_events_ooo.push({
+            title: ret.notinoffice[i].name,
+            start: ISO86Date(ret.notinoffice[i].date)
+          });
+          //console.log(calendar_events_ooo[calendar_events_ooo.length - 1]);
+        } else if (ret.notinoffice[i].type == "ooo" && ret.notinoffice[i].hasOwnProperty("dateend")) {
+          calendar_events_ooo.push({
+            title: ret.notinoffice[i].name,
+            start: ISO86Date(ret.notinoffice[i].date),
+            end: ISO86Date(ret.notinoffice[i].dateend)
+          });
+        }
+      }
+      
+      readMilestones((err, ret) => {
+        var milestones_events = [];
+        if (err !== null) {
+          console.error(err);
+          return;
+        }
+        // record.milestones is an array stored in RAM
+        readProjects((error, proj) => {
+          for (var milestone = 0; milestone < record.milestones.length; milestone++) {
+            for (var project = 0; project < record.projects.length; project++) {
+              if (record.projects[project].projnum == record.milestones[milestone].projnum) {
+                milestones_events.push({
+                  title: record.projects[project].projname,
+                  start: ISO86Date(record.milestones[milestone].date)
+                });
+
+                continue;
+              }
+            }
+          }
+          $('#calendar').fullCalendar({
+            eventSources: [
+              {
+                events: calendar_events_pto,
+                color: 'rgba(238, 51, 78, 0.4)',
+                textColor: 'rgba(255, 255, 255, 1)'
+              },
+              {
+                events: calendar_events_ooo,
+                color: 'rgba(0, 0, 255, 0.4)',
+                textColor: 'rgba(255, 255, 255, 1)'
+              },
+              {
+                events: milestones_events,
+                color: 'rgba(139, 195, 74, 0.4)',
+                testColor: 'rgba(255, 255, 255, 1)'
+              }
+            ]
+          });
+        });
+      });
     });
   }
 
