@@ -226,7 +226,7 @@ var createNIO = function(data, callback) {
   if (!checkNIOData(data) || hasNull(data))
     return callback("Input data is not a valid 'NIO' object, or contains null properties.");
 
-  readProjects(function (err, ret) {
+  readNIO(function (err, ret) {
     if (err !== null) {
       eventEmitter.emit('readError');
       return callback(err);

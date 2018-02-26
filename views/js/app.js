@@ -1,6 +1,8 @@
 /*jshint esversion: 6 */
 const session = require('electron').remote.session;
 var ses = session.fromPartition('persist:name');
+var login = false;
+var lname = "";
 // Create Rotation upon document load
 // Converts the month number to a readable string
 var stringMonth = function(monthInteger) {
@@ -54,7 +56,13 @@ var setLoginCookie = (cookie_inf, callback) => {
 
   // Set the cookie, and display an error if an error occurrs.
   ses.cookies.set(cookie_inf, (error) => {
-    console.eror(error);
+    if (error !== null) console.log(error);
+    else {
+      lname = cookie_inf.value;
+      login = true;
+      eventEmitter.emit('loggedIn');
+      window.location.href = "loading.ejs";
+    }
   });
 };
 
@@ -94,12 +102,25 @@ var currentPage = function() {
   return window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
 };
 
+// Arrow function version, NO REFERENCE TO THIS
+$(document).ready(() => {
+  eventEmitter.on('loggedIn', () => {
+    // Executed when log in is confirmed
+    document.title = "Hours Planner - Welcome " + lname;
+    $(".login-link").text("Switch User");
+    $(".loginName").html("<strong>"+lname+"</strong>");
+    if (currentPage() === 'login.ejs') $("#login").text("Switch User");
+  });
+});
+
 $(document).ready(function () {
   loggedIn((err, li, name) => {
     if (err !== null) {
       console.error(err);
     } else if (li) {
-      document.title = "Hours Planner - Welcome " + name;
+      lname = name;
+      login = true;
+      eventEmitter.emit('loggedIn');
     }
   });
 
@@ -116,24 +137,28 @@ $(document).ready(function () {
       var calendar_events_ooo = [];
 
       for (var i = 0; i < ret.notinoffice.length; i++) {
-        if (ret.notinoffice[i].type == "pto" && !ret.notinoffice[i].hasOwnProperty("dateend")) {
+        if (ret.notinoffice[i].type == "pto" &&
+          !ret.notinoffice[i].hasOwnProperty("dateend")) {
           calendar_events_pto.push({
             title: ret.notinoffice[i].name,
             start: ISO86Date(ret.notinoffice[i].date)
           });
-        } else if (ret.notinoffice[i].type == "pto" && ret.notinoffice[i].hasOwnProperty("dateend")) {
+        } else if (ret.notinoffice[i].type == "pto" &&
+          ret.notinoffice[i].hasOwnProperty("dateend")) {
           calendar_events_pto.push({
             title: ret.notinoffice[i].name,
             start: ISO86Date(ret.notinoffice[i].date),
             end: ISO86Date(ret.notinoffice[i].dateend)
           });
-        } else if (ret.notinoffice[i].type == "ooo" && !ret.notinoffice[i].hasOwnProperty("dateend")) {
+        } else if (ret.notinoffice[i].type == "ooo" &&
+          !ret.notinoffice[i].hasOwnProperty("dateend")) {
           calendar_events_ooo.push({
             title: ret.notinoffice[i].name,
             start: ISO86Date(ret.notinoffice[i].date)
           });
           //console.log(calendar_events_ooo[calendar_events_ooo.length - 1]);
-        } else if (ret.notinoffice[i].type == "ooo" && ret.notinoffice[i].hasOwnProperty("dateend")) {
+        } else if (ret.notinoffice[i].type == "ooo" &&
+          ret.notinoffice[i].hasOwnProperty("dateend")) {
           calendar_events_ooo.push({
             title: ret.notinoffice[i].name,
             start: ISO86Date(ret.notinoffice[i].date),
@@ -187,7 +212,7 @@ $(document).ready(function () {
 
   // If current page is the login page
   if (currentPage() === "login.ejs") {
-    readEmployees(function (err, ret) {
+    readEmployees((err, ret) => {
       if (err !== null) {
         window.alert("" + err);
       } else {
@@ -203,19 +228,18 @@ $(document).ready(function () {
     });
   }
   // What happens when the login button is clicked
-  $("#login").on('click', function() {
+  $("#login").on('click', () => {
+    // Set value before async func to prevent null
+    var name = "name";
+    var value = $("#nameList").val();
     // Make sure this is the correct page
     if (currentPage() === "login.ejs") {
       // Debug: Popup window with selected name
-      alert($("#nameList").val());
-      var name = "name";
-      var value = $("#nameList").val();
-
       setLoginCookie({
         url: "http://127.0.0.1",
         name: name,
         value: value
-      }, function (err) {
+      }, (err) => {
         if (err !== null) alert("An error has occurred.\n" + err);
       });
     }
