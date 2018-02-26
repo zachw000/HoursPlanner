@@ -41,19 +41,6 @@ var getCookie = (cname, callback) => {
   });
 };
 
-function setScroll() {
-        window.scrollBy({
-                top: 100, // could be negative value
-                left: 0,
-                behavior: 'smooth'
-        });
-
-        // Scroll to a certain element
-        document.querySelector('.hello').scrollIntoView({
-                behavior: 'smooth'
-        });
-}
-
 // Store the login information for the current user (on the local machine)
 var setLoginCookie = (cookie_inf, callback) => {
   if (!(cookie_inf !== null && typeof cookie_inf === 'object'))
@@ -96,7 +83,6 @@ var ISO86Date = (mmddyyy) => {
 
 
 var d = new Date();
-var degreesRotated = 0;
 
 var dateObj = {
         "day": d.getDate(),
