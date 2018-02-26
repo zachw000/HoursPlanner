@@ -155,7 +155,7 @@ $(document).ready(function () {
           });
         }
       }
-      
+
       readMilestones((err, ret) => {
         var milestones_events = [];
         if (err !== null) {
@@ -164,14 +164,13 @@ $(document).ready(function () {
         }
         // record.milestones is an array stored in RAM
         readProjects((error, proj) => {
-          for (var milestone = 0; milestone < record.milestones.length; milestone++) {
-            for (var project = 0; project < record.projects.length; project++) {
-              if (record.projects[project].projnum == record.milestones[milestone].projnum) {
+          for (var i = 0; i < ret.milestones.length; i++) {
+            for (var j = 0; j < proj.projects.length; j++) {
+              if (ret.milestones[i].projnum == proj.projects[j].projnum) {
                 milestones_events.push({
-                  title: record.projects[project].projname,
-                  start: ISO86Date(record.milestones[milestone].date)
+                  title: proj.projects[j].projname,
+                  start: ISO86Date(ret.milestones[i].date)
                 });
-
                 continue;
               }
             }
@@ -191,7 +190,7 @@ $(document).ready(function () {
               {
                 events: milestones_events,
                 color: 'rgba(139, 195, 74, 0.4)',
-                testColor: 'rgba(255, 255, 255, 1)'
+                textColor: 'rgba(26, 26, 26, 1)'
               }
             ]
           });
