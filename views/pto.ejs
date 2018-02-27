@@ -23,7 +23,7 @@
   <script src="scripts/jsonhandler.js"></script>
   <link rel="stylesheet" href="../bower_components/bootstrap-select/dist/css/bootstrap-select.css" />
   <script type="text/javascript" src="../bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
-  <script type="text/javascript" src="js/employeepage.js"></script>
+  <script type="text/javascript" src="js/pto.js"></script>
   <!-- Insert this line after script imports -->
   <script>if (window.module) module = window.module;</script>
 </head>
@@ -36,15 +36,15 @@
   			</button>
   			<div class="collapse navbar-collapse justify-content-md-center navbar-toggleable-md" id="mainNavbarCollapse">
   				<ul class="nav pull-lg-right navbar-nav mr-auto">
-  			<li class='nav-item dropdown'><a href='./index.ejs' class='nav-link'>Overview</a></li>
+  			<li class='nav-item active dropdown'><a href='./index.ejs' class='nav-link'>Overview</a></li>
         <li class='nav-item dropdown'><a href='./login.ejs' class='login-link nav-link'>Login</a></li>
-        <li class='nav-item dropdown'><a class="nav-link active nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <li class='nav-item dropdown'><a class="nav-link nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
   				Personnel <i class="fa fa-angle-down" aria-hidden="true"></i>
   </a>
   			<ul class="dropdown-menu bg-primary" aria-labelledby="navbarDropdown1">
   				<li class='nav-item dropdown-header'>Personnel</li>
   				<li class='nav-item'>
-  					<a class='hover active nav-link' href='employees.ejs'>Employees</a>
+  					<a class='hover nav-link' href='employees.ejs'>Employees</a>
   				</li>
   				<li class='nav-item'>
   					<a class='hover nav-link' href='#'>Set PMs</a>
@@ -87,57 +87,18 @@
 	</div>
   <div class="container-fluid">
     <div class="row">
-        <div class="container">
-        <div class="col-sm">
-          <form>
-            <h5>Division:</h5>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="division-phx" id="division-phx" value="phx" checked>
-            <label class="form-check-label" for="division-phx">
-              PHX
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="division-lax" id="division-lax" value="lax" checked>
-            <label class="form-check-label" for="division-lax">
-              LAX
-            </label>
-          </div>
-        </form>
-      </div>
-      <div class="col-lg">
-        <small class="text-info">Employees Matching Criteria <i class="fa fa-info"></i>:</small>
-        <div class="container">
-        <table class="table table-striped table-bordered table-hover">
-          <thead class="thead-inverse">
-            <tr>
-              <th colspan="4">
-                <h4>Employees</h4>
-              </th>
-            </tr>
-            <tr>
-              <th>
-                Name
-              </th>
-              <th>
-                Division
-              </th>
-              <th>
-                Role
-              </th>
-              <th>
-                Total Hours
-              </th>
-            </tr>
-          </thead>
-          <!-- Table data here -->
-          <tbody id="empTable">
-
-          </tbody>
-        </table>
-      </div>
+      <div class="container">
+        <h3 class="display-3">Personal PTO</h3>
+        <hr />
+        <div class="article">
+          <span class="date-anc"></span>
+        </div>
       </div>
     </div>
+    <div class="row">
+      <div class="container">
+        <div id="calendar"></div>
+      </div>
     </div>
   </div>
 </body>

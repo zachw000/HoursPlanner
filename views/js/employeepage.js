@@ -56,7 +56,7 @@ $(document).ready(function() {
       }
       $("#empTable").html(empRows.join('\n') + tableRow.join(''));
     }
-    alert("Filter PHX changed");
+    //alert("Filter PHX changed");
   });
 
   $('#division-lax').change(function() {
@@ -87,13 +87,13 @@ $(document).ready(function() {
       }
       $("#empTable").html(tableRow.join('') + empRows.join('\n'));
     }
-    alert("Filter LAX changed");
+    //alert("Filter LAX changed");
   });
 
   eventEmitter.on('empRead', () => {
     var empSet = record.employees.Employees;
     var tableRow = [];
-    alert(JSON.stringify(empSet, null, ' '));
+    //alert(JSON.stringify(empSet, null, ' '));
     for (var i = 0; i < empSet.length; i++) {
       tableRow.push("<td>" + empSet[i].name + "</td><td>" +
       empSet[i].division + "</td><td>" + empSet[i].role + "</td><td>" + totalHours(empSet[i].hours) +
@@ -118,13 +118,13 @@ $(document).ready(() => {
         } else {
           projmanager = checkManager(ret);
           // Emit the event so the employee file is only read once.
-          if (projmanager) alert(lname + " is a project manager.");
+          //if (projmanager) alert(lname + " is a project manager.");
         }
       });
     } else {
       // the recordset is already available, use for speed.
       projmanager = checkManager(record.employees);
-      if (projmanager) alert(lname + " is a project manager. RECORDSET");
+      //if (projmanager) alert(lname + " is a project manager. RECORDSET");
     }
   });
 
