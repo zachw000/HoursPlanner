@@ -7,10 +7,10 @@ var events = require('events');
 var eventEmitter = new events.EventEmitter();
 
 var record = {
-  "employees": Object,
-  "milestones": Object,
-  "nio": Object,
-  "projects": Object
+  "employees": null,
+  "milestones": null,
+  "nio": null,
+  "projects": null
 };
 
 // Checks if two objects are equal, only true iff IDENTITICAL

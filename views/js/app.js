@@ -61,6 +61,7 @@ var setLoginCookie = (cookie_inf, callback) => {
       lname = cookie_inf.value;
       login = true;
       eventEmitter.emit('loggedIn');
+      // Open loading page for testing
       window.location.href = "loading.ejs";
     }
   });
@@ -87,6 +88,25 @@ var ISO86Date = (mmddyyy) => {
   var parts = mmddyyy.split('/');
   return parts[2] + "-" + (parts[0] < 10 ? "0" + parts[0]:parts[0]) +
     "-" + (parts[1] < 10 ? "0" + parts[1]:parts[1]);
+};
+
+var checkManager = (records) => {
+  var pmanager = false;
+  for (var i = 0; i < records.Employees.length; i++) {
+    if (records.Employees[i].name == lname) {
+      pmanager = records.Employees[i].projectmanager;
+      break;
+    }
+  }
+
+  return pmanager;
+};
+
+var totalHours = (hours) => {
+  var th = 0;
+  for (var i = 0; i < hours.length; i++)
+    th += hours[i].time;
+  return th;
 };
 
 
