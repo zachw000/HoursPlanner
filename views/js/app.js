@@ -141,6 +141,8 @@ $(document).ready(function () {
       lname = name;
       login = true;
       eventEmitter.emit('loggedIn');
+    } else {
+      eventEmitter.emit('notLoggedIn');
     }
   });
 
