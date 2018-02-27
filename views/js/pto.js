@@ -24,6 +24,10 @@ $(document).ready(function() {
   });
 
   // Handle log-in
+  /*
+  * I require logging in so the system knows
+  * who's PTO to set and display
+  */
   eventEmitter.on('notLoggedIn', () => {
     alert("You must be logged in to access this page.\n"+
       "You will be redirected.");
