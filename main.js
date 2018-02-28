@@ -18,7 +18,7 @@ var createWindow = function() {
 let mainWindow;
 
 app.on('ready', () => {
-    mainWindow = new BrowserWindow({width: 800, height: 600});
+    mainWindow = new BrowserWindow({width: 800, height: 600, frame: false, titleBarStyle: 'customButtonsOnHover'});
     mainWindow.loadURL('file://' + __dirname + '/views/index.ejs');
     global.ses = mainWindow.webContents.session;
 });

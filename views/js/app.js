@@ -83,11 +83,19 @@ var loggedIn = (callback) => {
   });
 };
 
-var ISO86Date = (mmddyyy) => {
+var ISO86Date = (mmddyyy, t) => {
   // Stored as MM/DD/YYYY, Need YYYY-MM-DD
   var parts = mmddyyy.split('/');
-  return parts[2] + "-" + (parts[0] < 10 ? "0" + parts[0]:parts[0]) +
-    "-" + (parts[1] < 10 ? "0" + parts[1]:parts[1]);
+  parts = parts[2] + "-" + (parts[0] < 10 ? "0" + parts[0]:parts[0]) + "-" +
+    (parts[1] < 10 ? "0" + parts[1]:parts[1]);
+  if (t != '8hr') {
+    if (t == '4am') {
+      parts += "T09:00:00";
+    } else if (t == '4pm') {
+      parts += "T13:00:00";
+    }
+  }
+  return parts;
 };
 
 var checkManager = (records) => {
@@ -163,28 +171,28 @@ $(document).ready(function () {
           !ret.notinoffice[i].hasOwnProperty("dateend")) {
           calendar_events_pto.push({
             title: ret.notinoffice[i].name,
-            start: ISO86Date(ret.notinoffice[i].date)
+            start: ISO86Date(ret.notinoffice[i].date, ret.notinoffice[i].time)
           });
         } else if (ret.notinoffice[i].type == "pto" &&
           ret.notinoffice[i].hasOwnProperty("dateend")) {
           calendar_events_pto.push({
             title: ret.notinoffice[i].name,
-            start: ISO86Date(ret.notinoffice[i].date),
-            end: ISO86Date(ret.notinoffice[i].dateend)
+            start: ISO86Date(ret.notinoffice[i].date, ret.notinoffice[i].time),
+            end: ISO86Date(ret.notinoffice[i].dateend, ret.notinoffice[i].time)
           });
         } else if (ret.notinoffice[i].type == "ooo" &&
           !ret.notinoffice[i].hasOwnProperty("dateend")) {
           calendar_events_ooo.push({
             title: ret.notinoffice[i].name,
-            start: ISO86Date(ret.notinoffice[i].date)
+            start: ISO86Date(ret.notinoffice[i].date, ret.notinoffice[i].time)
           });
           //console.log(calendar_events_ooo[calendar_events_ooo.length - 1]);
         } else if (ret.notinoffice[i].type == "ooo" &&
           ret.notinoffice[i].hasOwnProperty("dateend")) {
           calendar_events_ooo.push({
             title: ret.notinoffice[i].name,
-            start: ISO86Date(ret.notinoffice[i].date),
-            end: ISO86Date(ret.notinoffice[i].dateend)
+            start: ISO86Date(ret.notinoffice[i].date, ret.notinoffice[i].time),
+            end: ISO86Date(ret.notinoffice[i].dateend, ret.notinoffice[i].time)
           });
         }
       }
@@ -202,7 +210,7 @@ $(document).ready(function () {
               if (ret.milestones[i].projnum == proj.projects[j].projnum) {
                 milestones_events.push({
                   title: proj.projects[j].projname,
-                  start: ISO86Date(ret.milestones[i].date)
+                  start: ISO86Date(ret.milestones[i].date, ret.milestones[i].time)
                 });
                 continue;
               }
