@@ -7,7 +7,25 @@
 **/
 var crec = null;
 
+var Reverse8601 = (standardDate) => {
+  var dt = standardDate;
+  console.log(standardDate);
+  if (standardDate.indexOf('T') > -1) {
+    dt.split('T');
+    dt.pop();
+    dt.join('');
+  }
+
+  dt.split('-');
+
+  // YYYY-MM-DD -> MM/DD/YYYY
+  dt = ~~dt[1] + ~~dt[2] + dt[0];
+  alert(dt);
+  return dt;
+};
+
 var getRecordByEvent = (eventData) => {
+  var date = Reverse8601(eventData._i);
 
 };
 
@@ -75,9 +93,14 @@ $(document).ready(function() {
               textColor: 'rgba(255, 255, 255, 1)'
             }
           ],
-          eventResizeStart: function(event, jsEvent, ui, view) {
+          eventResizeStart: function(devent, jsEvent, ui, view) {
             // Load crec
-            getRecordByEvent(event);
+            alert(devent.title);
+            console.log(devent);
+            getRecordByEvent(devent);
+
+            // ui is an empty object. deprecated from
+            // jquery ui
           }
         });
       } else {

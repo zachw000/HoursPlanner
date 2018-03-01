@@ -26,14 +26,34 @@
   <!-- Insert this line after script imports -->
   <script>if (window.module) module = window.module;</script>
 </head>
-<body>
+<body><!--
+  <div class="sticky-top navigation navbar navbar-expand-sm navbar-dark bg-primary">
+    <a class="navbar-brand">Gannett-Fleming</a>
+    <div class="window-controls">
+      <button aria-label="Minimize" tabindex="-1" class="window-control minimize">
+        <svg aria-hidden="true" version="1.1" width="10" height="10">
+          <path d="M 0,5 10,5 10,6 0,6 Z"></path>
+        </svg>
+      </button>
+      <button aria-label="Maximize" tabindex="-1" class="window-control maximize">
+        <svg aria-hidden="true" version="1.1" width="10" height="10">
+          <path d="M 0,0 0,10 10,10 10,0 Z M 1,1 9,1 9,9 1,9 Z"></path>
+        </svg>
+      </button>
+      <button aria-label="Close" tabindex="-1" class="window-control close">
+        <svg aria-hidden="true" version="1.1" width="10" height="10">
+          <path d="M 0,0 0,0.7 4.3,5 0,9.3 0,10 0.7,10 5,5.7 9.3,10 10,10 10,9.3 5.7,5 10,0.7 10,0 9.3,0 5,4.3 0.7,0 Z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>-->
   <div class="sticky-top navigation navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-primary">
   			<a class="navbar-brand" href="./index.ejs">Gannett-Fleming</a>
 
   			<button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#mainNavbarCollapse">
   				&#9776;
   			</button>
-  			<div class="collapse navbar-collapse justify-content-md-center navbar-toggleable-md" id="mainNavbarCollapse">
+  			<div class="collapse navbar-collapse justify-content-md-left navbar-toggleable-md" id="mainNavbarCollapse">
   				<ul class="nav pull-lg-right navbar-nav mr-auto">
   			<li class='nav-item active dropdown'><a href='./index.ejs' class='nav-link'>Overview</a></li>
         <li class='nav-item dropdown'><a href='./login.ejs' class='login-link nav-link'>Login</a></li>

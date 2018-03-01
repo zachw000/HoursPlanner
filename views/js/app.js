@@ -217,6 +217,12 @@ $(document).ready(function () {
             }
           }
           $('#calendar').fullCalendar({
+            header: {
+              left: 'prev,next today',
+              center: 'title',
+              right: ''
+            },
+            eventLimit: true,
             eventSources: [
               {
                 events: calendar_events_pto,
