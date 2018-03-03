@@ -5,32 +5,64 @@
 *
 *
 **/
+
 var crec = null;
+var cpage = "";
+
+var chkStr = (inStr, pos, chr) => {
+  if (inStr.charAt(pos) === chr) {
+    return inStr.substring(0, pos) + inStr.substring(pos + 1, inStr.length);
+  }
+
+  return inStr;
+};
 
 var Reverse8601 = (standardDate) => {
   var dt = standardDate;
-  console.log(standardDate);
   if (standardDate.indexOf('T') > -1) {
     dt.split('T');
     dt.pop();
     dt.join('');
   }
-
-  dt.split('-');
-
   // YYYY-MM-DD -> MM/DD/YYYY
-  dt = ~~dt[1] + ~~dt[2] + dt[0];
-  alert(dt);
-  return dt;
+  dt = dt.split('/');
+  var date = "";
+  date += chkStr(dt[0], 0, '0') + "/" + chkStr(dt[1], 0, '0') + "/" + dt[2];
+  return date;
 };
 
+// Also grabs the index of the event and stores it in a property called
+// indicie
 var getRecordByEvent = (eventData) => {
-  var date = Reverse8601(eventData._i);
+  var dateS = Reverse8601(eventData.start.format('MM/DD/YYYY'));
+  // End date shouldn't be needed, it is set to not overlap.
+  //var dateE = Reverse8601(eventData.end.format('MM/DD/YYYY'));
+  var recs = [];
 
+  for (var i = 0; i < record.nio.notinoffice.length; i++) {
+    if (record.nio.notinoffice[i].name == lname) {
+      if (record.nio.notinoffice[i].type == cpage) {
+        if (record.nio.notinoffice[i].date == dateS) {
+          recs.push(record.nio.notinoffice[i]);
+          recs[recs.length - 1].indicie = i;
+        }
+      }
+    }
+  }
+
+  if (recs.length == 1) return recs[0];
+// If more than 1 record was returned, check end dates
+  for (var rec = 0; rec < recs.length; i++) {
+    var dateE = Reverse8601(eventData.end.format('MM/DD/YYYY'));
+    if (recs[rec].dateend == dateE) return recs[rec];
+  }
+
+  return null;
 };
 
 $(document).ready(function() {
-  eventEmitter.on('nio', (page_t, callback) => {
+  cpage = currentPage().split(".")[0];
+  eventEmitter.on('nio', (callback) => {
     if (record.nio === null) {
       readNIO((err, ret) => {
         if (err !== null) {
@@ -49,7 +81,7 @@ $(document).ready(function() {
   // Handle log-in
   /*
   * I require logging in so the system knows
-  * who's PTO to set and display
+  * who's NIO to set and display
   */
   eventEmitter.on('notLoggedIn', () => {
     alert("You must be logged in to access this page.\n"+
@@ -59,12 +91,12 @@ $(document).ready(function() {
 
   eventEmitter.on('loggedIn', () => {
     // check if records has been set
-    eventEmitter.emit('nio', 'pto', (out) => {
+    eventEmitter.emit('nio', (out) => {
       if (out === null) {
         var recSet = record.nio.notinoffice;
         var events_calendar = [];
         for (var i = 0; i < recSet.length; i++) {
-          if (recSet[i].name == lname) {
+          if (recSet[i].name == lname && recSet[i].type == cpage) {
             events_calendar.push({
               title: recSet[i].name,
               start: ISO86Date(recSet[i].date, recSet[i].time)
@@ -76,7 +108,7 @@ $(document).ready(function() {
             }
           }
         }
-        console.log(JSON.stringify(events_calendar));
+        //console.log(JSON.stringify(events_calendar));
         $('#calendar').fullCalendar({
           header: {
             left: 'prev,next today',
@@ -94,13 +126,62 @@ $(document).ready(function() {
             }
           ],
           eventResizeStart: function(devent, jsEvent, ui, view) {
-            // Load crec
-            alert(devent.title);
-            console.log(devent);
-            getRecordByEvent(devent);
+            // Reset crec
+            crec = null;
 
-            // ui is an empty object. deprecated from
-            // jquery ui
+            // Load crec
+            crec = getRecordByEvent(devent);
+
+            // Debug purposes, to show crec is finding correct string,
+            // and appending the index
+            alert(JSON.stringify(crec, null, ' '));
+
+            if (crec !== null) {
+              // Record was found, delete record from JSON,
+              // to allow modification
+              // Before deletion check
+              // alert(JSON.stringify(record.nio.notinoffice, null, ' '));
+
+              // Delete record
+              record.nio.notinoffice.splice(crec.indicie, 1);
+
+              // After deletion check
+              // alert(JSON.stringify(record.nio.notinoffice, null, ' '));
+              // Ensure crec still contains given record
+              // alert(JSON.stringify(crec, null, ' '));
+              // Remove extraneous crec indicie property
+              delete crec.indicie;
+            }
+          },
+          eventResize: function(devent, jsEvent, ui, view) {
+            // Get start date
+            var dateS = Reverse8601(devent.start.format('MM/DD/YYYY'));
+            // Get end date (should be null if 1 day and the same)
+            var dateE = Reverse8601(devent.end.format('MM/DD/YYYY'));
+            var dateSA = Reverse8601(moment(devent.start, "DD-MM-YYYY").add(1, 'days').format('MM/DD/YYYY'));
+            // Use to debug if dates are not set correctly in JSON.
+            console.log(dateS);
+            console.log(dateSA);
+            console.log(dateE);
+            // Get the employee's name
+            var name = devent.title;
+
+            if (!confirm("Are you sure you want to resize this?")) {
+              revertFunc();
+            }
+
+            // Check current hours time/type
+            if (crec.time != "8hr") {
+
+            }
+
+            record.nio.notinoffice.push({
+              "name": name,
+              "date": dateS,
+              "dateend": dateE,
+              "time": crec.time,
+              "type": cpage
+            });
           }
         });
       } else {

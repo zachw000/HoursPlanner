@@ -226,7 +226,7 @@ var createNIO = function(data, callback) {
   if (!checkNIOData(data) || hasNull(data))
     return callback("Input data is not a valid 'NIO' object, or contains null properties.");
 
-  readNIO(function (err, ret) {
+  readNIO((err, ret) => {
     if (err !== null) {
       eventEmitter.emit('readError');
       return callback(err);
@@ -236,7 +236,7 @@ var createNIO = function(data, callback) {
     record.nio.notinoffice.push(data);
 
     // Write data
-    jsonfile.writeFile(prepend + filename[2], record.nio, function (err) {
+    jsonfile.writeFile(prepend + filename[2], record.nio, (err) => {
       if (err !== null) return callback(err);
       else return callback(null); // Successful write
     });
