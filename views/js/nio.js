@@ -121,7 +121,7 @@ $(document).ready(function() {
           eventSources: [
             {
               events: events_calendar,
-              color: 'rgba(238, 51, 78, 0.4)',
+              color: cpage === "pto" ? 'rgba(238, 51, 78, 0.4)' : 'rgba(0, 0, 255, 0.4)',
               textColor: 'rgba(255, 255, 255, 1)'
             }
           ],
@@ -134,7 +134,7 @@ $(document).ready(function() {
 
             // Debug purposes, to show crec is finding correct string,
             // and appending the index
-            alert(JSON.stringify(crec, null, ' '));
+            // alert(JSON.stringify(crec, null, ' '));
 
             if (crec !== null) {
               // Record was found, delete record from JSON,
@@ -157,12 +157,13 @@ $(document).ready(function() {
             // Get start date
             var dateS = Reverse8601(devent.start.format('MM/DD/YYYY'));
             // Get end date (should be null if 1 day and the same)
-            var dateE = Reverse8601(devent.end.format('MM/DD/YYYY'));
+            var dateE = null;
+            if (devent.end !== null) dateE = Reverse8601(devent.end.format('MM/DD/YYYY'));
             var dateSA = Reverse8601(moment(devent.start, "DD-MM-YYYY").add(1, 'days').format('MM/DD/YYYY'));
             // Use to debug if dates are not set correctly in JSON.
-            console.log(dateS);
-            console.log(dateSA);
-            console.log(dateE);
+            // console.log(dateS);
+            // console.log(dateSA);
+            // console.log(dateE);
             // Get the employee's name
             var name = devent.title;
 
@@ -182,6 +183,67 @@ $(document).ready(function() {
               "time": crec.time,
               "type": cpage
             });
+
+            if (record.nio.notinoffice[record.nio.notinoffice.length - 1].dateend == null)
+              delete record.nio.notinoffice[record.nio.notinoffice.length - 1].dateend;
+          },
+          // When the user drags and drops the event
+          eventDragStart: function(devent, jsEvent, ui, view) {
+            // Reset crec
+            crec = null;
+
+            // Load crec
+            crec = getRecordByEvent(devent);
+
+            // Debug purposes, to show crec is finding correct string,
+            // and appending the index
+            //alert(JSON.stringify(crec, null, ' '));
+
+            if (crec !== null) {
+              // Record was found, delete record from JSON,
+              // to allow modification
+              // Before deletion check
+              // alert(JSON.stringify(record.nio.notinoffice, null, ' '));
+
+              // Delete record
+              record.nio.notinoffice.splice(crec.indicie, 1);
+
+              // After deletion check
+              // alert(JSON.stringify(record.nio.notinoffice, null, ' '));
+              // Ensure crec still contains given record
+              // alert(JSON.stringify(crec, null, ' '));
+              // Remove extraneous crec indicie property
+              delete crec.indicie;
+            }
+          },
+          eventDrop: function(devent, jsEvent, ui, view) {
+            // Get start date
+            var dateS = Reverse8601(devent.start.format('MM/DD/YYYY'));
+            // Get end date (should be null if 1 day and the same)
+            var dateE = null;
+            if (devent.end !== null) dateE = Reverse8601(devent.end.format('MM/DD/YYYY'));
+            var dateSA = Reverse8601(moment(devent.start, "DD-MM-YYYY").add(1, 'days').format('MM/DD/YYYY'));
+            // Use to debug if dates are not set correctly in JSON.
+            // console.log(dateS);
+            // console.log(dateSA);
+            // console.log(dateE);
+            // Get the employee's name
+            var name = devent.title;
+
+            if (!confirm("Are you sure you want to move this?")) {
+              revertFunc();
+            }
+
+            record.nio.notinoffice.push({
+              "name": name,
+              "date": dateS,
+              "dateend": dateE,
+              "time": crec.time,
+              "type": cpage
+            });
+
+            if (record.nio.notinoffice[record.nio.notinoffice.length - 1].dateend == null)
+              delete record.nio.notinoffice[record.nio.notinoffice.length - 1].dateend;
           }
         });
       } else {

@@ -18,10 +18,12 @@
   <script src="js/app.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js" integrity="sha384-3ziFidFTgxJXHMDttyPJKDuTlmxJlwbSkojudK/CkRqKDOmeSbN6KLrGdrBQnT2n" crossorigin="anonymous"></script>
+  <script src="../node_modules/fullcalendar/dist/gcal.js"></script>
   <script src="../node_modules/fullcalendar/dist/fullcalendar.js"></script>
   <script src="scripts/jsonhandler.js"></script>
   <link rel="stylesheet" href="../bower_components/bootstrap-select/dist/css/bootstrap-select.css" />
   <script type="text/javascript" src="../bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+  <script type="text/javascript" src="js/nio.js"></script>
   <!-- Insert this line after script imports -->
   <script>if (window.module) module = window.module;</script>
 </head>
@@ -35,8 +37,8 @@
   			<div class="collapse navbar-collapse justify-content-md-center navbar-toggleable-md" id="mainNavbarCollapse">
   				<ul class="nav pull-lg-right navbar-nav mr-auto">
   			<li class='nav-item dropdown'><a href='./index.ejs' class='nav-link'>Overview</a></li>
-        <li class='nav-item active dropdown'><a href='./login.ejs' class='nav-link login-link'>Login</a></li>
-        <li class='nav-item dropdown'><a class="nav-link nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <li class='nav-item dropdown'><a href='./login.ejs' class='login-link nav-link'>Login</a></li>
+        <li class='nav-item dropdown'><a class="nav-link active nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
   				Personnel <i class="fa fa-angle-down" aria-hidden="true"></i>
   </a>
   			<ul class="dropdown-menu bg-primary" aria-labelledby="navbarDropdown1">
@@ -60,7 +62,7 @@
   					<a class='hover nav-link' href='pto.ejs'>PTO</a>
   				</li>
   				<li class='nav-item'>
-  					<a class='hover nav-link' href='ooo.ejs'>OOO</a>
+  					<a class='hover active nav-link' href='ooo.ejs'>OOO</a>
   				</li>
   			</ul></li><li class='nav-item dropdown'><a class='nav-link nav-rotate' id='navbarDropdown2' data-target='#' href='/' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Projects <i class="fa fa-angle-down" aria-hidden="true"></i>
   </a>
@@ -78,20 +80,24 @@
   <div class="jumbotron jumbotron-fluid text-center">
 		<div class="layer">
 			<img class="img-responsive hidden-xs hidden-sm" src="http://www.gannettfleming.com/images/GFLogo400x400V2.png" alt="Gannett Fleming, Inc." />
+      <p>
+        Weekly Planner v.2.0.1_3b
+      </p>
 		</div>
 	</div>
   <div class="container-fluid">
     <div class="row">
-      <div class="col">
-        <div class="container">
-          <h3>Please Select Your Name</h3>
-          <div class="form-group">
-            <label for="nameList">Name: (Select One) Current: <span class="loginName">None</span></label>
-            <select class="form-control" id="nameList">
-            </select>
-            <button id="login" class="button form-control">Log In</button>
-          </div>
+      <div class="container">
+        <h3 class="display-3">Personal OOO</h3>
+        <hr />
+        <div class="article">
+          <span class="date-anc"></span>
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container">
+        <div id="calendar"></div>
       </div>
     </div>
   </div>
