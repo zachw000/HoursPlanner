@@ -31,6 +31,18 @@ var Reverse8601 = (standardDate) => {
   return date;
 };
 
+var writeLiveRecord = () => {
+  for (var i = 0; i < record.nio.notinoffice.length; i++) {
+    if (record.nio.notinoffice[i].hasOwnProperty('indicie') || record.nio.notinoffice[i].indicie != "undefined") {
+      delete record.nio.notinoffice[i].indicie;
+    }
+  }
+  //console.log(record.nio.notinoffice);
+  jsonfile.writeFile(prepend + filenames[2], record.nio, (err) => {
+    if (err !== null) console.error(err);
+  });
+};
+
 // Also grabs the index of the event and stores it in a property called
 // indicie
 var getRecordByEvent = (eventData) => {
@@ -117,7 +129,9 @@ $(document).ready(function() {
           },
           editable: true,
           eventLimit: true,
-          eventOverlap: false,
+          eventOverlap: () => {
+            return false;
+          },
           eventSources: [
             {
               events: events_calendar,
@@ -125,7 +139,7 @@ $(document).ready(function() {
               textColor: 'rgba(255, 255, 255, 1)'
             }
           ],
-          eventResizeStart: function(devent, jsEvent, ui, view) {
+          eventResizeStop: function(devent, jsEvent, ui, view) {
             // Reset crec
             crec = null;
 
@@ -134,47 +148,25 @@ $(document).ready(function() {
 
             // Debug purposes, to show crec is finding correct string,
             // and appending the index
-            // alert(JSON.stringify(crec, null, ' '));
-
-            if (crec !== null) {
-              // Record was found, delete record from JSON,
-              // to allow modification
-              // Before deletion check
-              // alert(JSON.stringify(record.nio.notinoffice, null, ' '));
-
-              // Delete record
-              record.nio.notinoffice.splice(crec.indicie, 1);
-
-              // After deletion check
-              // alert(JSON.stringify(record.nio.notinoffice, null, ' '));
-              // Ensure crec still contains given record
-              // alert(JSON.stringify(crec, null, ' '));
-              // Remove extraneous crec indicie property
-              delete crec.indicie;
-            }
+            //alert(JSON.stringify(crec, null, ' '));
           },
           eventResize: function(devent, jsEvent, ui, view) {
+            if (crec !== null)
+              record.nio.notinoffice.splice(crec.indicie, 1);
+            delete crec.indicie;
             // Get start date
             var dateS = Reverse8601(devent.start.format('MM/DD/YYYY'));
             // Get end date (should be null if 1 day and the same)
             var dateE = null;
             if (devent.end !== null) dateE = Reverse8601(devent.end.format('MM/DD/YYYY'));
             var dateSA = Reverse8601(moment(devent.start, "DD-MM-YYYY").add(1, 'days').format('MM/DD/YYYY'));
-            // Use to debug if dates are not set correctly in JSON.
-            // console.log(dateS);
-            // console.log(dateSA);
-            // console.log(dateE);
             // Get the employee's name
             var name = devent.title;
 
-            if (!confirm("Are you sure you want to resize this?")) {
+            if (!confirm("Are you sure you want to move this?")) {
+              record.nio.notinoffice.push(crec);
               revertFunc();
-            }
-
-            // Check current hours time/type
-            if (crec.time != "8hr") {
-
-            }
+            } else {
 
             record.nio.notinoffice.push({
               "name": name,
@@ -186,9 +178,14 @@ $(document).ready(function() {
 
             if (record.nio.notinoffice[record.nio.notinoffice.length - 1].dateend == null)
               delete record.nio.notinoffice[record.nio.notinoffice.length - 1].dateend;
+            }
+            if (typeof record.nio.notinoffice[record.nio.notinoffice.length - 1].indicie != 'undefined') {
+              delete record.nio.notinoffice[record.nio.notinoffice.length - 1].indicie;
+            }
+
+            writeLiveRecord();
           },
-          // When the user drags and drops the event
-          eventDragStart: function(devent, jsEvent, ui, view) {
+          eventDragStop: function(devent, jsEvent, ui, view) {
             // Reset crec
             crec = null;
 
@@ -199,40 +196,25 @@ $(document).ready(function() {
             // and appending the index
             //alert(JSON.stringify(crec, null, ' '));
 
-            if (crec !== null) {
-              // Record was found, delete record from JSON,
-              // to allow modification
-              // Before deletion check
-              // alert(JSON.stringify(record.nio.notinoffice, null, ' '));
-
-              // Delete record
-              record.nio.notinoffice.splice(crec.indicie, 1);
-
-              // After deletion check
-              // alert(JSON.stringify(record.nio.notinoffice, null, ' '));
-              // Ensure crec still contains given record
-              // alert(JSON.stringify(crec, null, ' '));
-              // Remove extraneous crec indicie property
-              delete crec.indicie;
-            }
           },
           eventDrop: function(devent, jsEvent, ui, view) {
+            if (crec !== null)
+              record.nio.notinoffice.splice(crec.indicie, 1);
+            delete crec.indicie;
             // Get start date
             var dateS = Reverse8601(devent.start.format('MM/DD/YYYY'));
             // Get end date (should be null if 1 day and the same)
             var dateE = null;
             if (devent.end !== null) dateE = Reverse8601(devent.end.format('MM/DD/YYYY'));
             var dateSA = Reverse8601(moment(devent.start, "DD-MM-YYYY").add(1, 'days').format('MM/DD/YYYY'));
-            // Use to debug if dates are not set correctly in JSON.
-            // console.log(dateS);
-            // console.log(dateSA);
-            // console.log(dateE);
             // Get the employee's name
             var name = devent.title;
 
             if (!confirm("Are you sure you want to move this?")) {
+              delete crec.indicie;
+              record.nio.notinoffice.push(crec);
               revertFunc();
-            }
+            } else {
 
             record.nio.notinoffice.push({
               "name": name,
@@ -244,6 +226,12 @@ $(document).ready(function() {
 
             if (record.nio.notinoffice[record.nio.notinoffice.length - 1].dateend == null)
               delete record.nio.notinoffice[record.nio.notinoffice.length - 1].dateend;
+            }
+            if (typeof record.nio.notinoffice[record.nio.notinoffice.length - 1].indicie != 'undefined') {
+              delete record.nio.notinoffice[record.nio.notinoffice.length - 1].indicie;
+            }
+
+            writeLiveRecord();
           }
         });
       } else {
