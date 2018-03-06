@@ -28,6 +28,25 @@
   <script>if (window.module) module = window.module;</script>
 </head>
 <body>
+  <div class="modal" id="events-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Event</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p><i class="fa fa-trash"></i><span class="text-danger"><a href="javascript:eventEmitter.emit('delPTO');">DELETE PTO Entry</a></span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="sticky-top navigation navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-primary">
   			<a class="navbar-brand" href="./index.ejs">Gannett-Fleming</a>
 

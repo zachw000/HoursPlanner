@@ -30,8 +30,9 @@ var Reverse8601 = (standardDate) => {
   date += chkStr(dt[0], 0, '0') + "/" + chkStr(dt[1], 0, '0') + "/" + dt[2];
   return date;
 };
-
+// writes the data to the record.
 var writeLiveRecord = () => {
+  // removes instances of buggy "indicie" properties.
   for (var i = 0; i < record.nio.notinoffice.length; i++) {
     if (record.nio.notinoffice[i].hasOwnProperty('indicie') || record.nio.notinoffice[i].indicie != "undefined") {
       delete record.nio.notinoffice[i].indicie;
@@ -99,6 +100,11 @@ $(document).ready(function() {
     alert("You must be logged in to access this page.\n"+
       "You will be redirected.");
     window.location.href = "index.ejs";
+  });
+
+  eventEmitter.on('delPTO', () => {
+    // crec should be loaded.
+    alert(JSON.stringify(crec, null, ' '));
   });
 
   eventEmitter.on('loggedIn', () => {
@@ -215,23 +221,34 @@ $(document).ready(function() {
               record.nio.notinoffice.push(crec);
               revertFunc();
             } else {
+              // Push new data onto the array
+              record.nio.notinoffice.push({
+                "name": name,
+                "date": dateS,
+                "dateend": dateE,
+                "time": crec.time,
+                "type": cpage
+              });
 
-            record.nio.notinoffice.push({
-              "name": name,
-              "date": dateS,
-              "dateend": dateE,
-              "time": crec.time,
-              "type": cpage
-            });
-
-            if (record.nio.notinoffice[record.nio.notinoffice.length - 1].dateend == null)
-              delete record.nio.notinoffice[record.nio.notinoffice.length - 1].dateend;
+              if (record.nio.notinoffice[record.nio.notinoffice.length - 1].dateend == null)
+                delete record.nio.notinoffice[record.nio.notinoffice.length - 1].dateend;
             }
             if (typeof record.nio.notinoffice[record.nio.notinoffice.length - 1].indicie != 'undefined') {
               delete record.nio.notinoffice[record.nio.notinoffice.length - 1].indicie;
             }
 
             writeLiveRecord();
+          },
+          eventClick: function(devent, jsEvent, view) {
+            // Reset crec
+            crec = null;
+
+            // Load crec
+            crec = getRecordByEvent(devent);
+            // When an event is clicked execute this function.
+            $('#events-modal').modal({
+              'backdrop': 'static'
+            });
           }
         });
       } else {
