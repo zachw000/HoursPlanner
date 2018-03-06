@@ -128,8 +128,16 @@ $(document).ready(function() {
         }
         //console.log(JSON.stringify(events_calendar));
         $('#calendar').fullCalendar({
+          customButtons: {
+            AddNew: {
+              text: "Add New " + cpage.toUpperCase(),
+              click: function() {
+                alert("Where I would add a new event.");
+              }
+            }
+          },
           header: {
-            left: 'prev,next today',
+            left: 'prev,next today AddNew',
             center: 'title',
             right: ''
           },
@@ -156,7 +164,7 @@ $(document).ready(function() {
             // and appending the index
             //alert(JSON.stringify(crec, null, ' '));
           },
-          eventResize: function(devent, jsEvent, ui, view) {
+          eventResize: function(devent, delta, revertFunc) {
             if (crec !== null)
               record.nio.notinoffice.splice(crec.indicie, 1);
             delete crec.indicie;
@@ -203,7 +211,7 @@ $(document).ready(function() {
             //alert(JSON.stringify(crec, null, ' '));
 
           },
-          eventDrop: function(devent, jsEvent, ui, view) {
+          eventDrop: function(devent, delta, revertFunc, jsEvent, ui, view) {
             if (crec !== null)
               record.nio.notinoffice.splice(crec.indicie, 1);
             delete crec.indicie;
