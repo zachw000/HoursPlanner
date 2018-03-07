@@ -10,7 +10,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <meta name="author" content="Zachary Waldron" />
   <link href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.2/lux/bootstrap.min.css" rel="stylesheet" integrity="sha384-CF64UnUzxV691sOmqagn+TQJmesKn1fgsYmlIPqYB5nm0m32jYo3LiX1BcrbuESZ" crossorigin="anonymous">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <link href="css/fixes.css" rel="stylesheet" />
   <script src="scripts/moment.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -28,7 +28,7 @@
   <script>if (window.module) module = window.module;</script>
 </head>
 <body>
-  <div class="modal" id="events-modal">
+  <div class="modal fade" id="events-modal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -47,7 +47,7 @@
       </div>
     </div>
   </div>
-  <div class="modal" id="addnew-modal">
+  <div class="modal fade" id="addnew-modal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -74,9 +74,9 @@
   			</button>
   			<div class="collapse navbar-collapse justify-content-md-center navbar-toggleable-md" id="mainNavbarCollapse">
   				<ul class="nav pull-lg-right navbar-nav mr-auto">
-  			<li class='nav-item active dropdown'><a href='./index.ejs' class='nav-link'>Overview</a></li>
+  			<li class='nav-item dropdown'><a href='./index.ejs' class='nav-link'>Overview</a></li>
         <li class='nav-item dropdown'><a href='./login.ejs' class='login-link nav-link'>Login</a></li>
-        <li class='nav-item dropdown'><a class="nav-link nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <li class='nav-item dropdown'><a class="nav-link active nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
   				Personnel <i class="fa fa-angle-down" aria-hidden="true"></i>
   </a>
   			<ul class="dropdown-menu bg-primary" aria-labelledby="navbarDropdown1">
@@ -97,7 +97,7 @@
   					<a class='hover nav-link' href='#'>Set ADMINs</a>
   				</li>
   				<li class='nav-item'>
-  					<a class='hover nav-link' href='pto.ejs'>PTO</a>
+  					<a class='hover active nav-link' href='pto.ejs'>PTO</a>
   				</li>
   				<li class='nav-item'>
   					<a class='hover nav-link' href='ooo.ejs'>OOO</a>
@@ -117,7 +117,6 @@
   		</div>
   <div class="jumbotron jumbotron-fluid text-center">
 		<div class="layer">
-			<img class="img-responsive hidden-xs hidden-sm" src="http://www.gannettfleming.com/images/GFLogo400x400V2.png" alt="Gannett Fleming, Inc." />
       <p>
         Weekly Planner v.2.0.1_3b
       </p>

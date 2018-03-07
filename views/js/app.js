@@ -129,6 +129,19 @@ var dateObj = {
 var currentPage = function() {
   return window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
 };
+// Rotation Function
+$.fn.animateRotate = function(angle, duration, easing, complete) {
+    var args = $.speed(duration, easing, complete);
+    var step = args.step;
+    return this.each(function(i, e) {
+        args.step = function(now) {
+            $.style(e, 'transform', 'rotate(' + now + 'deg)');
+            if (step) return step.apply(this, arguments);
+        };
+
+        $({deg: 0}).animate({deg: angle}, args);
+    });
+};
 
 // Arrow function version, NO REFERENCE TO THIS
 $(document).ready(() => {
@@ -142,6 +155,18 @@ $(document).ready(() => {
 });
 
 $(document).ready(function () {
+  // Add slideDown animation to Bootstrap dropdown when expanding.
+  $('.dropdown').on('show.bs.dropdown', function() {
+    $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+    $(this).find('.fa-angle-down').first().stop(true, true).animateRotate(180, 300, "linear", function() {});
+  });
+
+  // Add slideUp animation to Bootstrap dropdown when collapsing.
+  $('.dropdown').on('hide.bs.dropdown', function() {
+    $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
+    $(this).find('.fa-angle-down').first().stop(true, true).animateRotate(360, 300, "linear", function() {});
+  });
+
   loggedIn((err, li, name) => {
     if (err !== null) {
       console.error(err);
@@ -217,12 +242,14 @@ $(document).ready(function () {
             }
           }
           $('#calendar').fullCalendar({
+            themeSystem: 'bootstrap4',
             header: {
-              left: 'prev,next today',
+              left: 'prev today',
               center: 'title',
-              right: ''
+              right: 'next'
             },
             eventLimit: true,
+            weekNumbers: true,
             eventSources: [
               {
                 events: calendar_events_pto,
