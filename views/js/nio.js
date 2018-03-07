@@ -133,6 +133,8 @@ $(document).ready(function() {
               text: "Add New " + cpage.toUpperCase(),
               click: function() {
                 alert("Where I would add a new event.");
+                $("#addnew-modal").modal();
+                $("#addnew-title").html("<i class='fa fa-file'></i> Add New " + cpage.toUpperCase());
               }
             }
           },

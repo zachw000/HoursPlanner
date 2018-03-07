@@ -18,7 +18,7 @@ var createWindow = function() {
 let mainWindow;
 
 app.on('ready', () => {
-    mainWindow = new BrowserWindow({width: 1280, height: 720});
+    mainWindow = new BrowserWindow({width: 1280, height: 720, frame: false});
     mainWindow.loadURL('file://' + __dirname + '/views/index.ejs');
     global.ses = mainWindow.webContents.session;
 });
