@@ -140,9 +140,9 @@ $(document).ready(function() {
             }
           },
           header: {
-            left: 'prev,next today AddNew',
+            left: 'prev today AddNew',
             center: 'title',
-            right: ''
+            right: 'next'
           },
           editable: true,
           eventLimit: true,
