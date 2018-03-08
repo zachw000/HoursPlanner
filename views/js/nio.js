@@ -128,6 +128,7 @@ $(document).ready(function() {
         }
         //console.log(JSON.stringify(events_calendar));
         $('#calendar').fullCalendar({
+          themeSystem: 'bootstrap4',
           customButtons: {
             AddNew: {
               text: "Add New " + cpage.toUpperCase(),
@@ -145,6 +146,7 @@ $(document).ready(function() {
           },
           editable: true,
           eventLimit: true,
+          weekNumbers: true,
           eventOverlap: () => {
             return false;
           },
@@ -179,7 +181,7 @@ $(document).ready(function() {
             // Get the employee's name
             var name = devent.title;
 
-            if (!confirm("Are you sure you want to move this?")) {
+            if (!confirm("Are you sure you want to resize this?")) {
               record.nio.notinoffice.push(crec);
               revertFunc();
             } else {
@@ -207,11 +209,6 @@ $(document).ready(function() {
 
             // Load crec
             crec = getRecordByEvent(devent);
-
-            // Debug purposes, to show crec is finding correct string,
-            // and appending the index
-            //alert(JSON.stringify(crec, null, ' '));
-
           },
           eventDrop: function(devent, delta, revertFunc, jsEvent, ui, view) {
             if (crec !== null)
@@ -257,7 +254,6 @@ $(document).ready(function() {
             crec = getRecordByEvent(devent);
             // When an event is clicked execute this function.
             $('#events-modal').modal({
-              'backdrop': 'static'
             });
           }
         });

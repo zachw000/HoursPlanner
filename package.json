@@ -20,8 +20,12 @@
     "bower": "^1.8.2",
     "ejs": "^2.5.7",
     "ejs-electron": "^2.0.1",
+<<<<<<< HEAD
     "electron": "^1.8.3",
     "fullcalendar": "^3.8.2",
+=======
+    "fullcalendar": "^3.9.0",
+>>>>>>> 356333a7a63b72c3cb9e5bf8fff3ef2762497759
     "jquery": "^3.3.1",
     "jsonfile": "^4.0.0",
     "path": "^0.12.7",
