@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(229, 57, 53);
+  background-color: #FFF;
 }
 
 img.img-responsive {
@@ -48,7 +48,7 @@ img.img-responsive {
     display: inline-block;
     position: absolute;
     top: 0;
-    background-color: #FFF;
+    background-color: rgb(229, 57, 53);
     border-radius: 100%;
     -webkit-animation: sk-chasingDotsBounce 2s infinite ease-in-out;
             animation: sk-chasingDotsBounce 2s infinite ease-in-out; }

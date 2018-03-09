@@ -151,6 +151,7 @@ $(document).ready(() => {
     $(".login-link").text("Switch User");
     $(".loginName").html("<strong>"+lname+"</strong>");
     if (currentPage() === 'login.ejs') $("#login").text("Switch User");
+    $("#welcome").html("<strong>Welcome - <em>" + lname + "</em></strong>");
   });
 });
 
@@ -287,6 +288,13 @@ $(document).ready(function () {
           data_out += "<option value=\"" + ret.Employees[i].name + "\">" + ret.Employees[i].name + "</option>";
         }
         $("#nameList").html(data_out);
+        var options = $('select#nameList option');
+        var arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
+        arr.sort(function(o1, o2) { return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; });
+        options.each(function(i, o) {
+          o.value = arr[i].v;
+          $(o).text(arr[i].t);
+        });
       }
     });
   }
