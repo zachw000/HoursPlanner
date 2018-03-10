@@ -91,6 +91,12 @@ $(document).ready(function() {
     }
   });
 
+  // Handle multi day checkbox changes
+  $("#isMultiDay").on('change', function() {
+    var isMultiDay = document.getElementById('isMultiDay');
+    var isChecked = isMultiDay.checked;
+  });
+
   // Handle log-in
   /*
   * I require logging in so the system knows
@@ -133,9 +139,13 @@ $(document).ready(function() {
             AddNew: {
               text: "Add New " + cpage.toUpperCase(),
               click: function() {
-                alert("Where I would add a new event.");
                 $("#addnew-modal").modal();
                 $("#addnew-title").html("<i class='fa fa-file'></i> Add New " + cpage.toUpperCase());
+
+                // Use renderEvent to display new event on screen
+                // Add event to the record.nio.notinoffice array
+                // Use writeLiveRecord() funciton to write new data
+                // Hide modal dialog
               }
             }
           },
