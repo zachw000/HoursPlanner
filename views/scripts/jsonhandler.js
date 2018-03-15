@@ -326,6 +326,14 @@ var deleteEmployeeByName = function(data, callback) {
   // Check to make sure records are set
   if (!(record.employees !== null && record.hasOwnProperty('Employees')))
     return callback("Error: Please run 'readEmployees' first to set record variable.");
+  for (i = 0; i < record.employees.Employees.length; i++) {
+    if (record.employees.Employees[i].name == data) match_indicies.push(i);
+  }
+
+  // Traverse matched indicies backwards to preserve array structure.
+  for (n = match_indicies.length - 1; n >= 0; n--) {
+    record.employees.Employees.slice(1, n);
+  }
 };
 
 var deleteMilestoneByObj = function(data, callback) {
