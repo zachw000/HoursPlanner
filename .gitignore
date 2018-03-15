@@ -2,3 +2,4 @@ node_modules/
 bower_components/
 WeeklyPlanner-win32-x64/
 gdesktopbar.html
+.vscode/
