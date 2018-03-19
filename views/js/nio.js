@@ -95,6 +95,22 @@ $(document).ready(function() {
   $("#isMultiDay").on('change', function() {
     var isMultiDay = document.getElementById('isMultiDay');
     var isChecked = isMultiDay.checked;
+
+    if (isChecked) {
+      $('#EndDate').stop(true, true).slideDown();
+      $('#timeOffFullDay').prop("checked", true);
+      $('#timeOffAm').attr('disabled', true);
+      $('#timeOffPm').attr('disabled', true);
+      $('#timeOffFullDay').attr('disabled', true);
+      if ($("#datepicker2").val() == "") {
+        $("#addnio").attr('disabled', true);
+      }
+    } else {
+      $('#EndDate').stop(true, true).slideUp();
+      $('#timeOffAm').attr('disabled', false);
+      $('#timeOffPm').attr('disabled', false);
+      $('#timeOffFullDay').attr('disabled', false);
+    }
   });
 
   // Handle log-in
@@ -108,9 +124,100 @@ $(document).ready(function() {
     window.location.href = "index.ejs";
   });
 
-  eventEmitter.on('delPTO', () => {
+  eventEmitter.on('delNIO', () => {
     // crec should be loaded.
     alert(JSON.stringify(crec, null, ' '));
+  });
+
+  $("#datepicker").on("change", function() {
+    var m = moment($(this).val());
+    if (!m.isValid() || moment().isAfter(m)) {
+      var dt = new Date();
+      var y = dt.getFullYear();
+      var mm = dt.getMonth() + 1;
+      var dd = dt.getDate();
+      $(this).val(mm + "/" + dd + "/" + y);
+    } else {
+      var d = $(this).val();
+      var mt = moment($("#datepicker2").val());
+      // remove extra 0s, for database format
+      d = d.split('/');
+      if (d.length > 1) {
+        if (d[0].charAt(0) == '0') {
+          d[0] = d[0].slice(1);
+        }
+        if (d[1].charAt(0) == '0') {
+          d[1] = d[1].slice(1);
+        }
+
+        $(this).val(d.join('/'));
+      }
+
+      if (m.isAfter(mt)) {
+        // Make this empty
+        $("#datepicker2").val($(this).val());
+      }
+    }
+
+    $("#addnio").attr('disabled', false);
+  });
+
+  $("#datepicker2").on("change", function() {
+    var m = moment($(this).val());
+    var mt = moment($("#datepicker").val());
+    if (!m.isValid() || moment().isAfter(m) || m.isBefore(mt)) {
+      if (mt.isValid()) {
+        $(this).val(mt.format('MM/DD/YYYY'));
+        var d = $(this).val();
+        // remove extra 0s, for database format
+        d = d.split('/');
+        if (d.length > 1) {
+          if (d[0].charAt(0) == '0') {
+            d[0] = d[0].slice(1);
+          }
+          if (d[1].charAt(0) == '0') {
+            d[1] = d[1].slice(1);
+          }
+
+          $(this).val(d.join('/'));
+        }
+      } else {
+        var dt = new Date();
+        var y = dt.getFullYear();
+        var mm = dt.getMonth() + 1;
+        var dd = dt.getDate();
+        $(this).val(mm + "/" + dd + "/" + y);
+      }
+    } else {
+      var d = $(this).val();
+      // remove extra 0s, for database format
+      d = d.split('/');
+      if (d.length > 1) {
+        if (d[0].charAt(0) == '0') {
+          d[0] = d[0].slice(1);
+        }
+        if (d[1].charAt(0) == '0') {
+          d[1] = d[1].slice(1);
+        }
+
+        $(this).val(d.join('/'));
+      }
+    }
+
+    if ($("#datepicker").val() == "") {
+      $("#datepicker").val($(this).val());
+    }
+
+    $("#addnio").attr('disabled', false);
+  });
+
+  $("#addnio").on('click', () => {
+    var startdate = $("#datepicker").val();
+    var enddate = $("#datepicker2").val();
+    var multiday = document.getElementById('isMultiDay').checked;
+    var timeoffam = document.getElementById('timeOffAm').checked;
+    var timeoffpm = document.getElementById('timeOffPm').checked;
+    var timeoffallday = document.getElementById('timeOffAllDay').checked;
   });
 
   eventEmitter.on('loggedIn', () => {

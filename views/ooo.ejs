@@ -42,7 +42,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <p><i class="fa fa-trash"></i><span class="text-danger"><a href="javascript:eventEmitter.emit('delPTO');">DELETE OOO Entry</a></span></p>
+          <p><i class="fa fa-trash"></i><span class="text-danger"><a href="javascript:eventEmitter.emit('delNIO');">DELETE OOO Entry</a></span></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary">Save changes</button>
@@ -52,38 +52,60 @@
     </div>
   </div>
   <div class="modal" id="addnew-modal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addnew-title">Add New</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <input placeholder="Start Date" id="datepicker" width="276" />
-              <script>
-                  $('#datepicker').datepicker({
-                      uiLibrary: 'bootstrap4'
-                  });
-              </script>
-            </div>
-            <hr />
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="isMultiDay" />
-              <label class="form-check-label" for="isMultiDay">Multiple Days?</label>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Add OOO</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addnew-title">Add New</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="datepicker"><strong>Start Date:</strong></label>
+                <input placeholder="Start Date" id="datepicker" width="276" />
+                <script>
+                    $('#datepicker').datepicker({
+                        uiLibrary: 'bootstrap4'
+                    });
+                </script>
+              </div>
+              <hr />
+              <div class="form-check form-check">
+                <input class="form-check-input" type="checkbox" id="isMultiDay" />
+                <label class="form-check-label" for="isMultiDay">Multiple Days</label>
+              </div>
+              <div class="form-check form-check">
+                <input class="form-check-input" type="radio" name="time" id="timeOffAm" value="4am">
+                <label class="form-check-label" for="timeOffAm">Morning Time Off</label>
+              </div>
+              <div class="form-check form-check">
+                <input class="form-check-input" type="radio" name="time" id="timeOffPm" value="4pm">
+                <label class="form-check-label" for="timeOffPm">Afternoon Time Off</label>
+              </div>
+              <div class="form-check form-check">
+                <input class="form-check-input" checked="true" type="radio" name="time" id="timeOffFullDay" value="8hr">
+                <label class="form-check-label" for="timeOffFullDay">Full Day</label>
+              </div>
+              <div class="form-group hidden" id="EndDate">
+                <label for="datepicker2"><strong>End Date:</strong></label>
+                <input placeholder="End Date" id="datepicker2" width="276" />
+                <script>
+                    $('#datepicker2').datepicker({
+                        uiLibrary: 'bootstrap4'
+                    });
+                </script>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="addnio" disabled="true">Add OOO</button> <!-- Disable until all fields are entered -->
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   <div class="sticky-top navigation navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-light">
 		<a class="text-dark navbar-brand" href="./index.ejs">Gannett Fleming</a>
 
