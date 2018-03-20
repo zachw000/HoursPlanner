@@ -42,10 +42,54 @@
           </button>
         </div>
         <div class="modal-body">
-          <p><i class="fa fa-trash"></i><span class="text-danger"><a href="javascript:eventEmitter.emit('delNIO');">DELETE PTO Entry</a></span></p>
+          <p>
+            <button class="btn btn-danger" onclick="eventEmitter.emit('delNIO');">
+              <i class="fa fa-trash"></i>
+              DELETE PTO Entry
+            </button>
+          </p>
+          <hr />
+          <form>
+              <div class="form-group">
+                <label for="datepicker3"><strong>Edit Start Date:</strong></label>
+                <input placeholder="Start Date" id="datepicker3" width="276" />
+                <script>
+                    $('#datepicker3').datepicker({
+                        uiLibrary: 'bootstrap4'
+                    });
+                </script>
+              </div>
+              <hr />
+              <!-- Use crec to edit current record -->
+              <div class="form-check form-check">
+                <input class="form-check-input" type="checkbox" id="isMultiDay2" />
+                <label class="form-check-label" for="isMultiDay2">Multiple Days</label>
+              </div>
+              <div class="form-check form-check">
+                <input class="form-check-input" type="radio" name="time" id="timeOffAm2" value="4am">
+                <label class="form-check-label" for="timeOffAm2">Morning Time Off</label>
+              </div>
+              <div class="form-check form-check">
+                <input class="form-check-input" type="radio" name="time" id="timeOffPm2" value="4pm">
+                <label class="form-check-label" for="timeOffPm2">Afternoon Time Off</label>
+              </div>
+              <div class="form-check form-check">
+                <input class="form-check-input" checked="true" type="radio" name="time" id="timeOffFullDay2" value="8hr">
+                <label class="form-check-label" for="timeOffFullDay2">Full Day</label>
+              </div>
+              <div class="form-group hidden" id="EndDate2">
+                <label for="datepicker4"><strong>End Date:</strong></label>
+                <input placeholder="End Date" id="datepicker4" width="276" />
+                <script>
+                    $('#datepicker4').datepicker({
+                        uiLibrary: 'bootstrap4'
+                    });
+                </script>
+              </div>
+            </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" id="savenio" class="btn btn-primary">Save changes</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>

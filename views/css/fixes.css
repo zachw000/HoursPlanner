@@ -34,6 +34,10 @@ img.img-responsive {
         display: none;
 }
 
+#EndDate2.hidden {
+        display: none;
+}
+
 ::-webkit-scrollbar-track-piece* {
    background: transparent url('../img/transparent.png') repeat !important;
 }

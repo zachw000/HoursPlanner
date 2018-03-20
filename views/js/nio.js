@@ -113,6 +113,28 @@ $(document).ready(function() {
     }
   });
 
+  $("#isMultiDay2").on('change', function() {
+    var isMultiDay = document.getElementById('isMultiDay2');
+    var isChecked = isMultiDay.checked;
+
+    if (isChecked) {
+      $('#EndDate2').stop(true, true).slideDown();
+      $('#timeOffFullDay2').prop("checked", true);
+      $('#timeOffAm2').attr('disabled', true);
+      $('#timeOffPm2').attr('disabled', true);
+      $('#timeOffFullDay2').attr('disabled', true);
+      if ($("#datepicker4").val() == "") {
+        //$("#addnio").attr('disabled', true);
+        $("#savenio").attr('disabled', true);
+      }
+    } else {
+      $('#EndDate2').stop(true, true).slideUp();
+      $('#timeOffAm2').attr('disabled', false);
+      $('#timeOffPm2').attr('disabled', false);
+      $('#timeOffFullDay2').attr('disabled', false);
+    }
+  });
+
   // Handle log-in
   /*
   * I require logging in so the system knows
@@ -145,6 +167,8 @@ $(document).ready(function() {
       });
       // Hide popup
       $("#events-modal").modal('hide');
+      record.nio.notinoffice.splice(crec.indicie, 1);
+      writeLiveRecord();
     }
   });
 
@@ -232,7 +256,20 @@ $(document).ready(function() {
 
   $("#addnio").on('click', () => {
     var startdate = $("#datepicker").val();
-    var enddate = $("#datepicker2").val();
+    var m_enddate = moment($("#datepicker2").val());
+    var enddate = m_enddate.add(1, 'days').format('MM/DD/YYYY');
+    // Remove beginning 0s
+    var d = enddate.split('/');
+    if (d.length > 1) {
+      if (d[0].charAt(0) == '0') {
+        d[0] = d[0].slice(1);
+      }
+      if (d[1].charAt(0) == '0') {
+        d[1] = d[1].slice(1);
+      }
+    }
+
+    enddate = d.join('/');
     var multiday = document.getElementById('isMultiDay').checked;
     var timeoffam = document.getElementById('timeOffAm').checked;
     var timeoffpm = document.getElementById('timeOffPm').checked;
@@ -409,6 +446,34 @@ $(document).ready(function() {
 
             // Load crec
             crec = getRecordByEvent(devent);
+            $("#datepicker3").val(crec.date);
+            // default to unchecked
+            $("#isMultiDay2").prop('checked', false);
+            if (crec.hasOwnProperty('dateend')) {
+              var m_enddate = moment(crec.dateend).subtract(1, 'days').format('MM/DD/YYYY');
+              var d = m_enddate.split('/');
+              $("#isMultiDay2").prop('checked', true);
+              if (d.length > 1) {
+                if (d[0].charAt(0) == '0') {
+                  d[0] = d[0].slice(1);
+                }
+
+                if (d[1].charAt(0) == '0') {
+                  d[1] = d[1].slice(1);
+                }
+              }
+              m_enddate = d.join('/')
+              $("#datepicker4").val(m_enddate);
+              $("#EndDate2").removeClass('hidden');
+              $("#timeOffAm2").prop('checked', false);
+              $("#timeOffPm2").prop('checked', false);
+              $("#timeOffFullDay2").prop('checked', true);
+              $("#savenio").prop('disabled', false);
+            } else {
+              $("#timeOffAm2").prop('checked', crec.time == '4am');
+              $("#timeOffPm2").prop('checked', crec.time == '4pm');
+              $("#timeOffFullDay2").prop('checked', crec.time == '8hr');
+            }
             // When an event is clicked execute this function.
             $('#events-modal').modal({
             });
