@@ -158,8 +158,8 @@ $(document).ready(function() {
         $("#datepicker2").val($(this).val());
       }
     }
-
-    $("#addnio").attr('disabled', false);
+    if ((document.getElementById('isMultiDay').checked && $("#datepicker2").val() != "") || !document.getElementById('isMultiDay').checked)
+      $("#addnio").attr('disabled', false);
   });
 
   $("#datepicker2").on("change", function() {
@@ -217,7 +217,27 @@ $(document).ready(function() {
     var multiday = document.getElementById('isMultiDay').checked;
     var timeoffam = document.getElementById('timeOffAm').checked;
     var timeoffpm = document.getElementById('timeOffPm').checked;
-    var timeoffallday = document.getElementById('timeOffAllDay').checked;
+    var timeoffallday = document.getElementById('timeOffFullDay').checked;
+    var times = ["4am", "4pm", "8hr"];
+    var tget = 0;
+    if (timeoffpm) tget = 1;
+    if (timeoffallday) tget = 2;
+    // Use renderEvent to display new event on screen
+    // Add event to the record.nio.notinoffice array
+    // Use writeLiveRecord() funciton to write new data
+    // Hide modal dialog
+
+    var nEvent = {};
+    var nAppend = {};
+    nEvent.start = ISO86Date(startdate, times[tget]);
+    nEvent.title = lname;
+    nEvent.color = cpage === "pto" ? 'rgba(238, 51, 78, 0.4)' : 'rgba(0, 0, 255, 0.4)';
+    if (multiday) {
+      nEvent.end = ISO86Date(enddate, times[tget]);
+    }
+    $("#calendar").fullCalendar('renderEvent', nEvent);
+    $("#addnew-modal").modal('hide');
+    // Create nAppend
   });
 
   eventEmitter.on('loggedIn', () => {
@@ -248,11 +268,6 @@ $(document).ready(function() {
               click: function() {
                 $("#addnew-modal").modal();
                 $("#addnew-title").html("<i class='fa fa-file'></i> Add New " + cpage.toUpperCase());
-
-                // Use renderEvent to display new event on screen
-                // Add event to the record.nio.notinoffice array
-                // Use writeLiveRecord() funciton to write new data
-                // Hide modal dialog
               }
             }
           },
@@ -264,9 +279,7 @@ $(document).ready(function() {
           editable: true,
           eventLimit: true,
           weekNumbers: true,
-          eventOverlap: () => {
-            return false;
-          },
+          eventOverlap: false,
           eventSources: [
             {
               events: events_calendar,
