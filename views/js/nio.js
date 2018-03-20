@@ -232,12 +232,20 @@ $(document).ready(function() {
     nEvent.start = ISO86Date(startdate, times[tget]);
     nEvent.title = lname;
     nEvent.color = cpage === "pto" ? 'rgba(238, 51, 78, 0.4)' : 'rgba(0, 0, 255, 0.4)';
+    nEvent.textColor = 'rgba(255, 255, 255, 1)';
     if (multiday) {
       nEvent.end = ISO86Date(enddate, times[tget]);
     }
     $("#calendar").fullCalendar('renderEvent', nEvent);
     $("#addnew-modal").modal('hide');
     // Create nAppend
+    nAppend.name = lname;
+    nAppend.date = startdate;
+    nAppend.time = times[tget];
+    nAppend.type = cpage;
+    if (multiday) nAppend.dateend = enddate;
+    record.nio.notinoffice.push(nAppend);
+    writeLiveRecord();
   });
 
   eventEmitter.on('loggedIn', () => {
