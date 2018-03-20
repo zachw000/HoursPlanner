@@ -17,6 +17,18 @@ var chkStr = (inStr, pos, chr) => {
   return inStr;
 };
 
+var removeZeroes = (dStr) => {
+  var d = dStr.split("/");
+  if (d.length > 1) {
+    if (d[0].charAt(0) == '0')
+      d[0] = d[0].slice(0);
+    if (d[1].charAt(0) == '0')
+      d[1] = d[1].slice(1);
+  }
+
+  return d.join('/');
+};
+
 var Reverse8601 = (standardDate) => {
   var dt = standardDate;
   if (standardDate.indexOf('T') > -1) {
@@ -254,6 +266,72 @@ $(document).ready(function() {
     $("#addnio").attr('disabled', false);
   });
 
+  $("#savenio").on('click', () => {
+    // remove event
+    $("#calendar").fullCalendar('removeEvents', (eFilter) => {
+      if (eFilter.title == crec.name && removeZeroes(eFilter.start.format("MM/DD/YYYY")) == crec.date) {
+        return true;
+      }
+
+      return false;
+    });
+    // render event
+    var nEvent = {
+      title: lname,
+      start: ISO86Date($("#datepicker3").val(),
+      document.getElementById("timeOffAm2").checked ? "4am" :
+      document.getElementById("timeOffPm2").checked ? "4pm" : "8hr"),
+      color: cpage === "pto" ? 'rgba(238, 51, 78, 0.4)' : 'rgba(0, 0, 255, 0.4)',
+      textColor: 'rgba(255, 255, 255, 1)'
+    };
+
+    if (document.getElementById("isMultiDay2").checked) {
+      var m_enddate = moment($("#datepicker4").val()).add(1, 'days').format("MM/DD/YYYY");
+      var d = m_enddate.split("/");
+      if (d.length > 1) {
+        if (d[0].charAt(0) == '0')
+          d[0] = d[0].slice(1);
+        if (d[1].charAt(0) == '0')
+          d[1] = d[1].slice(1);
+      }
+
+      m_enddate = d.join('/');
+      nEvent.end = ISO86Date(m_enddate, 
+        document.getElementById("timeOffAm2").checked ? "4am" :
+        document.getElementById("timeOffPm2").checked ? "4pm" : "8hr");
+    }
+
+    $("#calendar").fullCalendar('renderEvent', nEvent);
+    // Use crec to update current record.
+    var i = crec.indicie;
+    record.nio.notinoffice[i].date = $("#datepicker3").val();
+    if (document.getElementById("timeOffAm2").checked)
+      record.nio.notinoffice[i].time = "4am";
+    else if (document.getElementById("timeOffPm2").checked)
+      record.nio.notinoffice[i].time = "4pm";
+    else
+      record.nio.notinoffice[i].time = "8hr";
+    if (!document.getElementById("isMultiDay2").checked) {
+      // Attempt to delete dateend attribute
+      delete record.nio.notinoffice[i].dateend;
+    } else {
+      record.nio.notinoffice[i].time = "8hr";
+      var m_enddate = moment($("#datepicker4").val()).add(1, 'days').format("MM/DD/YYYY");
+      var d = m_enddate.split("/");
+      if (d.length > 1) {
+        if (d[0].charAt(0) == '0')
+          d[0] = d[0].slice(1);
+        if (d[1].charAt(0) == '0')
+          d[1] = d[1].slice(1);
+      }
+
+      m_enddate = d.join('/');
+      record.nio.notinoffice[i].dateend = m_enddate;
+    }
+    $("#events-modal").modal('hide');
+    writeLiveRecord();
+  });
+
   $("#addnio").on('click', () => {
     var startdate = $("#datepicker").val();
     var m_enddate = moment($("#datepicker2").val());
@@ -468,6 +546,9 @@ $(document).ready(function() {
               $("#timeOffAm2").prop('checked', false);
               $("#timeOffPm2").prop('checked', false);
               $("#timeOffFullDay2").prop('checked', true);
+              $("#timeOffAm2").prop('disabled', true);
+              $("#timeOffPm2").prop('disabled', true);
+              $("#timeOffFullDay2").prop('disabled', true);
               $("#savenio").prop('disabled', false);
             } else {
               $("#timeOffAm2").prop('checked', crec.time == '4am');
