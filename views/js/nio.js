@@ -126,7 +126,26 @@ $(document).ready(function() {
 
   eventEmitter.on('delNIO', () => {
     // crec should be loaded.
-    alert(JSON.stringify(crec, null, ' '));
+    //alert(JSON.stringify(crec, null, ' '));
+    var confirmDelete = confirm("Are you sure you want to delete the " + cpage.toUpperCase() + " record?");
+    if (confirmDelete) {
+      var dEvent = {};
+      dEvent.title = crec.name;
+      dEvent.start = ISO86Date(crec.date, crec.time);
+      dEvent.color = cpage === "pto" ? 'rgba(238, 51, 78, 0.4)' : 'rgba(0, 0, 255, 0.4)';
+      dEvent.textColor = 'rgba(255, 255, 255, 1)';
+      //console.log(JSON.stringify(dEvent));
+      if (crec.hasOwnProperty('dateend')) dEvent.end = ISO86Date(crec.dateend, crec.time);
+      $("#calendar").fullCalendar('removeEvents', (eFilter) => {
+        //console.log(eFilter);
+        if (dEvent.title == eFilter.title && dEvent.start == eFilter.start.format('YYYY-MM-DD'))
+          return true;
+        else
+          return false;
+      });
+      // Hide popup
+      $("#events-modal").modal('hide');
+    }
   });
 
   $("#datepicker").on("change", function() {
