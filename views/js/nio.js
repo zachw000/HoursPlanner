@@ -21,7 +21,7 @@ var removeZeroes = (dStr) => {
   var d = dStr.split("/");
   if (d.length > 1) {
     if (d[0].charAt(0) == '0')
-      d[0] = d[0].slice(0);
+      d[0] = d[0].slice(1);
     if (d[1].charAt(0) == '0')
       d[1] = d[1].slice(1);
   }
@@ -163,20 +163,17 @@ $(document).ready(function() {
     //alert(JSON.stringify(crec, null, ' '));
     var confirmDelete = confirm("Are you sure you want to delete the " + cpage.toUpperCase() + " record?");
     if (confirmDelete) {
-      var dEvent = {};
-      dEvent.title = crec.name;
-      dEvent.start = ISO86Date(crec.date, crec.time);
-      dEvent.color = cpage === "pto" ? 'rgba(238, 51, 78, 0.4)' : 'rgba(0, 0, 255, 0.4)';
-      dEvent.textColor = 'rgba(255, 255, 255, 1)';
-      //console.log(JSON.stringify(dEvent));
-      if (crec.hasOwnProperty('dateend')) dEvent.end = ISO86Date(crec.dateend, crec.time);
       $("#calendar").fullCalendar('removeEvents', (eFilter) => {
+        //console.log("Running Filter");
         //console.log(eFilter);
-        if (dEvent.title == eFilter.title && dEvent.start == eFilter.start.format('YYYY-MM-DD'))
+        //console.log(removeZeroes(eFilter.start.format("MM/DD/YYYY")));
+        if (eFilter.title == lname && removeZeroes(eFilter.start.format("MM/DD/YYYY")) == crec.date) {
           return true;
-        else
-          return false;
+        }
+  
+        return false;
       });
+  
       // Hide popup
       $("#events-modal").modal('hide');
       record.nio.notinoffice.splice(crec.indicie, 1);
@@ -186,7 +183,7 @@ $(document).ready(function() {
 
   $("#datepicker").on("change", function() {
     var m = moment($(this).val());
-    if (!m.isValid() || moment().isAfter(m)) {
+    if (!m.isValid()) {
       var dt = new Date();
       var y = dt.getFullYear();
       var mm = dt.getMonth() + 1;
@@ -220,7 +217,7 @@ $(document).ready(function() {
   $("#datepicker2").on("change", function() {
     var m = moment($(this).val());
     var mt = moment($("#datepicker").val());
-    if (!m.isValid() || moment().isAfter(m) || m.isBefore(mt)) {
+    if (!m.isValid() || m.isBefore(mt)) {
       if (mt.isValid()) {
         $(this).val(mt.format('MM/DD/YYYY'));
         var d = $(this).val();
@@ -266,16 +263,114 @@ $(document).ready(function() {
     $("#addnio").attr('disabled', false);
   });
 
+  $("#datepicker3").on('change', function () {
+    var m = moment($(this).val());
+    if (!m.isValid()) {
+      var dt = new Date();
+      var y = dt.getFullYear();
+      var mm = dt.getMonth() + 1;
+      var dd = dt.getDate();
+      $(this).val(mm + "/" + dd + "/" + y);
+    } else {
+      var d = $(this).val();
+      var mt = moment($("#datepicker4").val());
+      // remove extra 0s, for database format
+      d = d.split('/');
+      if (d.length > 1) {
+        if (d[0].charAt(0) == '0') {
+          d[0] = d[0].slice(1);
+        }
+        if (d[1].charAt(0) == '0') {
+          d[1] = d[1].slice(1);
+        }
+
+        $(this).val(d.join('/'));
+      }
+
+      if (m.isAfter(mt)) {
+        // Make this empty
+        $("#datepicker4").val($(this).val());
+      }
+    }
+    if ((document.getElementById('isMultiDay2').checked && $("#datepicker4").val() != "") || !document.getElementById('isMultiDay2').checked)
+      $("#savenio").attr('disabled', false);
+  });
+
+  $("#datepicker4").on('change', function () {
+    var m = moment($(this).val());
+    var mt = moment($("#datepicker3").val());
+    if (!m.isValid() || m.isBefore(mt)) {
+      if (mt.isValid()) {
+        $(this).val(mt.format('MM/DD/YYYY'));
+        var d = $(this).val();
+        // remove extra 0s, for database format
+        d = d.split('/');
+        if (d.length > 1) {
+          if (d[0].charAt(0) == '0') {
+            d[0] = d[0].slice(1);
+          }
+          if (d[1].charAt(0) == '0') {
+            d[1] = d[1].slice(1);
+          }
+
+          $(this).val(d.join('/'));
+        }
+      } else {
+        var dt = new Date();
+        var y = dt.getFullYear();
+        var mm = dt.getMonth() + 1;
+        var dd = dt.getDate();
+        $(this).val(mm + "/" + dd + "/" + y);
+      }
+    } else {
+      var d = $(this).val();
+      // remove extra 0s, for database format
+      d = d.split('/');
+      if (d.length > 1) {
+        if (d[0].charAt(0) == '0') {
+          d[0] = d[0].slice(1);
+        }
+        if (d[1].charAt(0) == '0') {
+          d[1] = d[1].slice(1);
+        }
+
+        $(this).val(d.join('/'));
+      }
+    }
+
+    if ($("#datepicker3").val() == "") {
+      $("#datepicker3").val($(this).val());
+    }
+
+    $("#savenio").attr('disabled', false);
+  });
+
   $("#savenio").on('click', () => {
     // remove event
     $("#calendar").fullCalendar('removeEvents', (eFilter) => {
-      if (eFilter.title == crec.name && removeZeroes(eFilter.start.format("MM/DD/YYYY")) == crec.date) {
+      //console.log("Running Filter");
+      //console.log(eFilter);
+      //console.log(removeZeroes(eFilter.start.format("MM/DD/YYYY")));
+      if (eFilter.title == lname && removeZeroes(eFilter.start.format("MM/DD/YYYY")) == crec.date) {
         return true;
       }
 
       return false;
     });
+
+    // remove old event from object
+    //console.log(record.nio.notinoffice);
+    //alert(crec.indicie);
+    record.nio.notinoffice.splice(crec.indicie, 1);
+
+    //console.log(record.nio.notinoffice);
     // render event
+    var jEvent = {};
+    jEvent.name = lname;
+    jEvent.date = $("#datepicker3").val();
+    jEvent.time = document.getElementById("timeOffAm2").checked ? "4am" :
+    document.getElementById("timeOffPm2").checked ? "4pm" : "8hr";
+    jEvent.type = cpage.toLowerCase();
     var nEvent = {
       title: lname,
       start: ISO86Date($("#datepicker3").val(),
@@ -287,49 +382,28 @@ $(document).ready(function() {
 
     if (document.getElementById("isMultiDay2").checked) {
       var m_enddate = moment($("#datepicker4").val()).add(1, 'days').format("MM/DD/YYYY");
+      jEvent.dateend = removeZeroes(m_enddate);
       var d = m_enddate.split("/");
+
       if (d.length > 1) {
         if (d[0].charAt(0) == '0')
           d[0] = d[0].slice(1);
         if (d[1].charAt(0) == '0')
           d[1] = d[1].slice(1);
       }
-
+      //console.log(m_enddate);
       m_enddate = d.join('/');
       nEvent.end = ISO86Date(m_enddate, 
         document.getElementById("timeOffAm2").checked ? "4am" :
         document.getElementById("timeOffPm2").checked ? "4pm" : "8hr");
     }
-
+    //console.log(jEvent);
     $("#calendar").fullCalendar('renderEvent', nEvent);
-    // Use crec to update current record.
-    var i = crec.indicie;
-    record.nio.notinoffice[i].date = $("#datepicker3").val();
-    if (document.getElementById("timeOffAm2").checked)
-      record.nio.notinoffice[i].time = "4am";
-    else if (document.getElementById("timeOffPm2").checked)
-      record.nio.notinoffice[i].time = "4pm";
-    else
-      record.nio.notinoffice[i].time = "8hr";
-    if (!document.getElementById("isMultiDay2").checked) {
-      // Attempt to delete dateend attribute
-      delete record.nio.notinoffice[i].dateend;
-    } else {
-      record.nio.notinoffice[i].time = "8hr";
-      var m_enddate = moment($("#datepicker4").val()).add(1, 'days').format("MM/DD/YYYY");
-      var d = m_enddate.split("/");
-      if (d.length > 1) {
-        if (d[0].charAt(0) == '0')
-          d[0] = d[0].slice(1);
-        if (d[1].charAt(0) == '0')
-          d[1] = d[1].slice(1);
-      }
-
-      m_enddate = d.join('/');
-      record.nio.notinoffice[i].dateend = m_enddate;
-    }
-    $("#events-modal").modal('hide');
+    // add to json
+    record.nio.notinoffice.push(jEvent);
+    // write
     writeLiveRecord();
+    $("#events-modal").modal('hide');
   });
 
   $("#addnio").on('click', () => {
@@ -429,6 +503,15 @@ $(document).ready(function() {
               textColor: 'rgba(255, 255, 255, 1)'
             }
           ],
+          eventRender: function(eventObj, $el) {
+            $el.popover({
+              title: eventObj.title,
+              content: cpage.toUpperCase() + " for " + lname,
+              trigger: 'hover',
+              placement: 'top',
+              container: 'body'
+            });
+          },
           eventResizeStop: function(devent, jsEvent, ui, view) {
             // Reset crec
             crec = null;
