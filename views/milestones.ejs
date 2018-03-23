@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Insert this line above script imports  -->
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <title>Hours Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Zachary Waldron" />
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="BS4/css/mdb.min.css" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/fixes.css" rel="stylesheet" />
+  <script src="scripts/moment.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="BS4/js/popper.min.js"></script>
+  <script src="BS4/js/bootstrap.min.js"></script>
+  <script src="BS4/js/mdb.min.js"></script>
+  <link rel="stylesheet" href="../node_modules/fullcalendar/dist/fullcalendar.css" />
+  <script src="../node_modules/fullcalendar/dist/gcal.js"></script>
+  <script src="../node_modules/fullcalendar/dist/fullcalendar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gijgo@1.8.2/combined/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://cdn.jsdelivr.net/npm/gijgo@1.8.2/combined/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <script src="scripts/jsonhandler.js"></script>
+  <link rel="stylesheet" href="../bower_components/bootstrap-select/dist/css/bootstrap-select.css" />
+  <script type="text/javascript" src="../bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+  <script type="text/javascript" src="js/milestones.js"></script>
+  <!-- Insert this line after script imports -->
+  <script>if (window.module) module = window.module;</script>
+</head>
+<body>
+  <div class="modal" id="events-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Milestones</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>
+            <button class="btn btn-danger" onclick="eventEmitter.emit('delNIO');">
+              <i class="fa fa-trash"></i>
+              DELETE MILESTONE
+            </button>
+          </p>
+          <hr />
+          <form>
+              <div class="form-group">
+                <label for="datepicker2"><strong>Edit Date:</strong></label>
+                <input placeholder="Start Date" id="datepicker2" width="276" />
+                <script>
+                    $('#datepicker2').datepicker({
+                        uiLibrary: 'bootstrap4'
+                    });
+                </script>
+              </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="savemilestone" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="addnew-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addnew-title">Add New</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="datepicker"><strong>Date:</strong></label>
+              <input placeholder="Start Date" id="datepicker" width="276" />
+              <script>
+                  $('#datepicker').datepicker({
+                      uiLibrary: 'bootstrap4'
+                  });
+              </script>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="addmilestone" disabled="true">Add Milestone</button> <!-- Disable until all fields are entered -->
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sticky-top navigation navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-light">
+  			<a class="text-dark navbar-brand" href="./index.ejs">Gannett Fleming</a>
+
+  			<button class="text-dark navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#mainNavbarCollapse">
+  				&#9776;
+  			</button>
+  			<div class="collapse navbar-collapse justify-content-md-center navbar-toggleable-md" id="mainNavbarCollapse">
+  				<ul class="nav pull-lg-right navbar-nav mr-auto">
+  			<li class='nav-item dropdown'><a href='./index.ejs' class='text-dark nav-link'>Overview</a></li>
+        <li class='nav-item dropdown'><a href='./login.ejs' class='text-dark login-link nav-link'>Login</a></li>
+        <li class='nav-item dropdown'><a class="nav-link text-dark active nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  				Personnel <i class="fa fa-angle-down" aria-hidden="true"></i>
+  </a>
+  			<ul class="dropdown-menu bg-light" aria-labelledby="navbarDropdown1">
+  				<li class='text-dark nav-item dropdown-header'>Personnel</li>
+  				<li class='nav-item'>
+  					<a class='text-dark hover nav-link' href='employees.ejs'>Employees</a>
+  				</li>
+  				<li class='nav-item'>
+  					<a class='text-dark hover nav-link' href='#'>Set PMs</a>
+  				</li>
+  				<li class='nav-item'>
+  					<a class='text-dark hover nav-link' href='#'>Set ENGs</a>
+  				</li>
+  				<li class='nav-item'>
+  					<a class='text-dark hover nav-link' href='#'>Set INSPTs</a>
+  				</li>
+  				<li class='nav-item'>
+  					<a class='text-dark hover nav-link' href='#'>Set ADMINs</a>
+  				</li>
+  				<li class='nav-item'>
+  					<a class='text-dark hover nav-link' href='pto.ejs'>PTO</a>
+  				</li>
+  				<li class='nav-item'>
+  					<a class='text-dark hover nav-link' href='ooo.ejs'>OOO</a>
+  				</li>
+              </ul></li>
+              <li class='nav-item dropdown'><a class='text-primary nav-link nav-rotate' id='navbarDropdown2' data-target='#' href='/' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Projects <i class="fa fa-angle-down" aria-hidden="true"></i>
+  </a>
+  			<ul class='dropdown-menu bg-light' aria-labelledby='navbarDropdown2'>
+  				<li class='text-dark nav-item text-primary dropdown-header'>Projects</li>
+  				<li class='nav-item'>
+  					<a class='text-dark nav-link' href='#'>Enter New &#9;<i class='fa fa-cog' aria-hidden='true'></i></a>
+  				</li>
+  				<li class='nav-item'>
+  					<a class='text-dark nav-link' href='#'>Edit Existing &#9;<i class='fa fa-pencil' aria-hidden='true'></i></a>
+                </li>
+                <li>
+                    <a class='text-primary nav-link active' href='milestones.ejs'>Milestones &#9;<i class='fa fa-star' aria-hidden='true'></i></a>
+                </li>
+  			</ul></li></ul>
+  			</div>
+  		</div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="container">
+        <h3 class="text-right">Personal Milestones</h3>
+        <hr />
+        <div class="article">
+          <span class="date-anc"></span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container">
+        <div id="calendar"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
