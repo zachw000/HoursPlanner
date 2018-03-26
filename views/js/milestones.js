@@ -42,4 +42,41 @@ var removeZeroes = (dStr) => {
 * formatted string, or it can use a Moment.JS object
 * to determine the needed datetime output.
 **/
-var Reverse8601
+var Reverse8601 = (standardDate) => {
+	var d_m;
+	var d;
+	
+	if (!moment.isMoment(standardDate)) {
+		// If the input was NOT a moment object.
+		d_m = moment(standardDate);
+	} else {
+		// No need to convert to Moment
+		d_m = standardDate;
+	}
+	
+	if (d_m.isValid()) {
+		d = removeZeroes(d_m.format('MM/DD/YYYY');
+		return d;
+	} else {
+		// An error has occurred, returns null to remain
+		// TSC compliant.
+		return null;
+	}
+};
+
+/**
+* writeLiveRecord
+* @return null
+* Pushes the entire array record to the JSON file.
+**/
+var writeLiveRecord = () => {
+	// Make sure the recordset is NOT null, do nothing otherwise
+	if (!record.milestones.milestones == null) {
+		for (var i = 0; i < record.milestones.milestones.length; i++)
+			if (record.milestones.milestones[i].hasOwnProperty('indicie') || typeof record.milestones.milestones[i].indicie != "undefined")
+				delete record.milestones.milestones[i].indicie;
+		jsonfile.writeFile(prepend + filenames[1], record.milestones, (err) => {
+			if (err !== null) console.error(err);
+		});
+	}
+};
