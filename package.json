@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/zachw000/HoursPlanner#readme",
   "dependencies": {
+    "chart.js": "^2.7.2",
     "ejs": "^2.5.7",
     "ejs-electron": "^2.0.1",
     "fullcalendar": "^3.9.0",
