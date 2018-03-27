@@ -80,3 +80,7 @@ var writeLiveRecord = () => {
 		});
 	}
 };
+
+$(document).ready(function() {
+	
+});
