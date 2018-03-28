@@ -153,9 +153,12 @@ $(document).ready(function() {
   * who's NIO to set and display
   */
   eventEmitter.on('notLoggedIn', () => {
-    alert("You must be logged in to access this page.\n"+
-      "You will be redirected.");
-    window.location.href = "index.ejs";
+    $("#nlo-modal").modal();
+  });
+  
+  // Not log in close
+  $("#nlo-modal").on("hidden.bs.modal", () => {
+    window.location.href = "login.ejs";
   });
 
   eventEmitter.on('delNIO', () => {
