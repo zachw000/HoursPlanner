@@ -32,6 +32,28 @@
   <script>if (window.module) module = window.module;</script>
 </head>
 <body>
+	<div class="modal" id="nlo-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Please Log In</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>
+            This page requires &quot;<em><a href="login.ejs">logging in</a></em>&quot; to 
+			edit the project milestones.
+          </p>
+          <hr />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="modal" id="events-modal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
