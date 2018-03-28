@@ -192,7 +192,7 @@ $(document).ready(function() {
 				
 				for (var i = 0; i < r_set.length; i++)
 					events_calendar.push({
-						title: r_set[i].projnum + " - " + r_set[i].type,
+						title: getProjectByNum(r_set[i].projnum).projname,
 						start: ISO86Date(r_set[i].date, "8hr") + "T17:00:00",
 						end: ISO86Date(r_set[i].date, "8hr") + "T17:00:00",
 						id: i
