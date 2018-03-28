@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 /**
 *@author Zachary Waldron
 *@desc Handles Paid Time Off/Out of Office Time
