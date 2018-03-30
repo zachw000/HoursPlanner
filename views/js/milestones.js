@@ -101,8 +101,8 @@ var writeLiveRecord = () => {
 var getRecordByEvent = (eventData) => {
 	// Use the Event ID (A.K.A. Index)
 	c_rec = null;
-	c_rec = record.milestones.milestones[eventData.id];
-	c_rec.indicie = eventData.id;
+	c_rec = record.milestones.milestones[getIndex(eventData)];
+	c_rec.indicie = getIndex(eventData);
 	
 	return null;
 };
@@ -118,6 +118,8 @@ var getProjectByNum = (projNum) => {
 	
 	return p_set[index];
 };
+
+var getIndex = (eventObj) => {};
 
 $(document).ready(function() {
 	
@@ -192,10 +194,11 @@ $(document).ready(function() {
 				
 				for (var i = 0; i < r_set.length; i++)
 					events_calendar.push({
-						title: getProjectByNum(r_set[i].projnum).projname,
+						title: getProjectByNum(r_set[i].projnum).projname + " #" + r_set[i].projnum,
 						start: ISO86Date(r_set[i].date, "8hr") + "T17:00:00",
 						end: ISO86Date(r_set[i].date, "8hr") + "T17:00:00",
-						id: i
+						// separate index id by slash
+						id: i + "/" + r_set[i].type
 					});
 				$("#calendar").fullCalendar({
 					themeSystem: 'bootstrap4',
@@ -224,17 +227,24 @@ $(document).ready(function() {
 						}
 					],
 					eventRender: function (eventObj, $el) {
-						var p_name = getProjectByNum(r_set[eventObj.id].projnum).projname;
+						var p_name = getProjectByNum(r_set[getIndex(eventObj)].projnum).projname;
 						$el.popover({
 							html: true,
 							title: "Milestone",
-							content: "PM: " + r_set[eventObj.id].name + "<br />Type: <strong>" +
-							r_set[eventObj.id].type + "</strong><br />Project #: " + r_set[eventObj.id].projnum +
+							content: "PM: " + r_set[getIndex(eventObj)].name + "<br />Type: <strong>" +
+							r_set[getIndex(eventObj)].type + "</strong><br />Project #: " + r_set[getIndex(eventObj)].projnum +
 							"<br /> Project: " + p_name,
 							trigger: 'hover',
 							placement: 'top',
 							container: 'body'
 						});
+					},
+					eventDragStop: function(devent, jsEvent, ui, view) {
+						getRecordByEvent(devent);
+					},
+					eventDrop: function(devent, delta, revertFunc, jsEvent, ui, view) {
+						if (crec !== null)
+							record.milestones.milestones.splice(getIndex(devent), 1);
 					}
 				});
 			} else {
