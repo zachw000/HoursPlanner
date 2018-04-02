@@ -119,7 +119,63 @@ var getProjectByNum = (projNum) => {
 	return p_set[index];
 };
 
-var getIndex = (eventObj) => {};
+var getIndex = (eventObj) => {
+	var proj_arr = eventObj.title.split(" #");
+
+	// Returns last object of array
+	var p_num = proj_arr.pop();
+
+	var p_name = getProjectByNum(p_num).projname;
+
+	var s_date = removeZeroes(eventObj.start.format("MM/DD/YYYY"));
+
+	var pid = eventObj.id.split("///").pop();
+
+	console.log(p_name + "\n" + p_num + "\n" + s_date + "\n" + pid);
+
+	var i;
+
+	for (i = 0; i < r_set.length; i++) {
+		if (r_set[i].projnum == p_num) {
+			if (getProjectByNum(r_set[i].projnum).projname == p_name) {
+				if (r_set[i].type == pid) {
+					console.log("all but date matched")
+					if (r_set[i].date == s_date) {
+						console.log("all matched.")
+						break;
+					}
+				}
+			}
+		}
+	}
+	return i;
+};
+
+var getIndexNoDate = (eventObj) => {
+	var proj_arr = eventObj.title.split(" #");
+
+	// Returns last object of array
+	var p_num = proj_arr.pop();
+
+	var p_name = getProjectByNum(p_num).projname;
+
+	var pid = eventObj.id.split("///").pop();
+
+	console.log(p_name + "\n" + p_num + "\n" + "\n" + pid);
+
+	var i;
+
+	for (i = 0; i < r_set.length; i++) {
+		if (r_set[i].projnum == p_num) {
+			if (getProjectByNum(r_set[i].projnum).projname == p_name) {
+				if (r_set[i].type == pid) {
+						break;
+				}
+			}
+		}
+	}
+	return i;
+};
 
 $(document).ready(function() {
 	
@@ -198,7 +254,7 @@ $(document).ready(function() {
 						start: ISO86Date(r_set[i].date, "8hr") + "T17:00:00",
 						end: ISO86Date(r_set[i].date, "8hr") + "T17:00:00",
 						// separate index id by slash
-						id: i + "/" + r_set[i].type
+						id: i + "///" + r_set[i].type
 					});
 				$("#calendar").fullCalendar({
 					themeSystem: 'bootstrap4',
@@ -226,25 +282,29 @@ $(document).ready(function() {
 							textColor: 'rgba(26, 26, 26, 1)'
 						}
 					],
+					eventDragStop: function(devent, jsEvent, ui, view) {
+						getRecordByEvent(devent);
+					},
+					eventDrop: function(devent, delta, revertFunc, jsEvent, ui, view) {
+						if (c_rec !== null && confirm("Are you sure you want to move the milestone?")) {
+							record.milestones.milestones[c_rec.indicie].date = removeZeroes(devent.start.format('MM/DD/YYYY'));
+							delete record.milestones.milestones[c_rec.indicie].indicie;
+						} else {
+							revertFunc();
+						}
+					},
 					eventRender: function (eventObj, $el) {
-						var p_name = getProjectByNum(r_set[getIndex(eventObj)].projnum).projname;
+						var p_name = getProjectByNum(r_set[getIndexNoDate(eventObj)].projnum).projname;
 						$el.popover({
 							html: true,
 							title: "Milestone",
-							content: "PM: " + r_set[getIndex(eventObj)].name + "<br />Type: <strong>" +
-							r_set[getIndex(eventObj)].type + "</strong><br />Project #: " + r_set[getIndex(eventObj)].projnum +
+							content: "PM: " + r_set[getIndexNoDate(eventObj)].name + "<br />Type: <strong>" +
+							r_set[getIndexNoDate(eventObj)].type + "</strong><br />Project #: " + r_set[getIndexNoDate(eventObj)].projnum +
 							"<br /> Project: " + p_name,
 							trigger: 'hover',
 							placement: 'top',
 							container: 'body'
 						});
-					},
-					eventDragStop: function(devent, jsEvent, ui, view) {
-						getRecordByEvent(devent);
-					},
-					eventDrop: function(devent, delta, revertFunc, jsEvent, ui, view) {
-						if (crec !== null)
-							record.milestones.milestones.splice(getIndex(devent), 1);
 					}
 				});
 			} else {
