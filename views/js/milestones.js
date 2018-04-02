@@ -309,9 +309,10 @@ $(document).ready(function() {
 					eventClick: function(devent, jsEvent, view) {
 						// load c_rec variable
 						getRecordByEvent(devent);
-						
-						// run and open modal dialog
 
+						// run and open modal dialog
+						$("#events-modal").modal();
+						$("#datepicker2").val(c_rec.date);
 						// use event emitter to control actions
 					}
 				});
