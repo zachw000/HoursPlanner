@@ -305,6 +305,14 @@ $(document).ready(function() {
 							placement: 'top',
 							container: 'body'
 						});
+					},
+					eventClick: function(devent, jsEvent, view) {
+						// load c_rec variable
+						getRecordByEvent(devent);
+						
+						// run and open modal dialog
+
+						// use event emitter to control actions
 					}
 				});
 			} else {
