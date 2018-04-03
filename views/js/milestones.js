@@ -218,6 +218,39 @@ $(document).ready(function() {
 	eventEmitter.on('delMilestone', () => {
 		// do not do anything if c_rec is not loaded
 		if (c_rec == null) return;
+
+		if (confirm("Are you sure you want to delete this milestone")) {
+			// Remove event from calendar
+			$("#calendar").fullCalendar('removeEvents', (devent) => {
+				var pn = c_rec.projnum;
+				var pd = c_rec.date;
+				var type = c_rec.type;
+				var pname = getProjectByNum(c_rec.projnum).projname;
+
+				var d_title_arr = devent.title;
+				var did = devent.id;
+				var d_num, d_name, d_type, d_date;
+				d_num = d_title_arr.split(" #").pop();
+				d_name = getProjectByNum(d_num).projname;
+				d_type = did.split("///").pop();
+				d_date = removeZeroes(devent.start.format("MM/DD/YYYY"));
+
+				if (d_num == pn && d_name == pname && d_type == type && d_date == pd) {
+					return true;
+				}
+
+				return false;
+			})
+
+			// Removes the record from the array
+			r_set.splice(c_rec.indicie, 1);
+
+			// Set c_rec to null so object is no longer accsesible
+			c_rec = null;
+
+			// Close modal dialog
+			$("#events-modal").modal("hide");
+		}
 	});
 	
 	// Use standard function for a local reference to 'this'
@@ -237,7 +270,29 @@ $(document).ready(function() {
 	
 	// TODO: Implement save milestone
 	$("#savemilestone").on('click', () => {
-		
+		// Make sure date is valid
+		let d = moment($("#datepicker2").val());
+		if (!d.isValid()) {
+			// Date is not valid, do not accept
+		} else {
+			// Change JSON data, and update calendar
+			r_set[c_rec.indicie].date = removeZeroes(d.format("MM/DD/YYYY"));
+			
+			// Obtain original event from memory, edit reference
+			var obj = $("#calendar").fullCalendar('clientEvents', (oevent) => {
+				if (oevent.title.split(" #").pop() == c_rec.projnum &&
+					removeZeroes(oevent.start.format("MM/DD/YYYY")) == c_rec.date &&
+					oevent.id.split("///").pop() == c_rec.type)
+					return true;
+				return false;
+			});
+
+			// obj is an array, use first element of array
+			obj[0].start = removeZeroes(d.format('MM/DD/YYYY') + "T17:00:00");
+			obj[0].end = removeZeroes(d.format('MM/DD/YYYY') + "T17:00:00");
+
+			$("#calendar").fullCalendar('updateEvent', obj[0]);
+		}
 	});
 	
 	eventEmitter.on('loggedIn', () => {
