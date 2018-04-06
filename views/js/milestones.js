@@ -131,7 +131,7 @@ var getIndex = (eventObj) => {
 
 	var pid = eventObj.id.split("///").pop();
 
-	console.log(p_name + "\n" + p_num + "\n" + s_date + "\n" + pid);
+	//console.log(p_name + "\n" + p_num + "\n" + s_date + "\n" + pid);
 
 	var i;
 
@@ -139,9 +139,9 @@ var getIndex = (eventObj) => {
 		if (r_set[i].projnum == p_num) {
 			if (getProjectByNum(r_set[i].projnum).projname == p_name) {
 				if (r_set[i].type == pid) {
-					console.log("all but date matched")
+					//console.log("all but date matched")
 					if (r_set[i].date == s_date) {
-						console.log("all matched.")
+						//console.log("all matched.")
 						break;
 					}
 				}
@@ -161,7 +161,7 @@ var getIndexNoDate = (eventObj) => {
 
 	var pid = eventObj.id.split("///").pop();
 
-	console.log(p_name + "\n" + p_num + "\n" + "\n" + pid);
+	//console.log(p_name + "\n" + p_num + "\n" + "\n" + pid);
 
 	var i;
 
@@ -187,17 +187,24 @@ $(document).ready(function() {
 			}
 
 			record.employees.Employees.forEach((element) => {
-				$(`#pmchooser.custom-select`).append(
+				$(`[id^=pmchooser].custom-select`).append(
 					`<option value="${element.name}">${element.name}`+
 					`</option>`)
 			});
 
-			var options = $('select#pmchooser option');
-			var arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
-			arr.sort(function(o1, o2) { return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; });
+			var options = $('select#pmchooser.custom-select option');
+			var arr = options.map(function(_, o) { 
+				return { 
+					t: $(o).text(), 
+					v: o.value 
+				}; 
+			}).get();
+			arr.sort(function(o1, o2) { 
+				return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; 
+			});
 			options.each(function(i, o) {
-			o.value = arr[i].v;
-			$(o).text(arr[i].t);
+				o.value = arr[i].v;
+				$(o).text(arr[i].t);
 			});
 		});
 	}
