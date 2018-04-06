@@ -178,6 +178,21 @@ var getIndexNoDate = (eventObj) => {
 };
 
 $(document).ready(function() {
+
+	async function loadEmployeeList() {
+		readEmployees((err, ret) => {
+			if (err !== null) { 
+				console.error(err);
+				return;
+			}
+
+			record.employees.Employees.forEach((element) => {
+				$(`#pmchooser.custom-select`).append(
+					`<option value="${element.name}">${element.name}`+
+					`</option>`)
+			});
+		});
+	}
 	
 	// Make sure milestone recordset is set
 	eventEmitter.on('milestones', (callback) => {
@@ -196,7 +211,14 @@ $(document).ready(function() {
 						
 						return callback (err);
 					}
-					
+					record.projects.projects.forEach(element => {
+						$("#projnum.custom-select")
+							.append(
+							`<option value="${element.projnum}">${element.projnum}`+ 
+							`- ${element.projname}</option>`);
+					});
+
+					loadEmployeeList();
 					return callback(null);
 				});				
 			});
@@ -296,7 +318,6 @@ $(document).ready(function() {
 	});
 	
 	eventEmitter.on('loggedIn', () => {
-		// Initialize milestone page
 		eventEmitter.emit('milestones', (out) => {
 			if (out === null) {
 				r_set = record.milestones.milestones;
@@ -353,9 +374,9 @@ $(document).ready(function() {
 						$el.popover({
 							html: true,
 							title: "Milestone",
-							content: "PM: " + r_set[getIndexNoDate(eventObj)].name + "<br />Type: <strong>" +
-							r_set[getIndexNoDate(eventObj)].type + "</strong><br />Project #: " + r_set[getIndexNoDate(eventObj)].projnum +
-							"<br /> Project: " + p_name,
+							content: "PM: <strong>" + r_set[getIndexNoDate(eventObj)].name + "</strong><br />Type: <strong>" +
+							r_set[getIndexNoDate(eventObj)].type + "</strong><br />Project #: <strong>" + r_set[getIndexNoDate(eventObj)].projnum +
+							"</strong><br /> Project: <strong>" + p_name + "</strong>",
 							trigger: 'hover',
 							placement: 'top',
 							container: 'body'
@@ -368,7 +389,12 @@ $(document).ready(function() {
 						// run and open modal dialog
 						$("#events-modal").modal();
 						$("#datepicker2").val(c_rec.date);
+						$(`#projnum.custom-select option:selected`).removeAttr("selected");
+						$(`#projnum.custom-select option[value='${c_rec.projnum}']`).attr('selected', 'selected');
 						// use event emitter to control actions
+						$("#projm").html(`<strong>${c_rec.name}</strong> (Current)`);
+						$(`#pmchooser.custom-select option:selected`).removeAttr("selected");
+						$(`#pmchooser.custom-select option[value='${c_rec.name}']`).attr('selected', 'selected');
 					}
 				});
 			} else {
