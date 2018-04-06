@@ -191,6 +191,14 @@ $(document).ready(function() {
 					`<option value="${element.name}">${element.name}`+
 					`</option>`)
 			});
+
+			var options = $('select#pmchooser option');
+			var arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
+			arr.sort(function(o1, o2) { return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; });
+			options.each(function(i, o) {
+			o.value = arr[i].v;
+			$(o).text(arr[i].t);
+			});
 		});
 	}
 	
@@ -216,6 +224,14 @@ $(document).ready(function() {
 							.append(
 							`<option value="${element.projnum}">${element.projnum}`+ 
 							`- ${element.projname}</option>`);
+					});
+
+					var options = $('select#projnum option');
+					var arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
+					arr.sort(function(o1, o2) { return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; });
+					options.each(function(i, o) {
+					o.value = arr[i].v;
+					$(o).text(arr[i].t);
 					});
 
 					loadEmployeeList();
@@ -395,6 +411,7 @@ $(document).ready(function() {
 						$("#projm").html(`<strong>${c_rec.name}</strong> (Current)`);
 						$(`#pmchooser.custom-select option:selected`).removeAttr("selected");
 						$(`#pmchooser.custom-select option[value='${c_rec.name}']`).attr('selected', 'selected');
+						$("#mtype").val(c_rec.type);
 					}
 				});
 			} else {
