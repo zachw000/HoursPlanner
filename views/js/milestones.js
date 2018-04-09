@@ -177,6 +177,11 @@ var getIndexNoDate = (eventObj) => {
 	return i;
 };
 
+var allFilled = ($fields) => {
+	console.log($fields);
+	return $fields.filter(field => field.value == '').length == 0;
+}
+
 $(document).ready(function() {
 
 	async function loadEmployeeList() {
@@ -187,13 +192,34 @@ $(document).ready(function() {
 			}
 
 			record.employees.Employees.forEach((element) => {
-				$(`[id^=pmchooser].custom-select`).append(
+				$(`#pmchooser.custom-select`).append(
 					`<option value="${element.name}">${element.name}`+
 					`</option>`)
 			});
 
-			var options = $('select#pmchooser.custom-select option');
+			record.employees.Employees.forEach((element) => {
+				$(`#pmchooser2.custom-select`).append(
+					`<option value="${element.name}">${element.name}`+
+					`</option>`)
+			});
+
+			var options = $('#pmchooser.custom-select option');
 			var arr = options.map(function(_, o) { 
+				return { 
+					t: $(o).text(), 
+					v: o.value 
+				}; 
+			}).get();
+			arr.sort(function(o1, o2) { 
+				return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; 
+			});
+			options.each(function(i, o) {
+				o.value = arr[i].v;
+				$(o).text(arr[i].t);
+			});
+
+			options = $('#pmchooser2.custom-select option');
+			arr = options.map(function(_, o) { 
 				return { 
 					t: $(o).text(), 
 					v: o.value 
@@ -235,6 +261,21 @@ $(document).ready(function() {
 
 					var options = $('select#projnum option');
 					var arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
+					arr.sort(function(o1, o2) { return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; });
+					options.each(function(i, o) {
+					o.value = arr[i].v;
+					$(o).text(arr[i].t);
+					});
+
+					record.projects.projects.forEach(element => {
+						$("#projnum2.custom-select")
+							.append(
+							`<option value="${element.projnum}">${element.projnum}`+ 
+							`- ${element.projname}</option>`);
+					});
+
+					options = $('select#projnum2 option');
+					arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
 					arr.sort(function(o1, o2) { return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; });
 					options.each(function(i, o) {
 					o.value = arr[i].v;
@@ -311,6 +352,14 @@ $(document).ready(function() {
 		}
 		
 		$(this).val(dt);
+	});
+
+	let $addf = $('#mtype2, #datepicker, #projnum2, #pmchooser2');
+
+	$addf.on('keyup change', function () {
+		if (allFilled($addf)) {
+			$("#addmilestone").removeAttr('disabled');
+		}
 	});
 	
 	// TODO: Implement save milestone
