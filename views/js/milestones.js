@@ -80,10 +80,9 @@ var Reverse8601 = (standardDate) => {
 **/
 var writeLiveRecord = () => {
 	// Make sure the recordset is NOT null, do nothing otherwise
-	if (!record.milestones.milestones == null) {
-		for (var i = 0; i < record.milestones.milestones.length; i++)
-			if (record.milestones.milestones[i].hasOwnProperty('indicie') || typeof record.milestones.milestones[i].indicie != "undefined")
-				delete record.milestones.milestones[i].indicie;
+	if (!(record.milestones.milestones == null)) {
+		// console.log("WRITING")
+		for (var i = 0; i < record.milestones.milestones.length; i++) delete record.milestones.milestones[i].indicie;
 		jsonfile.writeFile(prepend + filenames[1], record.milestones, (err) => {
 			if (err !== null) console.error(err);
 		});
@@ -178,8 +177,14 @@ var getIndexNoDate = (eventObj) => {
 };
 
 var allFilled = ($fields) => {
-	console.log($fields);
-	return $fields.filter(field => field.value == '').length == 0;
+	return $fields.filter(function () {
+		if (this.value === '') {
+			$(this).addClass('bg-danger');
+		} else {
+			$(this).removeClass('bg-danger');
+		}
+		return this.value === '';
+	}).length == 0;
 }
 
 $(document).ready(function() {
@@ -336,6 +341,8 @@ $(document).ready(function() {
 
 			// Close modal dialog
 			$("#events-modal").modal("hide");
+
+			writeLiveRecord();
 		}
 	});
 	
@@ -359,7 +366,56 @@ $(document).ready(function() {
 	$addf.on('keyup change', function () {
 		if (allFilled($addf)) {
 			$("#addmilestone").removeAttr('disabled');
+		} else {
+			$("#addmilestone").attr('disabled', 'disabled');
 		}
+	});
+
+	let $editf = $('#mtype, #datepicker2, #projnum, #pmchooser');
+
+	$editf.on('keyup change', () => {
+		if (allFilled($editf)) {
+			$("#savemilestone").removeAttr('disabled');
+		} else {
+			$("#savemilestone").attr('disabled', 'disabled');
+		}
+	});
+
+	$("#addmilestone").on('click', () => {
+		// Create new JSON entry
+		let nobj = {
+			name: $("#pmchooser2").val(),
+			projnum: $("#projnum2").val(),
+			date: $('#datepicker').val(),
+			type: $('#mtype2').val()
+		};
+		// Add to array
+		record.milestones.milestones.push(nobj);
+
+		// Write to record
+		writeLiveRecord();
+
+		// Create event object
+		let max = 0;
+		$("#calendar").fullCalendar('clientEvents', (eventObj) => {
+			max = eventObj.id > max ? eventObj.id : max;
+
+			// Just need IDs
+			return false;
+		});
+
+		max++;
+		var nevent = {
+			start: ISO86Date($("#datepicker").val(), '8hr') + "T17:00:00",
+			end: ISO86Date($("#datepicker").val(), '8hr') + "T17:00:00",
+			title: getProjectByNum($("#projnum2").val()).projname + " #" + $("#projnum2").val(),
+			id: max + "///" + $("#mtype2").val()
+		};
+		// Render event object
+		$("#calendar").fullCalendar('renderEvent', nevent);
+
+		// Close modal dialog
+		$("#addnew-modal").modal('hide');
 	});
 	
 	// TODO: Implement save milestone
