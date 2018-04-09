@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 // Division display variables
 var dphx = true;
 var dlax = true;
@@ -19,15 +18,10 @@ $(document).ready(function() {
   });
   eventEmitter.on('empRead', () => {
     var empSet = record.employees.Employees;
-    var tableRow = [];
-    //alert(JSON.stringify(empSet, null, ' '));
-    for (var i = 0; i < empSet.length; i++) {
-      tableRow.push("<td>" + empSet[i].name + "</td><td>" +
-      empSet[i].division + "</td><td>" + empSet[i].role + "</td><td>" + totalHours(empSet[i].hours) +
-      "</td>");
-      tableRow[tableRow.length - 1] = "<tr>" + tableRow[tableRow.length - 1] + "</tr>\n";
-    }
-    $("#empTable").html(tableRow.join(''));
+    let tableRow = empSet.map((data) => {
+      return `<tr><td>${data.name}</td><td>${data.division}</td><td>${data.role}</td><td>${totalHours(data.hours)}</td></tr>`;
+    }).join('\n');
+    $("#empTable").html(tableRow);
   });
 });
 $(document).ready(() => {
