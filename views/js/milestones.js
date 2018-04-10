@@ -409,7 +409,9 @@ $(document).ready(function() {
 			start: ISO86Date($("#datepicker").val(), '8hr') + "T17:00:00",
 			end: ISO86Date($("#datepicker").val(), '8hr') + "T17:00:00",
 			title: getProjectByNum($("#projnum2").val()).projname + " #" + $("#projnum2").val(),
-			id: max + "///" + $("#mtype2").val()
+			id: max + "///" + $("#mtype2").val(),
+			color: 'rgba(139, 195, 74, 0.4)',
+			textColor: 'rgba(26, 26, 26, 1)'
 		};
 		// Render event object
 		$("#calendar").fullCalendar('renderEvent', nevent);
@@ -425,9 +427,6 @@ $(document).ready(function() {
 		if (!d.isValid()) {
 			// Date is not valid, do not accept
 		} else {
-			// Change JSON data, and update calendar
-			r_set[c_rec.indicie].date = removeZeroes(d.format("MM/DD/YYYY"));
-			
 			// Obtain original event from memory, edit reference
 			var obj = $("#calendar").fullCalendar('clientEvents', (oevent) => {
 				if (oevent.title.split(" #").pop() == c_rec.projnum &&
@@ -436,12 +435,20 @@ $(document).ready(function() {
 					return true;
 				return false;
 			});
-
+			// Change JSON data, and update calendar
+			console.log(r_set[c_rec.indicie])
+			r_set[c_rec.indicie].date = removeZeroes(d.format("MM/DD/YYYY"));
+			r_set[c_rec.indicie].type = $("#mtype").val();
+			r_set[c_rec.indicie].projnum = $("#projnum").val();
+			r_set[c_rec.indicie].name = $("#pmchooser").val();
+			console.log(r_set[c_rec.indicie])
 			// obj is an array, use first element of array
-			obj[0].start = removeZeroes(d.format('MM/DD/YYYY') + "T17:00:00");
-			obj[0].end = removeZeroes(d.format('MM/DD/YYYY') + "T17:00:00");
-
+			obj[0].title = getProjectByNum(r_set[c_rec.indicie].projnum).projname + " #" + $("#projnum").val();
+			obj[0].id = obj[0].id.split('///')[0] + "///" + $("#mtype").val();
+			obj[0].start = ISO86Date(removeZeroes(d.format('MM/DD/YYYY')), '8hr') + "T17:00:00";
+			obj[0].end = ISO86Date(removeZeroes(d.format('MM/DD/YYYY')), '8hr') + "T17:00:00";
 			$("#calendar").fullCalendar('updateEvent', obj[0]);
+			$("#events-modal").modal('hide');
 		}
 	});
 	
@@ -498,6 +505,7 @@ $(document).ready(function() {
 						}
 					},
 					eventRender: function (eventObj, $el) {
+						console.log(eventObj)
 						var p_name = getProjectByNum(r_set[getIndexNoDate(eventObj)].projnum).projname;
 						$el.popover({
 							html: true,
