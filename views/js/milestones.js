@@ -447,6 +447,8 @@ $(document).ready(function() {
 			obj[0].id = obj[0].id.split('///')[0] + "///" + $("#mtype").val();
 			obj[0].start = ISO86Date(removeZeroes(d.format('MM/DD/YYYY')), '8hr') + "T17:00:00";
 			obj[0].end = ISO86Date(removeZeroes(d.format('MM/DD/YYYY')), '8hr') + "T17:00:00";
+			record.milestones.milestones = r_set;
+			writeLiveRecord();
 			$("#calendar").fullCalendar('updateEvent', obj[0]);
 			$("#events-modal").modal('hide');
 		}
