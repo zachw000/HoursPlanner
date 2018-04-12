@@ -1,6 +1,6 @@
 /**
  *@author Zachary Waldron
- *@desc Handles Paid Time Off/Out of Office Time
+ *@desc Handles Milestones
  *
  *
  **/
@@ -275,8 +275,7 @@ $(document).ready(function() {
 					record.projects.projects.forEach(element => {
 						$("#projnum2.custom-select")
 							.append(
-							`<option value="${element.projnum}">${element.projnum}`+ 
-							`- ${element.projname}</option>`);
+							`<option value="${element.projnum}">${element.projnum}- ${element.projname}</option>`);
 					});
 
 					options = $('select#projnum2 option');
