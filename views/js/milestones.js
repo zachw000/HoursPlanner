@@ -511,9 +511,9 @@ $(document).ready(function() {
 						$el.popover({
 							html: true,
 							title: "Milestone",
-							content: "PM: <strong>" + r_set[getIndexNoDate(eventObj)].name + "</strong><br />Type: <strong>" +
-							r_set[getIndexNoDate(eventObj)].type + "</strong><br />Project #: <strong>" + r_set[getIndexNoDate(eventObj)].projnum +
-							"</strong><br /> Project: <strong>" + p_name + "</strong>",
+							content: "PM: <strong>" + escapeHtml(r_set[getIndexNoDate(eventObj)].name) + "</strong><br />Type: <strong>" +
+													escapeHtml(r_set[getIndexNoDate(eventObj)].type) + "</strong><br />Project #: <strong>" + escapeHtml(r_set[getIndexNoDate(eventObj)].projnum) +
+							"</strong><br /> Project: <strong>" + escapeHtml(p_name) + "</strong>",
 							trigger: 'hover',
 							placement: 'top',
 							container: 'body'

@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- Insert this line above script imports  -->
-  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+  <script>
+    if (typeof module === 'object') {
+      window.module = module;
+      module = undefined;
+    }
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <title>Hours Planner</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="utf-8" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <meta name="author" content="Zachary Waldron" />
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
   <link href="BS4/css/mdb.min.css" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <link href="css/fixes.css" rel="stylesheet" />
@@ -29,8 +36,11 @@
   <script type="text/javascript" src="../bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
   <script type="text/javascript" src="js/nio.js"></script>
   <!-- Insert this line after script imports -->
-  <script>if (window.module) module = window.module;</script>
+  <script>
+    if (window.module) module = window.module;
+  </script>
 </head>
+
 <body>
   <div class="modal" id="nlo-modal">
     <div class="modal-dialog" role="document">
@@ -43,8 +53,10 @@
         </div>
         <div class="modal-body">
           <p>
-            This page requires &quot;<em><a href="login.ejs">logging in</a></em>&quot; to 
-      edit your Out Of Office time.
+            This page requires &quot;
+            <em>
+              <a href="login.ejs">logging in</a>
+            </em>&quot; to edit your Out Of Office time.
           </p>
           <hr />
         </div>
@@ -54,175 +66,200 @@
       </div>
     </div>
   </div>
-    <div class="modal" id="events-modal">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Edit OOO</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p>
-                <button class="btn btn-danger" onclick="eventEmitter.emit('delNIO');">
-                  <i class="fa fa-trash"></i>
-                  DELETE OOO Entry
-                </button>
-              </p>
-              <hr />
-              <form>
-                  <div class="form-group">
-                    <label for="datepicker3"><strong>Edit Start Date:</strong></label>
-                    <input placeholder="Start Date" id="datepicker3" width="276" />
-                    <script>
-                        $('#datepicker3').datepicker({
-                            uiLibrary: 'bootstrap4'
-                        });
-                    </script>
-                  </div>
-                  <hr />
-                  <!-- Use crec to edit current record -->
-                  <div class="form-check form-check">
-                    <input class="form-check-input" type="checkbox" id="isMultiDay2" />
-                    <label class="form-check-label" for="isMultiDay2">Multiple Days</label>
-                  </div>
-                  <div class="form-check form-check">
-                    <input class="form-check-input" type="radio" name="time" id="timeOffAm2" value="4am">
-                    <label class="form-check-label" for="timeOffAm2">Morning Time Off</label>
-                  </div>
-                  <div class="form-check form-check">
-                    <input class="form-check-input" type="radio" name="time" id="timeOffPm2" value="4pm">
-                    <label class="form-check-label" for="timeOffPm2">Afternoon Time Off</label>
-                  </div>
-                  <div class="form-check form-check">
-                    <input class="form-check-input" checked="true" type="radio" name="time" id="timeOffFullDay2" value="8hr">
-                    <label class="form-check-label" for="timeOffFullDay2">Full Day</label>
-                  </div>
-                  <div class="form-group hidden" id="EndDate2">
-                    <label for="datepicker4"><strong>End Date:</strong></label>
-                    <input placeholder="End Date" id="datepicker4" width="276" />
-                    <script>
-                        $('#datepicker4').datepicker({
-                            uiLibrary: 'bootstrap4'
-                        });
-                    </script>
-                  </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" id="savenio" class="btn btn-primary">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
+  <div class="modal" id="events-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit OOO</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-      </div>
-  <div class="modal" id="addnew-modal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addnew-title">Add New</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+        <div class="modal-body">
+          <p>
+            <button class="btn btn-danger" onclick="eventEmitter.emit('delNIO');">
+              <i class="fa fa-trash"></i>
+              DELETE OOO Entry
             </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="datepicker"><strong>Start Date:</strong></label>
-                <input placeholder="Start Date" id="datepicker" width="276" />
-                <script>
-                    $('#datepicker').datepicker({
-                        uiLibrary: 'bootstrap4'
-                    });
-                </script>
-              </div>
-              <hr />
-              <div class="form-check form-check">
-                <input class="form-check-input" type="checkbox" id="isMultiDay" />
-                <label class="form-check-label" for="isMultiDay">Multiple Days</label>
-              </div>
-              <div class="form-check form-check">
-                <input class="form-check-input" type="radio" name="time" id="timeOffAm" value="4am">
-                <label class="form-check-label" for="timeOffAm">Morning Time Off</label>
-              </div>
-              <div class="form-check form-check">
-                <input class="form-check-input" type="radio" name="time" id="timeOffPm" value="4pm">
-                <label class="form-check-label" for="timeOffPm">Afternoon Time Off</label>
-              </div>
-              <div class="form-check form-check">
-                <input class="form-check-input" checked="true" type="radio" name="time" id="timeOffFullDay" value="8hr">
-                <label class="form-check-label" for="timeOffFullDay">Full Day</label>
-              </div>
-              <div class="form-group hidden" id="EndDate">
-                <label for="datepicker2"><strong>End Date:</strong></label>
-                <input placeholder="End Date" id="datepicker2" width="276" />
-                <script>
-                    $('#datepicker2').datepicker({
-                        uiLibrary: 'bootstrap4'
-                    });
-                </script>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="addnio" disabled="true">Add OOO</button> <!-- Disable until all fields are entered -->
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
+          </p>
+          <hr />
+          <form>
+            <div class="form-group">
+              <label for="datepicker3">
+                <strong>Edit Start Date:</strong>
+              </label>
+              <input placeholder="Start Date" id="datepicker3" width="276" />
+              <script>
+                $('#datepicker3').datepicker({
+                  uiLibrary: 'bootstrap4'
+                });
+              </script>
+            </div>
+            <hr />
+            <!-- Use crec to edit current record -->
+            <div class="form-check form-check">
+              <input class="form-check-input" type="checkbox" id="isMultiDay2" />
+              <label class="form-check-label" for="isMultiDay2">Multiple Days</label>
+            </div>
+            <div class="form-check form-check">
+              <input class="form-check-input" type="radio" name="time" id="timeOffAm2" value="4am">
+              <label class="form-check-label" for="timeOffAm2">Morning Time Off</label>
+            </div>
+            <div class="form-check form-check">
+              <input class="form-check-input" type="radio" name="time" id="timeOffPm2" value="4pm">
+              <label class="form-check-label" for="timeOffPm2">Afternoon Time Off</label>
+            </div>
+            <div class="form-check form-check">
+              <input class="form-check-input" checked="true" type="radio" name="time" id="timeOffFullDay2" value="8hr">
+              <label class="form-check-label" for="timeOffFullDay2">Full Day</label>
+            </div>
+            <div class="form-group hidden" id="EndDate2">
+              <label for="datepicker4">
+                <strong>End Date:</strong>
+              </label>
+              <input placeholder="End Date" id="datepicker4" width="276" />
+              <script>
+                $('#datepicker4').datepicker({
+                  uiLibrary: 'bootstrap4'
+                });
+              </script>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="savenio" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+  </div>
+  <div class="modal" id="addnew-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addnew-title">Add New</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="datepicker">
+                <strong>Start Date:</strong>
+              </label>
+              <input placeholder="Start Date" id="datepicker" width="276" />
+              <script>
+                $('#datepicker').datepicker({
+                  uiLibrary: 'bootstrap4'
+                });
+              </script>
+            </div>
+            <hr />
+            <div class="form-check form-check">
+              <input class="form-check-input" type="checkbox" id="isMultiDay" />
+              <label class="form-check-label" for="isMultiDay">Multiple Days</label>
+            </div>
+            <div class="form-check form-check">
+              <input class="form-check-input" type="radio" name="time" id="timeOffAm" value="4am">
+              <label class="form-check-label" for="timeOffAm">Morning Time Off</label>
+            </div>
+            <div class="form-check form-check">
+              <input class="form-check-input" type="radio" name="time" id="timeOffPm" value="4pm">
+              <label class="form-check-label" for="timeOffPm">Afternoon Time Off</label>
+            </div>
+            <div class="form-check form-check">
+              <input class="form-check-input" checked="true" type="radio" name="time" id="timeOffFullDay" value="8hr">
+              <label class="form-check-label" for="timeOffFullDay">Full Day</label>
+            </div>
+            <div class="form-group hidden" id="EndDate">
+              <label for="datepicker2">
+                <strong>End Date:</strong>
+              </label>
+              <input placeholder="End Date" id="datepicker2" width="276" />
+              <script>
+                $('#datepicker2').datepicker({
+                  uiLibrary: 'bootstrap4'
+                });
+              </script>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="addnio" disabled="true">Add OOO</button>
+          <!-- Disable until all fields are entered -->
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="sticky-top navigation navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-light">
-		<a class="text-dark navbar-brand" href="./index.ejs">Gannett Fleming</a>
+    <a class="text-dark navbar-brand" href="./index.ejs">Gannett Fleming</a>
 
-		<button class="text-dark navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#mainNavbarCollapse">
-			&#9776;
-		</button>
-		<div class="collapse navbar-collapse justify-content-md-center navbar-toggleable-md" id="mainNavbarCollapse">
-			<ul class="nav pull-lg-right navbar-nav mr-auto">
-		<li class='nav-item dropdown'><a href='./index.ejs' class='text-dark nav-link'>Overview</a></li>
-    <li class='nav-item dropdown'><a href='./login.ejs' class='text-dark login-link nav-link'>Login</a></li>
-    <li class='nav-item dropdown'><a class="text-primary nav-link active nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			Personnel <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-  			<ul class="dropdown-menu bg-light" aria-labelledby="navbarDropdown1">
-  				<li class='text-primary nav-item dropdown-header'>Personnel</li>
-  				<li class='nav-item'>
-  					<a class='text-dark hover nav-link' href='employees.ejs'>Employees</a>
-  				</li>
-  				<li class='nav-item'>
-  					<a class='text-dark hover nav-link' href='#'>Set PMs</a>
-  				</li>
-  				<li class='nav-item'>
-  					<a class='text-dark hover nav-link' href='#'>Set ENGs</a>
-  				</li>
-  				<li class='nav-item'>
-  					<a class='text-dark hover nav-link' href='#'>Set INSPTs</a>
-  				</li>
-  				<li class='nav-item'>
-  					<a class='text-dark hover nav-link' href='#'>Set ADMINs</a>
-  				</li>
-  				<li class='nav-item'>
-  					<a class='text-dark hover nav-link' href='pto.ejs'>PTO</a>
-  				</li>
-  				<li class='nav-item'>
-  					<a class='text-primary hover active nav-link' href='ooo.ejs'>OOO</a>
-  				</li>
-  			</ul></li><li class='nav-item dropdown'><a class='text-dark nav-link nav-rotate' id='navbarDropdown2' data-target='#' href='/' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Projects <i class="fa fa-angle-down" aria-hidden="true"></i>
-  </a>
-  			<ul class='dropdown-menu bg-light' aria-labelledby='navbarDropdown2'>
-  				<li class='text-dark nav-item dropdown-header'>Projects</li>
-  				<li class='nav-item'>
-  					<a class='text-dark nav-link' href='#'>Enter New &#9;<i class='fa fa-cog' aria-hidden='true'></i></a>
-  				</li>
-  				<li class='nav-item'>
-  					<a class='text-dark nav-link' href='#'>Edit Existing &#9;<i class='fa fa-pencil' aria-hidden='true'></i></a>
-          </li>
-          <li>
-              <a class='text-dark nav-link active' href='milestones.ejs'>Milestones &#9;<i class='fa fa-star' aria-hidden='true'></i></a>
-          </li>
-  			</ul></li></ul>
-  			</div>
-  		</div>
+    <button class="text-dark navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#mainNavbarCollapse">
+      &#9776;
+    </button>
+    <div class="collapse navbar-collapse justify-content-md-center navbar-toggleable-md" id="mainNavbarCollapse">
+      <ul class="nav pull-lg-right navbar-nav mr-auto">
+        <li class='nav-item dropdown'>
+          <a href='./index.ejs' class='text-dark nav-link'>Overview</a>
+        </li>
+        <li class='nav-item dropdown'>
+          <a href='./login.ejs' class='text-dark login-link nav-link'>Login</a>
+        </li>
+        <li class='nav-item dropdown'>
+          <a class="text-primary nav-link active nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Personnel
+            <i class="fa fa-angle-down" aria-hidden="true"></i>
+          </a>
+          <ul class="dropdown-menu bg-light" aria-labelledby="navbarDropdown1">
+            <li class='text-primary nav-item dropdown-header'>Personnel</li>
+            <li class='nav-item'>
+              <a class='text-dark hover nav-link' href='employees.ejs'>Employees</a>
+            </li>
+            <li class='nav-item'>
+              <a class='text-dark hover nav-link' href='#'>Set PMs</a>
+            </li>
+            <li class='nav-item'>
+              <a class='text-dark hover nav-link' href='#'>Set ENGs</a>
+            </li>
+            <li class='nav-item'>
+              <a class='text-dark hover nav-link' href='#'>Set INSPTs</a>
+            </li>
+            <li class='nav-item'>
+              <a class='text-dark hover nav-link' href='#'>Set ADMINs</a>
+            </li>
+            <li class='nav-item'>
+              <a class='text-dark hover nav-link' href='pto.ejs'>PTO</a>
+            </li>
+            <li class='nav-item'>
+              <a class='text-primary hover active nav-link' href='ooo.ejs'>OOO</a>
+            </li>
+          </ul>
+        </li>
+        <li class='nav-item dropdown'>
+          <a class='nav-link text-dark nav-rotate' id='navbarDropdown2' data-target='#' href='/' data-toggle='dropdown'
+              aria-haspopup='true' aria-expanded='false'>Projects
+              <i class="fa fa-angle-down" aria-hidden="true"></i>
+          </a>
+          <ul class='dropdown-menu bg-light' aria-labelledby='navbarDropdown2'>
+              <li class='nav-item text-dark dropdown-header'>Projects</li>
+              <li class='nav-item'>
+                  <a class='text-dark nav-link' href='projects.ejs'>Projects &#9;
+                      <i class='fa fa-cog' aria-hidden='true'></i>
+                  </a>
+              </li>
+              <li>
+                  <a class='text-dark nav-link' href='milestones.ejs'>Milestones &#9;
+                      <i class='fa fa-star' aria-hidden='true'></i>
+                  </a>
+              </li>
+          </ul>
+      </li>
+      </ul>
+    </div>
+  </div>
   <div class="container-fluid">
     <div class="row">
       <div class="container">
@@ -240,4 +277,5 @@
     </div>
   </div>
 </body>
+
 </html>
