@@ -34,6 +34,7 @@
     <script src="scripts/jsonhandler.js"></script>
     <link rel="stylesheet" href="../bower_components/bootstrap-select/dist/css/bootstrap-select.css" />
     <script type="text/javascript" src="../bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+    <script type="text/javascript" src="js/projects.js"></script>
     <!-- Insert this line after script imports -->
     <script>
         if (window.module) module = window.module;
@@ -50,7 +51,7 @@
         <div class="collapse navbar-collapse justify-content-md-left navbar-toggleable-md" id="mainNavbarCollapse">
             <ul class="nav pull-lg-right navbar-nav mr-auto">
                 <li class='nav-item active dropdown'>
-                    <a href='./index.ejs' class='text-primary nav-link'>Overview</a>
+                    <a href='./index.ejs' class='text-dark nav-link'>Overview</a>
                 </li>
                 <li class='nav-item dropdown'>
                     <a href='./login.ejs' class='text-dark login-link nav-link'>Login</a>
@@ -87,7 +88,7 @@
                     </ul>
                 </li>
                 <li class='nav-item dropdown'>
-                    <a class='nav-link text-dark nav-rotate' id='navbarDropdown2' data-target='#' href='/' data-toggle='dropdown'
+                    <a class='nav-link text-primary nav-rotate' id='navbarDropdown2' data-target='#' href='/' data-toggle='dropdown'
                         aria-haspopup='true' aria-expanded='false'>Projects
                         <i class="fa fa-angle-down" aria-hidden="true"></i>
                     </a>
@@ -113,6 +114,21 @@
             <div class="container">
                 <h3 class="text-right">Projects</h3>
                 <hr />
+                <!-- TODO: List Projects -->
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">PM</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Active?</th>
+                        </tr>
+                    </thead>
+                    <!--APPEND-->
+                    <tbody id="p_list">
+
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
