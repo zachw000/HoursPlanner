@@ -42,6 +42,30 @@
 </head>
 
 <body>
+  <div class="modal fade" id="nlo-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Please Log In</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>
+            This page requires &quot;
+            <em>
+              <a href="login.ejs">logging in</a>
+            </em>&quot; to edit the employee data.
+          </p>
+          <hr />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="sticky-top navigation navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-light">
     <a class="text-dark navbar-brand" href="./index.ejs">Gannett Fleming</a>
 
@@ -51,22 +75,26 @@
     <div class="collapse navbar-collapse justify-content-md-center navbar-toggleable-md" id="mainNavbarCollapse">
       <ul class="nav pull-lg-right navbar-nav mr-auto">
         <li class='nav-item dropdown'>
-          <a href='./index.ejs' class='text-dark nav-link'><i class="fa fa-list-alt"></i> Overview</a>
+          <a href='./index.ejs' class='text-dark nav-link'>
+            <i class="fa fa-list-alt"></i> Overview</a>
         </li>
         <li class='nav-item dropdown'>
-          <a href='./login.ejs' class='text-dark login-link nav-link'><i class="fa fa-sign-in"></i> Login</a>
+          <a href='./login.ejs' class='text-dark login-link nav-link'>
+            <i class="fa fa-sign-in"></i> Login</a>
         </li>
         <li class='nav-item dropdown'>
-          <a class="nav-link text-primary nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link text-primary nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
             Personnel
             <i class="fa fa-angle-down" aria-hidden="true"></i>
           </a>
           <ul class="dropdown-menu bg-light" aria-labelledby="navbarDropdown1">
             <li class='text-dark nav-item dropdown-header'>Personnel</li>
             <li class='nav-item'>
-              <a class='text-primary hover active nav-link' href='employees.ejs'><i class="fa fa-users"></i> Employees</a>
-            </li><!--DEPRACATED
+              <a class='text-primary hover active nav-link' href='employees.ejs'>
+                <i class="fa fa-users"></i> Employees</a>
+            </li>
+            <!--DEPRACATED
             <li class='nav-item'>
               <a class='text-dark hover nav-link' href='#'>Set PMs</a>
             </li>
@@ -80,32 +108,36 @@
               <a class='text-dark hover nav-link' href='#'>Set ADMINs</a>
             </li>-->
             <li class='nav-item'>
-              <a class='text-dark hover nav-link' href='pto.ejs'><i class="fa fa-power-off"></i> PTO</a>
+              <a class='text-dark hover nav-link' href='pto.ejs'>
+                <i class="fa fa-power-off"></i> PTO</a>
             </li>
             <li class='nav-item'>
-              <a class='text-dark hover nav-link' href='ooo.ejs'><i class="fa fa-address-card"></i> OOO</a>
+              <a class='text-dark hover nav-link' href='ooo.ejs'>
+                <i class="fa fa-address-card"></i> OOO</a>
             </li>
           </ul>
         </li>
         <li class='nav-item dropdown'>
-          <a class='nav-link text-dark nav-rotate' id='navbarDropdown2' data-target='#' href='/' data-toggle='dropdown'
-              aria-haspopup='true' aria-expanded='false'>Projects
-              <i class="fa fa-angle-down" aria-hidden="true"></i>
+          <a class='nav-link text-dark nav-rotate' id='navbarDropdown2' data-target='#' href='/' data-toggle='dropdown' aria-haspopup='true'
+            aria-expanded='false'>Projects
+            <i class="fa fa-angle-down" aria-hidden="true"></i>
           </a>
           <ul class='dropdown-menu bg-light' aria-labelledby='navbarDropdown2'>
-              <li class='nav-item text-dark dropdown-header'>Projects</li>
-              <li class='nav-item'>
-                  <a class='text-dark nav-link' href='projects.ejs'><i class='fa fa-cog' aria-hidden='true'></i> Projects &#9;
-                      
-                  </a>
-              </li>
-              <li>
-                  <a class='text-dark nav-link' href='milestones.ejs'><i class='fa fa-star' aria-hidden='true'></i> Milestones &#9;
-                      
-                  </a>
-              </li>
+            <li class='nav-item text-dark dropdown-header'>Projects</li>
+            <li class='nav-item'>
+              <a class='text-dark nav-link' href='projects.ejs'>
+                <i class='fa fa-cog' aria-hidden='true'></i> Projects &#9;
+
+              </a>
+            </li>
+            <li>
+              <a class='text-dark nav-link' href='milestones.ejs'>
+                <i class='fa fa-star' aria-hidden='true'></i> Milestones &#9;
+
+              </a>
+            </li>
           </ul>
-      </li>
+        </li>
       </ul>
     </div>
   </div>

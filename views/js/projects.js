@@ -18,7 +18,7 @@ $(document).ready(() => {
         $("#p_list").html(tableRows)
     })
     $("#wrapper").on('click', 'tbody tr', function () {
-        alert($(this).html().split("</"))
+        alert($(this).html())
     })
     $("#newProject").on("click", function () {
         $("#addnew-modal").modal();

@@ -3,6 +3,12 @@ let dphx = true, dlax = true, dataMap = (arr) =>
   arr.map((data) => {
     return `<tr><td>${data.name}</td><td>${data.division}</td><td>${data.role}</td><td>${totalHours(data.hours)}</td></tr>`;});
 $(document).ready(() => {
+  eventEmitter.on('notLoggedIn', () => {
+      $("#nlo-modal").modal();
+  })
+  $("#nlo-modal").on("hidden.bs.modal", () => {
+      window.location.href = "login.ejs";
+  })
   $("input[type='checkbox']").on('change', function () {
     dlax = document.getElementById("division-lax").checked;
     dphx = document.getElementById("division-phx").checked;
