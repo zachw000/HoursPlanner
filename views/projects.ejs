@@ -42,6 +42,46 @@
 </head>
 
 <body>
+    <div class="modal" id="nlo-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Please Log In</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        This page requires &quot;
+                        <em>
+                            <a href="login.ejs">logging in</a>
+                        </em>&quot; to edit the project listings.
+                    </p>
+                    <hr />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal slide" id="addnew-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="addProj">Add Project</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="sticky-top navigation navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-light">
         <a class="navbar-brand text-dark" href="./index.ejs">Gannett Fleming</a>
 
@@ -57,8 +97,8 @@
                     <a href='./login.ejs' class='text-dark login-link nav-link'>Login</a>
                 </li>
                 <li class='nav-item dropdown'>
-                    <a class="text-dark nav-link nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
+                    <a class="text-dark nav-link nav-rotate hover" id="navbarDropdown1" data-target="#" href="/" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
                         Personnel
                         <i class="fa fa-angle-down" aria-hidden="true"></i>
                     </a>
@@ -88,8 +128,8 @@
                     </ul>
                 </li>
                 <li class='nav-item dropdown'>
-                    <a class='nav-link text-primary nav-rotate' id='navbarDropdown2' data-target='#' href='/' data-toggle='dropdown'
-                        aria-haspopup='true' aria-expanded='false'>Projects
+                    <a class='nav-link text-primary nav-rotate' id='navbarDropdown2' data-target='#' href='/' data-toggle='dropdown' aria-haspopup='true'
+                        aria-expanded='false'>Projects
                         <i class="fa fa-angle-down" aria-hidden="true"></i>
                     </a>
                     <ul class='dropdown-menu bg-light' aria-labelledby='navbarDropdown2'>
@@ -113,23 +153,26 @@
         <div class="row">
             <div class="container">
                 <h3 class="text-right">Projects</h3>
+                <button type="button" class="btn btn-success" id="newProject">Add New Project</button>
                 <hr />
                 <!-- TODO: List Projects -->
-                <table class="table table-striped table-bordered table-hover">
-                    <caption>Current Projects</caption>
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">PM</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Active?</th>
-                        </tr>
-                    </thead>
-                    <!--APPEND-->
-                    <tbody id="p_list">
+                <div id="wrapper">
+                    <table class="table table-striped table-bordered table-hover">
+                        <caption>Current Projects</caption>
+                        <thead class="thead">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">PM</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Active?</th>
+                            </tr>
+                        </thead>
+                        <!--APPEND-->
+                        <tbody id="p_list">
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
