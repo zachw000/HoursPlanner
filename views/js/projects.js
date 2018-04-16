@@ -19,7 +19,6 @@ $(document).ready(() => {
     })
     $("#wrapper").on('click', 'tbody tr', function () {
         alert($(this).html().split("</"))
-        // get all data from the current table row
     })
     $("#newProject").on("click", function () {
         $("#addnew-modal").modal();

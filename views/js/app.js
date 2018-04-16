@@ -282,7 +282,7 @@ $(document).ready(function () {
               {
                 events: milestones_events,
                 color: 'rgba(139, 195, 74, 0.4)',
-                textColor: 'rgba(26, 26, 26, 1)'
+                textColor: 'rgba(255, 255, 255, 1)'
               }
             ]
           });

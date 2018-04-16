@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Inconsolata');
+@import url('https://fonts.googleapis.com/css?family=Dosis');
 
 * {
-        font-family: 'Inconsolata', monospace;
+        font-family: 'Dosis', sans-serif;
 }
 
 img.img-responsive {

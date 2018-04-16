@@ -18,6 +18,9 @@ $(document).ready(() => {
     let tableRow = dataMap(record.employees.Employees).join('\n');
     $("#empTable").html(tableRow);
   });
+  $("#empTable").on("click", "tr", function() {
+    alert($(this).text());
+  })
   eventEmitter.on('loggedIn', () => {/*Log-in specific things*/});
   if ((record.employees === null) && typeof record.employees === 'object') {
     // if the record set is empty load into memory
