@@ -165,7 +165,7 @@ $(document).ready(() => {
   eventEmitter.on('loggedIn', () => {
     // Executed when log in is confirmed
     document.title = "Hours Planner - Welcome " + lname;
-    $(".login-link").text("Switch User");
+    $(".login-link").html("<i class='fa fa-user'></i> Switch User");
     $(".loginName").html("<strong>"+lname+"</strong>");
     if (currentPage() === 'login.ejs') $("#login").text("Switch User");
     $("#welcome").html("<strong>Welcome - <em>" + lname + "</em></strong>");
