@@ -18,7 +18,7 @@ $(document).ready(() => {
         $("#p_list").html(tableRows)
     })
     $("#p_list").on('click', 'tr', function () {
-        alert($(this).html())
+        alert($(this).find("th").first().text())
     })
     $("#newProject").on("click", function () {
         $("#addnew-modal").modal();
