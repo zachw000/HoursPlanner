@@ -128,9 +128,8 @@ var checkManager = (records) => {
 };
 
 var totalHours = (hours) => {
-  var th = 0;
-  for (var i = 0; i < hours.length; i++)
-    th += hours[i].time;
+  let th = 0;
+  hours.forEach(entry => {th += entry.time})
   return th;
 };
 

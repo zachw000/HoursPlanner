@@ -17,7 +17,7 @@ $(document).ready(() => {
         }).dataMap()
         $("#p_list").html(tableRows)
     })
-    $("#wrapper").on('click', 'tbody tr', function () {
+    $("#p_list").on('click', 'tr', function () {
         alert($(this).html())
     })
     $("#newProject").on("click", function () {

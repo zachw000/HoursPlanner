@@ -14,7 +14,7 @@
       {"name": "Michael Kasting", "division": "PHX", "projectmanager":true, "role": "Drafter", "hours": []},
       {"name": "David Galvin", "division": "PHX", "projectmanager":true, "role": "Drafter", "hours": []},
       {"name": "Glenn Hesseltine", "division": "PHX", "projectmanager":true, "role": "Drafter", "hours": []},
-      {"name": "Le Thanah", "division": "???", "projectmanager":true, "role": "Drafter", "hours": []},
+      {"name": "Le Thanah", "division": "PHX", "projectmanager":true, "role": "Drafter", "hours": []},
       {"name": "Ben Bryan", "division": "PHX", "projectmanager":true, "role": "Inspector", "hours": []},
       {"name": "Angel Nunez-Ortiz", "division": "PHX", "projectmanager":true, "role": "Inspector", "hours": []},
       {"name": "Aileen Santos-Redman", "division": "LAX", "projectmanager":true, "role": "Engineer", "hours": []},
