@@ -36,6 +36,9 @@ $(document).ready(() => {
     // TODO: Define activeProj and getEmployee
     //$("#assignedProj").val(activeProj(getEmployee($(this)).hours))
   })
+  $("#availableProj").on('dblclick', 'option', function() {
+    $("#assignedProj").append($(this))
+  })
   $("#addEmpBtn").on("click", () => {
     $("#addnew-modal").modal();
   })
@@ -48,6 +51,7 @@ $(document).ready(() => {
       if (err !== null) return;
       console.log(ret)
       $("#availableProj").html(mapProjects(ret.projects).join('\n'))
+      $("#selectProj").html(mapProjects(ret.projects).join('\n'))
     })
   }
 })
