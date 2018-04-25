@@ -88,6 +88,16 @@ $(document).ready(() => {
   })
   $("#availableProj").on('dblclick', 'option', function() {
     //$("#assignedProj").append($(this))
+    $("#ehours").val("")
+    $("#cpn").text("Project #: " + $(this).text().split('-')[0])
+    $("#enterHours").modal()
+  })
+  $("input[name='weekSelect']").on('change', function() {
+    alert(JSON.stringify(cEmp, null, ' '))
+  })
+  $("#assignedProj").on('dblclick', 'option', function() {
+    $("#ehours").val($(this).text().split(' ')[$(this).text().split(' ').length - 2])
+    $("#cpn").text("Project #: " + $(this).text().split('-')[0])
     $("#enterHours").modal()
   })
   $("#addEmpBtn").on("click", () => {
