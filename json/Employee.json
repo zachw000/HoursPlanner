@@ -29,7 +29,17 @@
       {"name": "Steve Brown", "division": "PHX", "projectmanager":true, "role": "Inspector", "hours": []},
       {"name": "Hosanna Yi", "division": "PHX", "projectmanager":true, "role": "Drafter", "hours": []},
       {"name": "Daniel Woodman", "division": "PHX", "projectmanager":true, "role": "Engineer", "hours": []},
-      {"name": "Zachary Waldron", "division": "PHX", "projectmanager":true, "role": "Programmer", "hours": []}
+      {"name": "Zachary Waldron", "division": "PHX", "projectmanager":true, "role": "Programmer", "hours": [{
+        "projnum": "001018",
+        "date": "2018-04-23",
+        "time": 18
+      },
+      {
+        "projnum": "11113",
+        "date": "2018-04-24",
+        "time": 1
+      }
+      ]}
     ]
   }
   

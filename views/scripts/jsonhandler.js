@@ -13,6 +13,9 @@ var record = {
   "projects": null
 };
 
+// Project recordset
+let p_set = null;
+
 // Checks if two objects are equal, only true iff IDENTITICAL
 var equalObj = (obj1, obj2) => {
   // Check if both inputs are objects
@@ -149,6 +152,22 @@ var readProjects = function(callback) {
     record.projects = ret;
     return callback(err, ret);
   });
+};
+
+readProjects((err, ret) => {
+  p_set = record.projects.projects
+});
+
+var getProjectByNum = (projNum) => {
+	var index;
+	for (var i = 0; i < p_set.length; i++) {
+		if (p_set[i].projnum == projNum) {
+			index = i;
+			break;
+		}
+	}
+	
+	return p_set[index];
 };
 
 // Uses the records already in memory rather than reading again, much faster

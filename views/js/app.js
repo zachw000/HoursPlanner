@@ -127,9 +127,11 @@ var checkManager = (records) => {
   return pmanager;
 };
 
-var totalHours = (hours) => {
+var totalHours = (hours, startDate) => {
   let th = 0;
-  hours.forEach(entry => {th += entry.time})
+  hours.filter((element) => {
+    return (moment(element.date).isSameOrAfter(startDate.startOf('isoWeek')) && moment(element.date).isSameOrBefore(startDate.endOf('week')))
+  }).forEach(entry => {th += entry.time})
   return th;
 };
 

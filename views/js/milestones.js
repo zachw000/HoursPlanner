@@ -9,9 +9,6 @@
  // this prevents other sessions from interfering with one of another.
  let c_rec = null;
  
- // Project recordset
- let p_set = null;
- 
  // Current version of the recordset
  let r_set = null;
 
@@ -106,17 +103,7 @@ var getRecordByEvent = (eventData) => {
 	return null;
 };
 
-var getProjectByNum = (projNum) => {
-	var index;
-	for (var i = 0; i < p_set.length; i++) {
-		if (p_set[i].projnum == projNum) {
-			index = i;
-			break;
-		}
-	}
-	
-	return p_set[index];
-};
+
 
 var getIndex = (eventObj) => {
 	var proj_arr = eventObj.title.split(" #");
@@ -506,7 +493,7 @@ $(document).ready(function() {
 						}
 					},
 					eventRender: function (eventObj, $el) {
-						console.log(eventObj)
+						//console.log(eventObj)
 						var p_name = getProjectByNum(r_set[getIndexNoDate(eventObj)].projnum).projname;
 						$el.popover({
 							html: true,
