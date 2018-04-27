@@ -36,6 +36,16 @@ var stringMonth = function(monthInteger) {
         }
 };
 
+var isNumber = (evt) => {
+  evt = (evt) ? evt: window.event;
+  let charCode = (evt.which) ? evt.which: evt.keyCode;
+  if (charCode >= 48 && charCode <=57) {
+    return true;
+  }
+
+  return false;
+}
+
 var getCookie = (cname, callback) => {
   var value = {name: cname};
   ses.cookies.get(value, (error, cookies) => {
