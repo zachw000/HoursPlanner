@@ -90,7 +90,6 @@ $(document).ready(() => {
       $("#availableProj").html(projs)
 
       $("#assignedProj").html(val)
-      eventEmitter.emit('updateTable')
     } else if (mode == "addproj" && nweek && hours_t != "0") {
       record.employees.Employees[cEmp.index].hours.push({
         "projnum": p_num,
@@ -120,10 +119,11 @@ $(document).ready(() => {
       $("#availableProj").html(projs)
 
       $("#assignedProj").html(val)
-      eventEmitter.emit('updateTable')
-    } else if (mode == "editproj") {
       
+    } else if (mode == "editproj") {
+
     }
+    eventEmitter.emit('updateTable')
     writeLiveRecord()
   })
   $("input[type='checkbox'], input[name='role']").on('change', function () {
@@ -205,6 +205,7 @@ $(document).ready(() => {
     $("#cpn").text("Project #: " + $(this).text().split('-')[0])
     $("#enterHours").modal()
     $("#saveTime").attr('disabled', true)
+    $("#deleteTime").hide()
     mode = "addproj"
   })
   $("input[name='weekSelect']").on('change', function() {
@@ -254,6 +255,7 @@ $(document).ready(() => {
     $("#ehours").val($(this).text().split(' ')[$(this).text().split(' ').length - 2])
     $("#cpn").text("Project #: " + $(this).text().split('-')[0])
     $("#enterHours").modal()
+    $("#deleteTime").show()
     mode = "editproj"
   })
   $("#addEmpBtn").on("click", () => {
