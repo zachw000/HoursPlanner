@@ -1,37 +1,17 @@
 ## Weekly Hours Planner
 
-You can use the [editor on GitHub](https://github.com/zachw000/HoursPlanner/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+A simple weekly hours and time organizer. This organizer is designed to help organize when each employee has work to accomplish.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Beta Software Disclaimer
 
-### Markdown
+BETA DISCLAIMER
+THE BETA SOFTWARE LICENSED HEREUNDER IS BELIEVED TO CONTAIN DEFECTS AND A PRIMARY PURPOSE OF THIS BETA TESTING LICENSE IS TO OBTAIN FEEDBACK ON SOFTWARE PERFORMANCE AND THE IDENTIFICATION OF DEFECTS. LICENSEE IS ADVISED TO SAFEGUARD IMPORTANT DATA, TO USE CAUTION AND NOT TO RELY IN ANY WAY ON THE CORRECT FUNCTIONING OR PERFORMANCE OF THE SOFTWARE AND/OR ACCOMPANYING MATERIALS.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### PTO (Paid Time Off)
 
-```markdown
-Syntax highlighted code block
+The main feature of the Paid Time Off section is to schedule when employees are taking time off. (TODO: Create a graph that indicates the change in
+time that employees take, and create an overall employee effeciency graph).
 
-# Header 1
-## Header 2
-### Header 3
+### OOO (Out of Office)
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/zachw000/HoursPlanner/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+The main feature of the Out of Office section is to schedule when employees are taking work out of the office. (TODO: Create a graph that indicates the change in time that employees take, and create an overall employee effeciency graph).
