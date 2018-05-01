@@ -138,7 +138,7 @@
         "role": "Drafter",
         "hours": []
     }, {
-        "name": "Shane Sweeten",
+        "name": "Shane Sweeton",
         "division": "PHX",
         "projectmanager": true,
         "role": "Engineer",
@@ -185,7 +185,7 @@
         }, {
             "projnum": "001018",
             "date": "2018-05-07",
-            "time": 40
+            "time": 18
         }]
     }]
 }

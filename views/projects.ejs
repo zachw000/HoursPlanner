@@ -66,26 +66,102 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="edit-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fa fa-pencil"></i> Edit Project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editProjNum">
+                            Project Number
+                        </label>
+                        <input class="form-control" placeholder="Project #" type="text" id="editProjNum" />
+                    </div>
+                    <div class="form-group">
+                        <label for="editSelect">
+                            Project Manager 
+                        </label>
+                        <select class="pmselect form-control input-sm" id="editSelect">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDesc">
+                            Project Name/Description
+                        </label>
+                        <input class="form-control " placeholder="Project Description" type="text" id="editDesc" />
+                    </div>
+                    <div class="form-inline form-group">
+                        <label for="editActive">
+                            Currently Active?&nbsp;
+                        </label>
+                        <input class="form-control form-control-inline" type="checkbox" id="editActive" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="editProj">
+                        <i class="fa fa-save"></i> Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fa fa-times"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal" id="addnew-modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-
+                    <h5 class="modal-title">
+                        <i class="fa fa-star"></i> Add New Project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
-
+                        <div class="form-group">
+                                <label for="newProjNum">
+                                    Project Number
+                                </label>
+                                <input class="form-control" placeholder="Project #" type="text" id="newProjNum" />
+                            </div>
+                            <div class="form-group">
+                                <label for="newSelect">
+                                    Project Manager 
+                                </label>
+                                <select class="pmselect form-control input-sm" id="newSelect">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="newDesc">
+                                    Project Name/Description
+                                </label>
+                                <input class="form-control " placeholder="Project Description" type="text" id="newDesc" />
+                            </div>
+                            <div class="form-inline form-group">
+                                <label for="newActive">
+                                    Currently Active?&nbsp;
+                                </label>
+                                <input class="form-control form-control-inline" type="checkbox" id="newActive" />
+                            </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="addProj">Add Project</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addProj">
+                        <i class="fa fa-save"></i> Add Project</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fa fa-times"></i> Close</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="sticky-top navigation navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-light">
-            <a class="text-dark navbar-brand" href="./index.ejs" style="line-height: 32px">
-                <img src="./img/gannett-fleming-squarelogo.svg" alt="" style="width: 32px; float: left;" />
-              </a>
+        <a class="text-dark navbar-brand" href="./index.ejs" style="line-height: 32px">
+            <img src="./img/gannett-fleming-squarelogo.svg" alt="" style="width: 32px; float: left;" />
+        </a>
 
         <button class="text-dark navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#mainNavbarCollapse">
             &#9776;

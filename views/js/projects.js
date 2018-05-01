@@ -4,6 +4,9 @@ Array.prototype.dataMap = function () {
             "<i class='fa fa-check-circle'></i> Active" : "<i class='fa fa-times'></i> Not Active"}</td></tr>`
     }).join('\n')
 }
+let c_proj = null, c_index = -1, getCurrentProject = (element) => {
+    return equalObj(c_proj, element)
+}
 $(document).ready(() => {
     eventEmitter.on('notLoggedIn', () => {
         $("#nlo-modal").modal();
@@ -16,9 +19,27 @@ $(document).ready(() => {
             return a.projnum - b.projnum;
         }).dataMap()
         $("#p_list").html(tableRows)
+
+        readEmployees((err, ret) => {
+            if (err) console.error(err)
+
+            let htm = record.employees.Employees.filter(element => element.projectmanager).map((element) => {
+                return `<option value="${element.name}">${element.name}</option>`
+            }).join('\n')
+
+            $("#editSelect").html(htm)
+            $("#newSelect").html(htm)
+        })
     })
     $("#p_list").on('click', 'tr', function () {
-        alert($(this).find("th").first().text())
+        let num = $(this).find("th").first().text()
+        c_proj = getProjectByNum(num)
+        c_index = (record.projects.projects.findIndex(getCurrentProject))
+        $("#editProjNum").val(c_proj.projnum)
+        $("#editSelect").val(c_proj.name)
+        $("#editDesc").val(c_proj.projname)
+        document.getElementById("editActive").checked = c_proj.active
+        $("#edit-modal").modal()
     })
     $("#newProject").on("click", function () {
         $("#addnew-modal").modal();
