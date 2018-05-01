@@ -81,7 +81,7 @@
                         <label for="editProjNum">
                             Project Number
                         </label>
-                        <input class="form-control" placeholder="Project #" type="text" id="editProjNum" />
+                        <input onkeypress="return isNumberOrDec(event)" class="form-control" placeholder="Project #" type="text" id="editProjNum" />
                     </div>
                     <div class="form-group">
                         <label for="editSelect">
@@ -127,7 +127,7 @@
                                 <label for="newProjNum">
                                     Project Number
                                 </label>
-                                <input class="form-control" placeholder="Project #" type="text" id="newProjNum" />
+                                <input onkeypress="return isNumberOrDec(event)" class="form-control" placeholder="Project #" type="text" id="newProjNum" />
                             </div>
                             <div class="form-group">
                                 <label for="newSelect">

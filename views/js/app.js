@@ -46,6 +46,14 @@ var isNumber = (evt) => {
   return false;
 }
 
+var isNumberOrDec = (evt) => {
+  if (isNumber(evt)) return true;
+  evt = (evt) ? evt: window.event;
+  let charCode = (evt.which) ? evt.which: evt.keyCode;
+  if (charCode == 0x2E) return true;
+  return false;
+}
+
 var getCookie = (cname, callback) => {
   var value = {name: cname};
   ses.cookies.get(value, (error, cookies) => {

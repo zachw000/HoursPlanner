@@ -4,9 +4,11 @@ Array.prototype.dataMap = function () {
             "<i class='fa fa-check-circle'></i> Active" : "<i class='fa fa-times'></i> Not Active"}</td></tr>`
     }).join('\n')
 }
-let c_proj = null, c_index = -1, getCurrentProject = (element) => {
-    return equalObj(c_proj, element)
-}
+let c_proj = null,
+    c_index = -1,
+    getCurrentProject = (element) => {
+        return equalObj(c_proj, element)
+    }
 $(document).ready(() => {
     eventEmitter.on('notLoggedIn', () => {
         $("#nlo-modal").modal();
@@ -19,14 +21,11 @@ $(document).ready(() => {
             return a.projnum - b.projnum;
         }).dataMap()
         $("#p_list").html(tableRows)
-
         readEmployees((err, ret) => {
             if (err) console.error(err)
-
             let htm = record.employees.Employees.filter(element => element.projectmanager).map((element) => {
                 return `<option value="${element.name}">${element.name}</option>`
             }).join('\n')
-
             $("#editSelect").html(htm)
             $("#newSelect").html(htm)
         })
@@ -40,6 +39,19 @@ $(document).ready(() => {
         $("#editDesc").val(c_proj.projname)
         document.getElementById("editActive").checked = c_proj.active
         $("#edit-modal").modal()
+    })
+    $("#editProj").on('click', function () {
+        if ($("#editProjNum").val() == "" || $("#editSelect").val() == "" || $("#editDesc").val() == "") {
+            alert("All fields must be filled.")
+        } else {
+            // continue save operation
+            p_set = record.projects.projects
+            record.projects.projects[c_index].projnum = $("#editProjNum").val()
+            record.projects.projects[c_index].projname = $("#editDesc").val()
+            record.projects.projects[c_index].name = $("#editSelect").val()
+            record.projects.projects[c_index].active = document.getElementById("editActive").checked
+            
+        }
     })
     $("#newProject").on("click", function () {
         $("#addnew-modal").modal();
