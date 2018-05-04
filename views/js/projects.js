@@ -61,6 +61,61 @@ async function updateExtern(projn, p_index) {
         }
     })
 }
+
+async function removeEmployees(projectNum) {
+    for (let i = record.employees.Employees.length - 1; i >= 0; i--) {
+        for (let j = record.employees.Employees[i].hours.length - 1; i >= 0; i--) {
+            if (record.employees.Employees[i].hours[j].projnum == projectNum)
+                record.employees.Employees[i].hours.splice(j, 1)
+        }
+    }
+    if (!(record.employees.Employees == null)) {                
+        jsonfile.writeFile(prepend + filenames[0], record.employees, (err) => {
+            if (err !== null) console.error()
+        })
+    }
+}
+
+async function removeMilestones(projectNum) {
+    for (let i = record.milestones.milestones.length - 1; i >= 0; i--) {
+        if (record.milestones.milestones[i].projnum == projectNum)
+            record.milestones.milestones.splice(i, 1)
+    }
+    if (!(record.milestones.milestones == null)) {
+        jsonfile.writeFile(prepend + filenames[1], record.milestones, (err) => {
+            if (err !== null) console.error(err);
+        });
+    }
+}
+
+async function removeExterns(projectNum) {
+    if (record.employees.Employees == null) {
+        // TODO: Read Employee Data
+        readEmployees((err, ret) => {
+            // display error message
+            if (err) console.error(err)
+            else {
+                removeEmployees(projectNum)
+            }
+        })
+    } else {
+        // Otherwise exists
+        removeEmployees(projectNum)
+    }
+    if (record.milestones.milestones == null) {
+        // TODO: Read Milestone Data
+        readMilestones((err, ret) => {
+            if (err) console.error(err)
+            else {
+                removeMilestones(projectNum)
+            }
+        })
+    } else {
+        // Exists.
+        removeMilestones(projectNum)
+    }
+}
+
 $(document).ready(() => {
     eventEmitter.on('notLoggedIn', () => {
         $("#nlo-modal").modal();
@@ -118,6 +173,38 @@ $(document).ready(() => {
             eventEmitter.emit("updateTable")
             $("#edit-modal").modal("hide")
         }
+    })
+    $("#deleteProj").on('click', () => {
+        let shouldDelete = confirm("Are you sure you want to delete this project? (THIS WILL REMOVE ALL HOURS AND MILESTONES ASSOCIATED WITH THE PROJECT AS WELL)")
+        if (shouldDelete) {
+            // delete the currently selected project (as indicated by c_index)
+            let pn = record.projects.projects[c_index].projnum
+            p_set = record.projects.projects
+            // delete the entry
+            record.projects.projects.splice(c_index, 1)
+            removeExterns(pn)
+            writeLiveRecord()
+            eventEmitter.emit('updateTable')
+            $("#edit-modal").modal("hide")
+        }
+    })
+    $("#addProj").on('click', function() {
+        let npn = $("#newProjNum").val()
+        let ns = $("#newSelect").val()
+        let nd = $("#newDesc").val()
+        let isActive = document.getElementById("newActive").checked
+
+        p_set = record.projects.projects
+        record.projects.projects.push({
+            "name": ns,
+            "projnum": npn,
+            "projname": nd,
+            "active": isActive
+        })
+
+        writeLiveRecord()
+        eventEmitter.emit("updateTable")
+        $("#addnew-modal").modal("hide")
     })
     $("#newProject").on("click", function () {
         $("#addnew-modal").modal();
