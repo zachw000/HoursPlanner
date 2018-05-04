@@ -291,17 +291,17 @@ $(document).ready(function () {
               {
                 events: calendar_events_pto,
                 color: 'rgba(238, 51, 78, 0.4)',
-                textColor: 'rgba(255, 255, 255, 1)'
+                textColor: 'rgba(0, 0, 0, 1)'
               },
               {
                 events: calendar_events_ooo,
                 color: 'rgba(0, 0, 255, 0.4)',
-                textColor: 'rgba(255, 255, 255, 1)'
+                textColor: 'rgba(0, 0, 0, 1)'
               },
               {
                 events: milestones_events,
                 color: 'rgba(139, 195, 74, 0.4)',
-                textColor: 'rgba(255, 255, 255, 1)'
+                textColor: 'rgba(0, 0, 0, 1)'
               }
             ]
           });

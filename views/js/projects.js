@@ -116,6 +116,7 @@ $(document).ready(() => {
             }
             writeLiveRecord()
             eventEmitter.emit("updateTable")
+            $("#edit-modal").modal("hide")
         }
     })
     $("#newProject").on("click", function () {

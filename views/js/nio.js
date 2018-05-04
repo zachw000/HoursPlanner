@@ -379,7 +379,7 @@ $(document).ready(function() {
       document.getElementById("timeOffAm2").checked ? "4am" :
       document.getElementById("timeOffPm2").checked ? "4pm" : "8hr"),
       color: cpage === "pto" ? 'rgba(238, 51, 78, 0.4)' : 'rgba(0, 0, 255, 0.4)',
-      textColor: 'rgba(255, 255, 255, 1)'
+      textColor: 'rgba(0, 0, 0, 1)'
     };
 
     if (document.getElementById("isMultiDay2").checked) {
@@ -442,7 +442,7 @@ $(document).ready(function() {
     nEvent.start = ISO86Date(startdate, times[tget]);
     nEvent.title = lname;
     nEvent.color = cpage === "pto" ? 'rgba(238, 51, 78, 0.4)' : 'rgba(0, 0, 255, 0.4)';
-    nEvent.textColor = 'rgba(255, 255, 255, 1)';
+    nEvent.textColor = 'rgba(0, 0, 0, 1)';
     if (multiday) {
       nEvent.end = ISO86Date(enddate, times[tget]);
     }
@@ -502,7 +502,7 @@ $(document).ready(function() {
             {
               events: events_calendar,
               color: cpage === "pto" ? 'rgba(238, 51, 78, 0.4)' : 'rgba(0, 0, 255, 0.4)',
-              textColor: 'rgba(255, 255, 255, 1)'
+              textColor: 'rgba(0, 0, 0, 1)'
             }
           ],
           eventRender: function(eventObj, $el) {

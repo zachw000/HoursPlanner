@@ -397,7 +397,7 @@ $(document).ready(function() {
 			title: getProjectByNum($("#projnum2").val()).projname + " #" + $("#projnum2").val(),
 			id: max + "///" + $("#mtype2").val(),
 			color: 'rgba(139, 195, 74, 0.4)',
-			textColor: 'rgba(255, 255, 255, 1)'
+			textColor: 'rgba(0, 0, 0, 1)'
 		};
 		// Render event object
 		$("#calendar").fullCalendar('renderEvent', nevent);
