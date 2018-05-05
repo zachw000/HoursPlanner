@@ -65,8 +65,9 @@ async function updateExtern(projn, p_index) {
 async function removeEmployees(projectNum) {
     for (let i = record.employees.Employees.length - 1; i >= 0; i--) {
         for (let j = record.employees.Employees[i].hours.length - 1; i >= 0; i--) {
-            if (record.employees.Employees[i].hours[j].projnum == projectNum)
+            if (record.employees.Employees[i].hours[j].projnum == projectNum) {
                 record.employees.Employees[i].hours.splice(j, 1)
+            }
         }
     }
     if (!(record.employees.Employees == null)) {                
@@ -78,8 +79,9 @@ async function removeEmployees(projectNum) {
 
 async function removeMilestones(projectNum) {
     for (let i = record.milestones.milestones.length - 1; i >= 0; i--) {
-        if (record.milestones.milestones[i].projnum == projectNum)
+        if (record.milestones.milestones[i].projnum == projectNum) {
             record.milestones.milestones.splice(i, 1)
+        }
     }
     if (!(record.milestones.milestones == null)) {
         jsonfile.writeFile(prepend + filenames[1], record.milestones, (err) => {
@@ -89,7 +91,7 @@ async function removeMilestones(projectNum) {
 }
 
 async function removeExterns(projectNum) {
-    if (record.employees.Employees == null) {
+    if (record.employees == null || !record.employees.hasOwnProperty("Employees")) {
         // TODO: Read Employee Data
         readEmployees((err, ret) => {
             // display error message
@@ -102,7 +104,7 @@ async function removeExterns(projectNum) {
         // Otherwise exists
         removeEmployees(projectNum)
     }
-    if (record.milestones.milestones == null) {
+    if (record.milestones == null || !record.milestones.hasOwnProperty("milestones")) {
         // TODO: Read Milestone Data
         readMilestones((err, ret) => {
             if (err) console.error(err)
