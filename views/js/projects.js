@@ -1,9 +1,58 @@
-Array.prototype.dataMap = function () {
-    return this.map((data) => {
-        return `<tr><th scope="row">${data.projnum}</th><td>${data.name}</td><td>${data.projname}</td><td>${data.active ? 
-            "<i class='fa fa-check-circle'></i> Active" : "<i class='fa fa-times'></i> Not Active"}</td></tr>`
-    }).join('\n')
-}
+let listHours = async function(hoursData, callback) {
+        if (!record.employees && !record.employees.hasOwnProperty("Employees")) {
+            // if employee record is not defined
+            readEmployees(function (error, ret) {
+                if (error) {
+                    console.error(error)
+                } else {
+                    let ulData = ""
+                    record.employees = ret
+                    for (let i = 0; i < record.employees.Employees.length; i++) {
+                        let totalHours = 0
+                        for (let j = 0; j < record.employees.Employees[i].hours.length; j++) {
+                            if (record.employees.Employees[i].hours[j].projnum == hoursData && 
+                                moment(record.employees.Employees[i].hours[j].date).isSameOrAfter(moment().startOf('week'))) {
+                                    totalHours += record.employees.Employees[i].hours[j].time
+                                }
+                        }
+
+                        if (totalHours > 0) {
+                            ulData += `\n<li>${record.employees.Employees[i].name} ${totalHours} ${totalHours > 1 ? "Hours" : "Hour"}</li>`
+                        }
+                    }
+
+                    callback(ulData)
+                }
+            })
+        } else {
+            let ulData = ""
+            for (let i = 0; i < record.employees.Employees.length; i++) {
+                let totalHours = 0
+                for (let j = 0; j < record.employees.Employees[i].hours.length; j++) {
+                    if (record.employees.Employees[i].hours[j].projnum == hoursData && 
+                        moment(record.employees.Employees[i].hours[j].date).isSameOrAfter(moment().startOf('week'))) {
+                            totalHours += record.employees.Employees[i].hours[j].time
+                        }
+                }
+
+                if (totalHours > 0) {
+                    ulData += `\n<li>${record.employees.Employees[i].name} ${totalHours} ${totalHours > 1 ? "Hours" : "Hour"}</li>`
+                }
+            }
+
+            callback(ulData)
+        }
+    }, dataMap = function (indat) {
+        order = []
+        return indat.map((data, index) => {
+            pushHours(data.projnum)
+            return `<tr><th scope="row">${data.projnum}</th><td>${data.name}</td><td>${data.projname}</td><td><ul id="listHours${index}"></ul></td><td>${data.active ? 
+                "<i class='fa fa-check-circle'></i> Active" : "<i class='fa fa-times'></i> Not Active"}</td></tr>`
+        }).join('\n')
+    }, order = [],
+    pushHours = (p_n) => {
+        order.push(p_n)
+    }
 let c_proj = null,
     c_index = -1,
     getCurrentProject = (element) => {
@@ -64,7 +113,7 @@ async function updateExtern(projn, p_index) {
 
 async function removeEmployees(projectNum) {
     for (let i = record.employees.Employees.length - 1; i >= 0; i--) {
-        for (let j = record.employees.Employees[i].hours.length - 1; i >= 0; i--) {
+        for (let j = record.employees.Employees[i].hours.length - 1; j >= 0; j--) {
             if (record.employees.Employees[i].hours[j].projnum == projectNum) {
                 record.employees.Employees[i].hours.splice(j, 1)
             }
@@ -126,23 +175,33 @@ $(document).ready(() => {
         window.location.href = "login.ejs";
     })
     eventEmitter.on('projRead', () => {
-        let tableRows = record.projects.projects.sort((a, b) => {
+        let tableRows = dataMap(record.projects.projects.sort((a, b) => {
             return a.projnum - b.projnum;
-        }).dataMap()
+        }))
         $("#p_list").html(tableRows)
         readEmployees((err, ret) => {
             if (err) console.error(err)
             let htm = record.employees.Employees.filter(element => element.projectmanager).map((element) => {
                 return `<option value="${element.name}">${element.name}</option>`
             }).join('\n')
+            order.forEach((pn, index) => {
+                listHours(pn, (htmlData) => {
+                    $(`#listHours${index}`).html(htmlData)
+                })
+            })
             $("#editSelect").html(htm)
             $("#newSelect").html(htm)
         })
     })
     eventEmitter.on('updateTable', () => {
-        let tableRows = record.projects.projects.sort((a, b) => {
+        let tableRows = dataMap(record.projects.projects.sort((a, b) => {
             return a.projnum - b.projnum;
-        }).dataMap()
+        }))
+        order.forEach((pn, index) => {
+            listHours(pn, (htmlData) => {
+                $(`#listHours${index}`).html(htmlData)
+            })
+        })
         $("#p_list").html(tableRows)
     })
     $("#p_list").on('click', 'tr', function () {

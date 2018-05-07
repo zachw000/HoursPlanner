@@ -4,13 +4,37 @@
         "division": "PHX",
         "projectmanager": true,
         "role": "Engineer",
-        "hours": []
+        "hours": [{
+            "projnum": "62421.2",
+            "date": "2018-05-04",
+            "time": 32
+        }, {
+            "projnum": "62421.5",
+            "date": "2018-05-04",
+            "time": 8
+        }]
     }, {
         "name": "Aileen Santos-Redman",
         "division": "LAX",
         "projectmanager": true,
         "role": "Engineer",
-        "hours": []
+        "hours": [{
+            "projnum": "11121",
+            "date": "2018-05-04",
+            "time": 12
+        }, {
+            "projnum": "60838",
+            "date": "2018-05-04",
+            "time": 4
+        }, {
+            "projnum": "62421.1",
+            "date": "2018-05-04",
+            "time": 8
+        }, {
+            "projnum": "62421.3",
+            "date": "2018-05-04",
+            "time": 8
+        }]
     }, {
         "name": "Angel Nunez-Ortiz",
         "division": "PHX",
@@ -28,7 +52,15 @@
         "division": "LAX",
         "projectmanager": true,
         "role": "Engineer",
-        "hours": []
+        "hours": [{
+            "projnum": "62421.3",
+            "date": "2018-05-04",
+            "time": 8
+        }, {
+            "projnum": "62910",
+            "date": "2018-05-04",
+            "time": 32
+        }]
     }, {
         "name": "Ben Bryan",
         "division": "PHX",
@@ -112,7 +144,11 @@
         "division": "PHX",
         "projectmanager": true,
         "role": "Engineer",
-        "hours": []
+        "hours": [{
+            "projnum": "62421.2",
+            "date": "2018-05-04",
+            "time": 16
+        }]
     }, {
         "name": "Pouya Banibayat",
         "division": "LAX",
@@ -138,17 +174,37 @@
         "role": "Drafter",
         "hours": []
     }, {
-        "name": "Shane Sweeton",
+        "name": "Shane Sweeten",
         "division": "PHX",
         "projectmanager": true,
         "role": "Engineer",
-        "hours": []
+        "hours": [{
+            "projnum": "62421",
+            "date": "2018-05-04",
+            "time": 24
+        }]
     }, {
         "name": "Stephanie Templeton",
         "division": "PHX",
         "projectmanager": true,
         "role": "Engineer",
-        "hours": []
+        "hours": [{
+            "projnum": "11121",
+            "date": "2018-05-04",
+            "time": 16
+        }, {
+            "projnum": "60410",
+            "date": "2018-05-04",
+            "time": 10
+        }, {
+            "projnum": "62421.1",
+            "date": "2018-05-04",
+            "time": 24
+        }, {
+            "projnum": "63096",
+            "date": "2018-05-04",
+            "time": 5
+        }]
     }, {
         "name": "Steve Brown",
         "division": "PHX",
@@ -172,7 +228,31 @@
         "division": "PHX",
         "projectmanager": true,
         "role": "Engineer",
-        "hours": []
+        "hours": [{
+            "projnum": "62910",
+            "date": "2018-05-04",
+            "time": 18
+        }, {
+            "projnum": "60660",
+            "date": "2018-05-04",
+            "time": 2
+        }, {
+            "projnum": "60910",
+            "date": "2018-05-04",
+            "time": 2
+        }, {
+            "projnum": "61638.5",
+            "date": "2018-05-04",
+            "time": 2
+        }, {
+            "projnum": "61733",
+            "date": "2018-05-04",
+            "time": 2
+        }, {
+            "projnum": "62090",
+            "date": "2018-05-04",
+            "time": 2
+        }]
     }, {
         "name": "Zachary Waldron",
         "division": "PHX",
@@ -181,7 +261,7 @@
         "hours": [{
             "projnum": "001018",
             "date": "2018-04-30",
-            "time": 9
+            "time": 18
         }, {
             "projnum": "001018",
             "date": "2018-05-07",

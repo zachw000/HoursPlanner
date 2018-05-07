@@ -265,7 +265,7 @@ $(document).ready(() => {
     $("#editName").val($(this).find("td").first().text())
     $("#changeDivision").val($(this).find("td").first().next().text())
     $("#changeRole").val($(this).find("td").last().prev().prev().text().toLowerCase())
-    $("#hours").val($(this).find("td").prev().last().text())
+    $("#hours").val($(this).find("td").last().prev().text())
     cEmp = getEmployee($(this))
     let val = "",
       reject = [],
