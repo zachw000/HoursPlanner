@@ -197,12 +197,12 @@ $(document).ready(() => {
         let tableRows = dataMap(record.projects.projects.sort((a, b) => {
             return a.projnum - b.projnum;
         }))
+        $("#p_list").html(tableRows)
         order.forEach((pn, index) => {
             listHours(pn, (htmlData) => {
-                $(`#listHours${index}`).html(htmlData)
+                $('table').find(`#listHours${index}`).first().html(htmlData)
             })
         })
-        $("#p_list").html(tableRows)
     })
     $("#p_list").on('click', 'tr', function () {
         let num = $(this).find("th").first().text()
