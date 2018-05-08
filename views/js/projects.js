@@ -9,15 +9,22 @@ let listHours = async function(hoursData, callback) {
                     record.employees = ret
                     for (let i = 0; i < record.employees.Employees.length; i++) {
                         let totalHours = 0
+                        let nextWeekHours = 0
                         for (let j = 0; j < record.employees.Employees[i].hours.length; j++) {
                             if (record.employees.Employees[i].hours[j].projnum == hoursData && 
-                                moment(record.employees.Employees[i].hours[j].date).isSameOrAfter(moment().startOf('week'))) {
-                                    totalHours += record.employees.Employees[i].hours[j].time
-                                }
+                            moment(record.employees.Employees[i].hours[j].date).isSameOrAfter(moment().startOf('week')) &&
+                            moment(record.employees.Employees[i].hours[j].date).isSameOrBefore(moment().endOf('week'))) {
+                                totalHours += record.employees.Employees[i].hours[j].time
+                            }
+                            if (record.employees.Employees[i].hours[j].projnum == hoursData && 
+                            moment(record.employees.Employees[i].hours[j].date).isSameOrAfter(moment().add(7, 'd').startOf('week')) &&
+                            moment(record.employees.Employees[i].hours[j].date).isSameOrBefore(moment().add(7, 'd').endOf('week'))) {
+                                nextWeekHours += record.employees.Employees[i].hours[j].time
+                            }
                         }
 
-                        if (totalHours > 0) {
-                            ulData += `\n<li>${record.employees.Employees[i].name} ${totalHours} ${totalHours > 1 ? "Hours" : "Hour"}</li>`
+                        if (totalHours > 0 || nextWeekHours > 0) {
+                            ulData += `\n<li><strong>${record.employees.Employees[i].name}</strong>: ${totalHours} ${totalHours > 1 ? "hours" : "hour"} this week. ${nextWeekHours} hour${nextWeekHours != 1 ? 's' : ''} next week.</li>`
                         }
                     }
 
@@ -28,15 +35,22 @@ let listHours = async function(hoursData, callback) {
             let ulData = ""
             for (let i = 0; i < record.employees.Employees.length; i++) {
                 let totalHours = 0
+                let nextWeekHours = 0
                 for (let j = 0; j < record.employees.Employees[i].hours.length; j++) {
                     if (record.employees.Employees[i].hours[j].projnum == hoursData && 
-                        moment(record.employees.Employees[i].hours[j].date).isSameOrAfter(moment().startOf('week'))) {
-                            totalHours += record.employees.Employees[i].hours[j].time
-                        }
+                    moment(record.employees.Employees[i].hours[j].date).isSameOrAfter(moment().startOf('week')) &&
+                    moment(record.employees.Employees[i].hours[j].date).isSameOrBefore(moment().endOf('week'))) {
+                        totalHours += record.employees.Employees[i].hours[j].time
+                    }
+                    if (record.employees.Employees[i].hours[j].projnum == hoursData && 
+                    moment(record.employees.Employees[i].hours[j].date).isSameOrAfter(moment().add(7, 'd').startOf('week')) &&
+                    moment(record.employees.Employees[i].hours[j].date).isSameOrBefore(moment().add(7, 'd').endOf('week'))) {
+                        nextWeekHours += record.employees.Employees[i].hours[j].time
+                    }
                 }
 
-                if (totalHours > 0) {
-                    ulData += `\n<li>${record.employees.Employees[i].name} ${totalHours} ${totalHours > 1 ? "Hours" : "Hour"}</li>`
+                if (totalHours > 0 || nextWeekHours > 0) {
+                    ulData += `\n<li><strong>${record.employees.Employees[i].name}</strong>: ${totalHours} ${totalHours > 1 ? "hours" : "hour"} this week. ${nextWeekHours} hour${nextWeekHours != 1 ? 's' : ''} next week.</li>`
                 }
             }
 

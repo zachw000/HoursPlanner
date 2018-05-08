@@ -438,6 +438,15 @@ $(document).ready(() => {
   $("#addEmpBtn").on("click", () => {
     $("#addnew-modal").modal();
   })
+  $("#updateEmp").on('click', () => {
+    record.employees.Employees[cEmp.index].name = $("#editName").val()
+    record.employees.Employees[cEmp.index].division = $("#changeDivision").val()
+    record.employees.Employees[cEmp.index].role = $("#changeRole").val()
+
+    $("#edit-modal").modal('hide')
+    writeLiveRecord()
+    eventEmitter.emit("updateTable")
+  })
   if ((record.employees === null) && typeof record.employees === 'object') {
     readEmployees((err, ret) => {
       if (err !== null) return;
