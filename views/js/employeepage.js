@@ -46,7 +46,9 @@ var getEmployee = (data) => {
     return obj
   },
   writeLiveRecord = () => {
-    let cIndex = cEmp.index
+    let cIndex = null
+    if (cEmp != null && cEmp.hasOwnProperty("index"))
+      cIndex = cEmp.index
     if (!(record.employees.Employees == null)) {
       for (let i = 0; i < record.employees.Employees.length; i++) {
         delete record.employees.Employees[i].index
@@ -54,7 +56,8 @@ var getEmployee = (data) => {
 
       jsonfile.writeFile(prepend + filenames[0], record.employees, (err) => {
         if (err !== null) console.error()
-        cEmp.index = cIndex
+        if (cEmp != null && cEmp.hasOwnProperty("index"))
+          cEmp.index = cIndex
       })
     }
   }
@@ -436,7 +439,48 @@ $(document).ready(() => {
     }
   })
   $("#addEmpBtn").on("click", () => {
+    // Reset Name
+    $("#newName").val("")
+    $("#addEmp").prop('disabled', true)
+    $("#newPM").prop('checked', false)
     $("#addnew-modal").modal();
+  })
+  $("#newName").on("keyup", function (){
+    if ($(this).val() == "") {
+      $("#addEmp").prop('disabled', true)
+    } else {
+      $("#addEmp").prop('disabled', false)
+    }
+  })
+  $("#addEmp").on("click", () => {
+    let newName = $("#newName").val()
+    let division = $("#setDivision").val()
+    let newPM = $("#newPM").prop('checked')
+    let newRole = $("#setRole").val()
+
+    // check if name already exists, if so, just update role
+    let index = record.employees.Employees.findIndex((element, index) => {
+      return (element.name.toLowerCase() == newName.toLowerCase())
+    })
+
+    if (index !== -1) {
+      alert("Error: Name is already in database.")
+      // exit function, do not close modal.
+      return
+    }
+    newName = newName.replace(/(\b\w)/gi, (m) => { return m.toUpperCase() })
+    newRole = newRole.replace(/(\b\w)/gi, (m) => { return m.toUpperCase() })
+    record.employees.Employees.push({
+      "name": newName,
+      "division": division.toUpperCase(),
+      "projectmanager": newPM,
+      "role": newRole,
+      "hours": []
+    })
+
+    writeLiveRecord()
+    eventEmitter.emit("updateTable")
+    $("#addnew-modal").modal('hide')
   })
   $("#updateEmp").on('click', () => {
     record.employees.Employees[cEmp.index].name = $("#editName").val()
@@ -453,7 +497,6 @@ $(document).ready(() => {
       eventEmitter.emit('empRead');
       readProjects((err, ret) => {
         $("#availableProj").html(mapProjects(ret.projects).join('\n'))
-        $("#selectProj").html(mapProjects(ret.projects).join('\n'))
       })
     })
   }

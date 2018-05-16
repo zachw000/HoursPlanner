@@ -1,1 +1,283 @@
-{"Employees":[{"name":"Aaron Krebs","division":"PHX","projectmanager":true,"role":"Engineer","hours":[{"projnum":"62421.2","date":"2018-05-04","time":32},{"projnum":"62421.5","date":"2018-05-04","time":8}]},{"name":"Aileen Santos-Redman","division":"LAX","projectmanager":true,"role":"Engineer","hours":[{"projnum":"11121","date":"2018-05-04","time":12},{"projnum":"60838","date":"2018-05-04","time":4},{"projnum":"62421.1","date":"2018-05-04","time":8},{"projnum":"62421.3","date":"2018-05-04","time":8}]},{"name":"Angel Nunez-Ortiz","division":"PHX","projectmanager":true,"role":"Inspector","hours":[]},{"name":"Ann Marie Ciemny","division":"PHX","projectmanager":true,"role":"Admin","hours":[]},{"name":"Arsen Adzhemyan","division":"LAX","projectmanager":true,"role":"Engineer","hours":[{"projnum":"62421.3","date":"2018-05-04","time":8},{"projnum":"62910","date":"2018-05-04","time":32}]},{"name":"Ben Bryan","division":"PHX","projectmanager":true,"role":"Inspector","hours":[]},{"name":"Ben Porritt","division":"PHX","projectmanager":true,"role":"Engineer","hours":[]},{"name":"Bo Lively","division":"PHX","projectmanager":true,"role":"Engineer","hours":[]},{"name":"Bob Stanley","division":"PHX","projectmanager":true,"role":"Engineer","hours":[]},{"name":"Daniel Breul","division":"PHX","projectmanager":true,"role":"Drafter","hours":[]},{"name":"Daniel Woodman","division":"PHX","projectmanager":true,"role":"Engineer","hours":[]},{"name":"Dave Bryan","division":"PHX","projectmanager":true,"role":"Inspector","hours":[]},{"name":"David Galvin","division":"PHX","projectmanager":true,"role":"Drafter","hours":[]},{"name":"Glenn Hesseltine","division":"PHX","projectmanager":true,"role":"Drafter","hours":[]},{"name":"Hosanna Yi","division":"PHX","projectmanager":true,"role":"Drafter","hours":[]},{"name":"Le Thanah","division":"PHX","projectmanager":true,"role":"Drafter","hours":[]},{"name":"Michael Biggs","division":"PHX","projectmanager":true,"role":"Drafter","hours":[]},{"name":"Michael Kasting","division":"PHX","projectmanager":true,"role":"Drafter","hours":[]},{"name":"Perry Kampa","division":"PHX","projectmanager":true,"role":"Engineer","hours":[{"projnum":"62421.2","date":"2018-05-04","time":16}]},{"name":"Pouya Banibayat","division":"LAX","projectmanager":true,"role":"Engineer","hours":[]},{"name":"Rajik Zakourian","division":"LAX","projectmanager":true,"role":"Engineer","hours":[]},{"name":"Sateesh Nabar","division":"PHX","projectmanager":true,"role":"Engineer","hours":[]},{"name":"Scott Laux","division":"LAX","projectmanager":true,"role":"Drafter","hours":[]},{"name":"Shane Sweeten","division":"PHX","projectmanager":true,"role":"Engineer","hours":[{"projnum":"62421","date":"2018-05-04","time":24}]},{"name":"Stephanie Templeton","division":"PHX","projectmanager":true,"role":"Engineer","hours":[{"projnum":"11121","date":"2018-05-04","time":16},{"projnum":"60410","date":"2018-05-04","time":10},{"projnum":"62421.1","date":"2018-05-04","time":24},{"projnum":"63096","date":"2018-05-04","time":5}]},{"name":"Steve Brown","division":"PHX","projectmanager":true,"role":"Inspector","hours":[]},{"name":"Stewart Vaghti","division":"PHX","projectmanager":true,"role":"Engineer","hours":[]},{"name":"Ted Keane","division":"PHX","projectmanager":true,"role":"Drafter","hours":[]},{"name":"Tim Wong","division":"PHX","projectmanager":true,"role":"Engineer","hours":[{"projnum":"62910","date":"2018-05-04","time":18},{"projnum":"60660","date":"2018-05-04","time":2},{"projnum":"60910","date":"2018-05-04","time":2},{"projnum":"61638.5","date":"2018-05-04","time":2},{"projnum":"61733","date":"2018-05-04","time":2},{"projnum":"62090","date":"2018-05-04","time":2}]},{"name":"Zachary Waldron","division":"PHX","projectmanager":true,"role":"programmer","hours":[{"projnum":"001018","date":"2018-04-30","time":18},{"projnum":"001018","date":"2018-05-07","time":18},{"projnum":"001018","date":"2018-05-15","time":9},{"projnum":"11119","date":"2018-05-08","time":18}]}]}
+{
+  "Employees": [{
+    "name": "Aaron Krebs",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Engineer",
+    "hours": [{
+      "projnum": "62421.2",
+      "date": "2018-05-04",
+      "time": 32
+    }, {
+      "projnum": "62421.5",
+      "date": "2018-05-04",
+      "time": 8
+    }]
+  }, {
+    "name": "Aileen Santos-Redman",
+    "division": "LAX",
+    "projectmanager": true,
+    "role": "Engineer",
+    "hours": [{
+      "projnum": "11121",
+      "date": "2018-05-04",
+      "time": 12
+    }, {
+      "projnum": "60838",
+      "date": "2018-05-04",
+      "time": 4
+    }, {
+      "projnum": "62421.1",
+      "date": "2018-05-04",
+      "time": 8
+    }, {
+      "projnum": "62421.3",
+      "date": "2018-05-04",
+      "time": 8
+    }]
+  }, {
+    "name": "Angel Nunez-Ortiz",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Inspector",
+    "hours": []
+  }, {
+    "name": "Ann Marie Ciemny",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Admin",
+    "hours": []
+  }, {
+    "name": "Arsen Adzhemyan",
+    "division": "LAX",
+    "projectmanager": true,
+    "role": "Engineer",
+    "hours": [{
+      "projnum": "62421.3",
+      "date": "2018-05-04",
+      "time": 8
+    }, {
+      "projnum": "62910",
+      "date": "2018-05-04",
+      "time": 32
+    }]
+  }, {
+    "name": "Ben Bryan",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Inspector",
+    "hours": []
+  }, {
+    "name": "Ben Porritt",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Engineer",
+    "hours": []
+  }, {
+    "name": "Bo Lively",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Engineer",
+    "hours": []
+  }, {
+    "name": "Bob Stanley",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Engineer",
+    "hours": []
+  }, {
+    "name": "Daniel Breul",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Drafter",
+    "hours": []
+  }, {
+    "name": "Daniel Woodman",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Engineer",
+    "hours": []
+  }, {
+    "name": "Dave Bryan",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Inspector",
+    "hours": []
+  }, {
+    "name": "David Galvin",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Drafter",
+    "hours": []
+  }, {
+    "name": "Glenn Hesseltine",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Drafter",
+    "hours": []
+  }, {
+    "name": "Hosanna Yi",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Drafter",
+    "hours": []
+  }, {
+    "name": "Le Thanah",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Drafter",
+    "hours": []
+  }, {
+    "name": "Michael Biggs",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Drafter",
+    "hours": []
+  }, {
+    "name": "Michael Kasting",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Drafter",
+    "hours": []
+  }, {
+    "name": "Perry Kampa",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Engineer",
+    "hours": [{
+      "projnum": "62421.2",
+      "date": "2018-05-04",
+      "time": 16
+    }]
+  }, {
+    "name": "Pouya Banibayat",
+    "division": "LAX",
+    "projectmanager": true,
+    "role": "Engineer",
+    "hours": []
+  }, {
+    "name": "Rajik Zakourian",
+    "division": "LAX",
+    "projectmanager": true,
+    "role": "Engineer",
+    "hours": []
+  }, {
+    "name": "Sateesh Nabar",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Engineer",
+    "hours": []
+  }, {
+    "name": "Scott Laux",
+    "division": "LAX",
+    "projectmanager": true,
+    "role": "Drafter",
+    "hours": []
+  }, {
+    "name": "Shane Sweeten",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Engineer",
+    "hours": [{
+      "projnum": "62421",
+      "date": "2018-05-04",
+      "time": 24
+    }]
+  }, {
+    "name": "Stephanie Templeton",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Engineer",
+    "hours": [{
+      "projnum": "11121",
+      "date": "2018-05-04",
+      "time": 16
+    }, {
+      "projnum": "60410",
+      "date": "2018-05-04",
+      "time": 10
+    }, {
+      "projnum": "62421.1",
+      "date": "2018-05-04",
+      "time": 24
+    }, {
+      "projnum": "63096",
+      "date": "2018-05-04",
+      "time": 5
+    }]
+  }, {
+    "name": "Steve Brown",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Inspector",
+    "hours": []
+  }, {
+    "name": "Stewart Vaghti",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Engineer",
+    "hours": []
+  }, {
+    "name": "Ted Keane",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Drafter",
+    "hours": []
+  }, {
+    "name": "Tim Wong",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "Engineer",
+    "hours": [{
+      "projnum": "62910",
+      "date": "2018-05-04",
+      "time": 18
+    }, {
+      "projnum": "60660",
+      "date": "2018-05-04",
+      "time": 2
+    }, {
+      "projnum": "60910",
+      "date": "2018-05-04",
+      "time": 2
+    }, {
+      "projnum": "61638.5",
+      "date": "2018-05-04",
+      "time": 2
+    }, {
+      "projnum": "61733",
+      "date": "2018-05-04",
+      "time": 2
+    }, {
+      "projnum": "62090",
+      "date": "2018-05-04",
+      "time": 2
+    }]
+  }, {
+    "name": "Zachary Waldron",
+    "division": "PHX",
+    "projectmanager": true,
+    "role": "programmer",
+    "hours": [{
+      "projnum": "001018",
+      "date": "2018-04-30",
+      "time": 18
+    }, {
+      "projnum": "001018",
+      "date": "2018-05-07",
+      "time": 18
+    }, {
+      "projnum": "11119",
+      "date": "2018-05-08",
+      "time": 18
+    }, {
+      "projnum": "59915",
+      "date": "2018-05-11",
+      "time": 12
+    }, {
+      "projnum": "59915",
+      "date": "2018-05-18",
+      "time": 12
+    }]
+  }]
+}
